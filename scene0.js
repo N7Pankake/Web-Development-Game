@@ -4,7 +4,7 @@ var centerX = 1200/2, centerY = 800/2 + 285, link, speed=4;
 scenes.scene0 = function(){};
 scenes.scene0.prototype = {
     preload: function (){
-        game.load.image('LinkR', 'Assets/Sprites/ResizedLink/LinkRight.png');
+        game.load.spritesheet('LinkSideMovement', 'Assets/Sprites/ResizedLink/LinkSideAnim.png', 150, 150);
         game.load.image('Background2', 'Assets/Sprites/Backgrounds/Background2.png');
     },
     create: function (){
@@ -18,10 +18,11 @@ scenes.scene0.prototype = {
         
         var background2 = game.add.sprite(0, 0, 'Background2');
         
-        link = game.add.sprite(centerX, centerY, 'LinkR');
+        link = game.add.sprite(centerX, centerY, 'LinkSideMovement');
         link.anchor.setTo(0.5, 0.5);
         game.physics.enable(link);
         link.body.collideWorldBounds = true;
+        link.animations.add('walk', [0, 1, 2, 3, 4, 5, 6]);
         
         game.camera.follow(link);
         //game.camera.deadzone = new Phaser.Rectangle(centerX)
@@ -31,12 +32,18 @@ scenes.scene0.prototype = {
             {
                 link.scale.setTo(1,1);
                 link.x += speed;
+                link.animations.play('walk', 8, true);
             }
         else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
             {
                 link.scale.setTo(-1,1);
                 link.x -= speed;
+                link.animations.play('walk', 8, true);
             }
+        else{
+            link.animations.stop('walk');
+            link.frame = 0;
+        }
         if(game.input.keyboard.isDown(Phaser.Keyboard.UP))
             {
                 link.y -= speed;
