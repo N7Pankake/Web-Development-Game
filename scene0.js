@@ -1,4 +1,4 @@
-//Menu
+//Demo scene/Main logic 
 var scenes = {};
 var centerX = 1200/2, centerY = 800/2 + 285, link, speed=4;
 scenes.scene0 = function(){};
@@ -10,7 +10,7 @@ scenes.scene0.prototype = {
     create: function (){
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.stage.backgroundColor = '#000000';
-        console.log('scene0');
+        
         addChangeStateEventListeners();
         
         //game.world.setbounds(0,0, 1200, 1000);
@@ -61,6 +61,7 @@ scenes.scene0.prototype = {
 };
 
 function changeState(i, sceneNum){
+    console.log('scene' + sceneNum);
     game.state.start('scene' + sceneNum);
 }
 
