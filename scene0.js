@@ -1,11 +1,11 @@
 //Demo scene/Main logic 
 var scenes = {};
-var centerX = 1200/2, centerY = 800/2 + 285, link, speed=4;
+var centerX = 1216/2, centerY = 800/2 + 285, link, speed=4;
 scenes.scene0 = function(){};
 scenes.scene0.prototype = {
     preload: function (){
         game.load.spritesheet('LinkSideMovement', 'Assets/Sprites/ResizedLink/LinkSideAnim.png', 150, 150);
-        game.load.image('Background2', 'Assets/Sprites/Backgrounds/Background2.png');
+        game.load.image('Background_01', 'Assets/Sprites/Backgrounds/Background_01.png');
     },
     create: function (){
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -16,7 +16,7 @@ scenes.scene0.prototype = {
         //game.world.setbounds(0,0, 1200, 1000);
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         
-        var background2 = game.add.sprite(0, 0, 'Background2');
+        var background2 = game.add.sprite(0, 0, 'Background_01');
         
         link = game.add.sprite(centerX, centerY, 'LinkSideMovement');
         link.anchor.setTo(0.5, 0.5);
