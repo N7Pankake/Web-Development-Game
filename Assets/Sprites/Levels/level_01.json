@@ -18,8 +18,18 @@
  "tileheight":32,
  "tilesets":[
         {
+         "columns":11,
          "firstgid":1,
-         "source":"..\/Maps\/zelda_01.tsx"
+         "image":"zelda_01.png",
+         "imageheight":384,
+         "imagewidth":352,
+         "margin":0,
+         "name":"zelda_01",
+         "spacing":0,
+         "tilecount":132,
+         "tileheight":32,
+         "tilewidth":32,
+         "transparentcolor":"#000000"
         }],
  "tilewidth":32,
  "type":"map",
