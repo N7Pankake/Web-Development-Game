@@ -7,8 +7,7 @@ scenes.scene0.prototype = {
         game.load.tilemap('level_01', 'Assets/Sprites/Levels/level_01.json' , null, Phaser.Tilemap.TILED_JSON);
         game.load.image('zelda_01', 'Assets/Sprites/Levels/zelda_01.png');
         game.load.spritesheet('LinkMovement', 'Assets/Sprites/ResizedLink/LinkMovement.png', 150, 150);
-    },
-    create: function (){
+        
         game.stage.backgroundColor = '#FF0000';
         addChangeStateEventListeners();
         game.world.setBounds(0,0, 1216, 800);
@@ -16,6 +15,12 @@ scenes.scene0.prototype = {
         
         game.camera.follow(link);
         game.camera.deadzone = new Phaser.Rectangle(centerX - 200 , 0, 600,800)
+        
+    },
+    create: function (){
+        this.state.start('scene1');
+       
+        
     },
     update: function (){}
 };
