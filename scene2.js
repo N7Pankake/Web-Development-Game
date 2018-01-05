@@ -1,3 +1,4 @@
+//Main Menu
 scenes.scene2 = function(){};
 scenes.scene2.prototype = {
     preload: function (){},

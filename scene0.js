@@ -1,63 +1,23 @@
-//Demo scene/Main logic 
+//Preloader
 var scenes = {};
 var centerX = 1216/2, centerY = 800/2 + 285, link, speed=4;
 scenes.scene0 = function(){};
 scenes.scene0.prototype = {
     preload: function (){
-        game.load.spritesheet('LinkSideMovement', 'Assets/Sprites/ResizedLink/LinkSideAnim.png', 150, 150);
-        game.load.image('Background_01', 'Assets/Sprites/Backgrounds/Background_01.png');
+        game.load.tilemap('level_01', 'Assets/Sprites/Levels/level_01.json' , null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('zelda_01', 'Assets/Sprites/Levels/zelda_01.png');
+        game.load.spritesheet('LinkMovement', 'Assets/Sprites/ResizedLink/LinkMovement.png', 150, 150);
     },
     create: function (){
-        game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.stage.backgroundColor = '#000000';
-        
+        game.stage.backgroundColor = '#FF0000';
         addChangeStateEventListeners();
-        
-        //game.world.setbounds(0,0, 1200, 1000);
+        game.world.setBounds(0,0, 1216, 800);
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         
-        var background2 = game.add.sprite(0, 0, 'Background_01');
-        
-        link = game.add.sprite(centerX, centerY, 'LinkSideMovement');
-        link.anchor.setTo(0.5, 0.5);
-        game.physics.enable(link);
-        link.body.collideWorldBounds = true;
-        link.animations.add('walk', [0, 1, 2, 3, 4, 5, 6]);
-        
         game.camera.follow(link);
-        //game.camera.deadzone = new Phaser.Rectangle(centerX)
+        game.camera.deadzone = new Phaser.Rectangle(centerX - 200 , 0, 600,800)
     },
-    update: function (){
-        if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
-            {
-                link.scale.setTo(1,1);
-                link.x += speed;
-                link.animations.play('walk', 8, true);
-            }
-        else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
-            {
-                link.scale.setTo(-1,1);
-                link.x -= speed;
-                link.animations.play('walk', 8, true);
-            }
-        else{
-            link.animations.stop('walk');
-            link.frame = 0;
-        }
-        if(game.input.keyboard.isDown(Phaser.Keyboard.UP))
-            {
-                link.y -= speed;
-                if(link.y < 615)
-                    {
-                        link.y = 615;
-                    }
-            }
-        else if(game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
-            {
-                link.y += speed;
-            }
-        
-    }
+    update: function (){}
 };
 
 function changeState(i, sceneNum){
