@@ -1,10 +1,18 @@
 scenes.scene1 = function(){};
 scenes.scene1.prototype = {
-    preload: function (){},
-    create: function (){
-        game.load.tilemap('Level1', 'Assets/Sprites/TileMaps/Level1.json' , null, Phaser.Tilemap.TILED_JSON);
+    preload: function (){
+        game.load.tilemap('level_01', 'Assets/Sprites/Levels/level_01.json' , null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('tiles', 'Assets/Sprites/Levels/zelda_01.png');
         
+    },
+    create: function (){
+        game.stage.backgroundColor = '#FF0000';
         addChangeStateEventListeners();
+        
+        var map = game.add.tilemap('level_01');
+        map.addTilesetImage('zelda_01', 'tiles');
+        
+        var level1 = map.createLayer('groundlayer');
     },
     update: function (){}
 };
