@@ -11,6 +11,7 @@ scenes.scene0.prototype = {
         game.load.spritesheet('LinkMovement', 'Assets/Sprites/ResizedLink/LinkMovement.png', 150, 150);
         
         game.load.audio('pop','Assets/Sounds/Blip_Select.wav');
+        game.load.audio('openWorld','Assets/Sounds/Open_World.wav');
         
         game.stage.backgroundColor = '#FF0000';
         addChangeStateEventListeners();

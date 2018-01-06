@@ -6,7 +6,10 @@ vel = 350;
 level1;
 
 scenes.scene3.prototype = {
-    preload: function (){},
+    preload: function (){
+        sound = game.add.audio('openWorld');
+        sound.addMarker('openWorld', 0, 16, true);
+    },
     
     create: function (){
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -17,6 +20,9 @@ scenes.scene3.prototype = {
         map.addTilesetImage('zelda_01');
         
         level1 = map.createLayer('groundlayer');
+        
+        
+        sound.play('openWorld');
         
         map.setCollisionBetween(29, 50, true, 'groundlayer');
         map.setCollisionBetween(52, 67, true, 'groundlayer');
