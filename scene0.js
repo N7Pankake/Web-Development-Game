@@ -1,12 +1,16 @@
 //Preloader
 var scenes = {};
-var centerX = 1216/2, centerY = 800/2 + 285, link, speed=4;
+var centerX = 1216/2, centerY = 800/2 + 285, link, vel = 350, cursors, level1;
 scenes.scene0 = function(){};
 scenes.scene0.prototype = {
     preload: function (){
         game.load.tilemap('level_01', 'Assets/Sprites/Levels/level_01.json' , null, Phaser.Tilemap.TILED_JSON);
         game.load.image('zelda_01', 'Assets/Sprites/Levels/zelda_01.png');
+        game.load.image('title', 'Assets/Sprites/GUI/MainMenu.png');
+        game.load.image('button', 'Assets/Sprites/GUI/Boton.png');
         game.load.spritesheet('LinkMovement', 'Assets/Sprites/ResizedLink/LinkMovement.png', 150, 150);
+        
+        game.load.audio('pop','Assets/Sounds/Blip_Select.wav');
         
         game.stage.backgroundColor = '#FF0000';
         addChangeStateEventListeners();
