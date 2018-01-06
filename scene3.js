@@ -8,8 +8,8 @@ level1;
 scenes.scene3.prototype = {
     preload: function (){
         
-        sound = game.add.audio('openWorld');
-        sound.addMarker('openWorld', 0, 16, true);
+        music = game.add.audio('openWorld');
+        music.addMarker('openWorld', 0, 16, true);
     },
     
     create: function (){
@@ -22,7 +22,7 @@ scenes.scene3.prototype = {
         
         level1 = map.createLayer('groundlayer');
         
-        sound.play('openWorld', 0,1,true);
+        music.play('openWorld', 0,1,true);
         
         map.setCollisionBetween(29, 50, true, 'groundlayer');
         map.setCollisionBetween(52, 67, true, 'groundlayer');

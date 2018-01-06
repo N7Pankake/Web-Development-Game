@@ -1,6 +1,6 @@
 //Preloader
 var scenes = {};
-var centerX = 1216/2, centerY = 800/2 + 285, link, vel = 350, cursors, level1;
+var centerX = 1216/2, centerY = 800/2 + 285, link, vel = 350, cursors, level1, music;
 scenes.scene0 = function(){};
 scenes.scene0.prototype = {
     preload: function (){
@@ -27,7 +27,8 @@ scenes.scene0.prototype = {
        
         
     },
-    update: function (){}
+    update: function (){
+    }
 };
 
 function changeState(i, sceneNum){

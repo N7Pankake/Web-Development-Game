@@ -13,6 +13,7 @@ scenes.scene1.prototype = {
         
         sound = game.add.audio('pop');
         sound.addMarker('blep', 0, 0.1);
+        
         var b1 = game.add.button(900,300, 'button', function() {
             changeState(null, 3);
         });
@@ -30,7 +31,7 @@ scenes.scene1.prototype = {
         
         game.add.text(975,390, text1);
         game.add.text(965,590, text2);
-        
+             
       },
      tint: function() {
          this.tint = 0xbbbbbb;
@@ -38,5 +39,10 @@ scenes.scene1.prototype = {
       },
      unTint: function() {
          this.tint = 0xFFFFFF;
-     }
+     },
+    
+   removeMusic: function() {
+    music.destroy('openWorld');
+    game.cache.removeSound('openWorld');
+  }
 };
