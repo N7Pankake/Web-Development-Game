@@ -1,3 +1,5 @@
+//Lives Hud
+
 scenes.scene8 = function(){};
 scenes.scene8.prototype = {
     preload: function (){},

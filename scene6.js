@@ -1,3 +1,4 @@
+//Level 4
 scenes.scene6 = function(){};
 scenes.scene6.prototype = {
     preload: function (){},
