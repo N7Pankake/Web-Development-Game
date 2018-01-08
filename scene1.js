@@ -4,9 +4,7 @@ scenes.scene1 = function(){};
 scenes.scene1.prototype = {
     create: function (){
        
-        game.stage.backgroundColor = '#FFFF00';
         game.add.sprite(0,0, 'title');
-        addChangeStateEventListeners();
         
         var text1 = "Play"
         var text2 = "Levels"

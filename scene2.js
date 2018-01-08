@@ -4,9 +4,7 @@ scenes.scene2 = function(){};
 scenes.scene2.prototype = {
     create: function (){
        
-        game.stage.backgroundColor = '#FFFF00';
         game.add.sprite(0,0, 'title');
-        addChangeStateEventListeners();
         
         var text1 = "Main Menu"
         var text2 = "Level 1"

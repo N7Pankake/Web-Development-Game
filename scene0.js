@@ -2,8 +2,6 @@
 var scenes = {};
 //Map Related
 var centerX = 1216/2, centerY = 800/2 + 285, worldScale = 1;
-//Map Layers
-var walls, water;
 //Player
 var link, vel = 350, cursors, life,hitPoints = 2;
 //Music
@@ -15,9 +13,8 @@ scenes.scene0.prototype = {
     preload: function (){
         //Map Related
         game.load.tilemap('level_01', 'Assets/Sprites/Levels/level_01.json' , null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('tiles', 'Assets/Sprites/Levels/zelda_01.png');
+        
         game.stage.backgroundColor = '#FF0000';
-        addChangeStateEventListeners();
         game.world.setBounds(0,0, 1216, 800);
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         
@@ -50,21 +47,4 @@ scenes.scene0.prototype = {
 function changeState(i, sceneNum){
     console.log('scene' + sceneNum);
     game.state.start('scene' + sceneNum);
-}
-
-function addKeyCallback(key, fn, args){
-    game.input.keyboard.addKey(key).onDown.add(fn, null, null, args);
-}
-
-function addChangeStateEventListeners(){
-        addKeyCallback(Phaser.Keyboard.ZERO, changeState, 0)
-        addKeyCallback(Phaser.Keyboard.ONE, changeState, 1)
-        addKeyCallback(Phaser.Keyboard.TWO, changeState, 2)
-        addKeyCallback(Phaser.Keyboard.THREE, changeState, 3)
-        addKeyCallback(Phaser.Keyboard.FOUR, changeState, 4)
-        addKeyCallback(Phaser.Keyboard.FIVE, changeState, 5)
-        addKeyCallback(Phaser.Keyboard.SIX, changeState, 6)
-        addKeyCallback(Phaser.Keyboard.SEVEN, changeState, 7)
-        addKeyCallback(Phaser.Keyboard.EIGHT, changeState, 8)
-        addKeyCallback(Phaser.Keyboard.NINE, changeState, 9)
 }

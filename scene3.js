@@ -2,30 +2,60 @@
 
 scenes.scene3 = function(){};
 
+//Player speed
 vel = 350;
-var rocks, bushes, map,result;
+
+//Map/Level
+var map;
+
+//Tiled Layers
+var floor, water,walls;
+
+//Object Tiled Layers
+var rocks
+var bushes1, bushes2, bushes3, bushes4;
 
 scenes.scene3.prototype = {
     preload: function (){
+        
+        game.load.image('tiles', 'Assets/Sprites/Levels/zelda_01.png');
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
         
     },
     
     create: function (){
+        
+        //Buttons
+        var b1 = game.add.button(900,300, 'button', function() {
+            changeState(null, 1);
+        });
+        
+        
+        //Game itself
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.stage.backgroundColor = '#FF0000';
-        addChangeStateEventListeners();
         
         map = game.add.tilemap('level_01');
         map.addTilesetImage('tiles');
         
-        var floor = map.createLayer('ground');
+        floor = map.createLayer('ground');
         walls = map.createLayer('walls');
         water = map.createLayer('water');
         
         map.setCollisionBetween(0, 100, true, 'walls');
         map.setCollisionBetween(0, 100, true, 'water');
+        
+        //Objects layer related
+        rocks = game.add.physicsGroup();
+        map.createFromObjects('rocks','ROCK','tiles', 48, true, false, rocks);
+        rocks.forEach(function(rocks){rocks.body.immovable = true;});  
+        
+        bushes = game.add.physicsGroup();
+        map.createFromObjects('bushes', 'BUSHTOP', 'tiles', 37, true, false , bushes);
+        map.createFromObjects('bushes', 'BUSHBOT', 'tiles', 35, true, false , bushes);
+        map.createFromObjects('bushes', 'BUSHLEFT', 'tiles', 36, true, false , bushes);
+        map.createFromObjects('bushes', 'BUSHRIGHT', 'tiles', 34, true, false , bushes);
+        bushes.forEach(function(bushes){bushes.body.immovable = true;});  
         
         
        // music.play('openWorld', 0,1,true);
@@ -46,9 +76,6 @@ scenes.scene3.prototype = {
         life.animations.add('oneHP', [2]);
         life.animations.add('Dead', [3]);
         
-        //this.createRocks();
-        //this.createBushes();
-        
         cursors = game.input.keyboard.createCursorKeys();
     },
     
@@ -57,6 +84,8 @@ scenes.scene3.prototype = {
         
         game.physics.arcade.collide(link, walls);
         game.physics.arcade.collide(link, water);
+        game.physics.arcade.collide(link, rocks);
+        game.physics.arcade.collide(link, bushes);
         
         if(cursors.up.isDown){
               link.body.velocity.y = -vel;
@@ -93,26 +122,32 @@ scenes.scene3.prototype = {
                 
     },
     
+    fire: function(){
+        console.log('firing')
+        var bullet = bullets.getFirstDead();
+        bullet.reset(link.x, link.y);
+    },
+    
    drawHealthBar: function(){
-       if (hitPoints == 3)
+       if (hitPoints === 3)
             {
                 life.animation.play('fullHP');
             }
         else if
-            (hitPoints == 2)
+            (hitPoints === 2)
             {
                 life.animation.play('twoHP');
             }
         else if
-            (hitPoints == 1)
+            (hitPoints === 1)
             {
                 life.animation.play('oneHP');
             }
         else if
-            (hitPoints == 0)
+            (hitPoints === 0)
             {
                 life.animation.play('Dead');
             }
    } 
-       
+    
 };

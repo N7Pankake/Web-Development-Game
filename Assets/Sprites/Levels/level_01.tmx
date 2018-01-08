@@ -33,112 +33,106 @@
 </data>
  </layer>
  <objectgroup name="rocks">
-  <properties>
-   <property name="Type" value="Rock"/>
-  </properties>
-  <object id="4" gid="48" x="351.5" y="480" width="32" height="32">
+  <object id="4" name="ROCK" gid="48" x="351.5" y="480" width="32" height="32">
    <properties>
-    <property name="Type" value="Rock"/>
+    <property name="type" value="Rock"/>
    </properties>
   </object>
-  <object id="6" gid="48" x="577" y="735.5" width="32" height="32">
+  <object id="6" name="ROCK" gid="48" x="577" y="735.5" width="32" height="32">
    <properties>
-    <property name="Type" value="Rock"/>
+    <property name="type" value="Rock"/>
    </properties>
   </object>
-  <object id="11" gid="48" x="544.364" y="220.727" width="32" height="32">
+  <object id="11" name="ROCK" gid="48" x="544.364" y="220.727" width="32" height="32">
    <properties>
-    <property name="Type" value="Rock"/>
+    <property name="type" value="Rock"/>
    </properties>
   </object>
-  <object id="13" gid="48" x="929" y="671" width="32" height="32">
+  <object id="13" name="ROCK" gid="48" x="929" y="671" width="32" height="32">
    <properties>
-    <property name="Type" value="Rock"/>
+    <property name="type" value="Rock"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup name="bushes">
-  <properties>
-   <property name="Type" value="Bush"/>
-  </properties>
-  <object id="18" gid="35" x="160" y="352.5" width="32" height="32">
+  <object id="18" name="BUSHBOT" gid="35" x="160" y="352.5" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="19" name="BUSHTOP" gid="37" x="160.5" y="321" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="32" name="BUSHBOT" gid="35" x="223.75" y="608.75" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="33" name="BUSHTOP" gid="37" x="224.25" y="577.25" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="34" name="BUSHBOT" gid="35" x="478.75" y="255.75" width="32" height="32">
    <properties>
     <property name="Type" value="Bush"/>
    </properties>
   </object>
-  <object id="19" gid="37" x="160.5" y="321" width="32" height="32">
+  <object id="35" name="BUSHTOP" gid="37" x="479.25" y="224.25" width="32" height="32">
    <properties>
     <property name="Type" value="Bush"/>
    </properties>
   </object>
-  <object id="32" gid="35" x="223.75" y="608.75" width="32" height="32">
+  <object id="36" name="BUSHBOT" gid="35" x="670.75" y="289.75" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="37" name="BUSHTOP" gid="37" x="671.25" y="258.25" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="38" name="BUSHBOT" gid="35" x="481.75" y="704.75" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="39" name="BUSHTOP" gid="37" x="482.25" y="673.25" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="43" name="BUSHRIGHT" gid="34" x="576.182" y="543.818" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="44" name="BUSHLEFT" gid="36" x="544.364" y="544" width="32" height="32">
+   <properties>
+    <property name="type" value="Bush"/>
+   </properties>
+  </object>
+  <object id="45" name="BUSHRIGHT" gid="34" x="801.909" y="671.909" width="32" height="32">
    <properties>
     <property name="Type" value="Bush"/>
    </properties>
   </object>
-  <object id="33" gid="37" x="224.25" y="577.25" width="32" height="32">
+  <object id="46" name="BUSHLEFT" gid="36" x="770.091" y="672.091" width="32" height="32">
    <properties>
     <property name="Type" value="Bush"/>
    </properties>
   </object>
-  <object id="34" gid="35" x="478.75" y="255.75" width="32" height="32">
+  <object id="47" name="BUSHRIGHT" gid="34" x="927.909" y="163.909" width="32" height="32">
    <properties>
-    <property name="Type" value="Bush"/>
+    <property name="type" value="Bush"/>
    </properties>
   </object>
-  <object id="35" gid="37" x="479.25" y="224.25" width="32" height="32">
+  <object id="48" name="BUSHLEFT" gid="36" x="896.091" y="164.091" width="32" height="32">
    <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="36" gid="35" x="670.75" y="289.75" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="37" gid="37" x="671.25" y="258.25" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="38" gid="35" x="481.75" y="704.75" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="39" gid="37" x="482.25" y="673.25" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="43" gid="34" x="576.182" y="543.818" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="44" gid="36" x="544.364" y="544" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="45" gid="34" x="801.909" y="671.909" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="46" gid="36" x="770.091" y="672.091" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="47" gid="34" x="927.909" y="163.909" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
-   </properties>
-  </object>
-  <object id="48" gid="36" x="896.091" y="164.091" width="32" height="32">
-   <properties>
-    <property name="Type" value="Bush"/>
+    <property name="type" value="Bush"/>
    </properties>
   </object>
  </objectgroup>
@@ -149,22 +143,22 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,53,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,53,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,53,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,53,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,53,53,53,0,0,0,0,0,0,0,0,0,0,0,0,53,53,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,53,53,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,53,53,53,53,53,0,0,0,0,0,0,0,0,53,53,53,0,53,53,53,0,0,53,53,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,53,53,53,0,0,0,0,0,0,0,0,53,0,0,0,0,0,53,0,0,53,53,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,53,53,53,0,0,0,0,0,0,0,0,53,0,0,0,0,0,53,0,0,53,53,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,61,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,66,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,66,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,59,58,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,60,64,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,67,52,66,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,59,65,52,64,61,0,0,0,0,0,0,0,0,60,55,0,0,0,54,61,0,0,60,61,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,67,52,66,0,0,0,0,0,0,0,0,57,0,0,0,0,0,57,0,0,67,66,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,59,65,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,59,58,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0,0,0,53,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0,0,0,53,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,53,53,53,0,0,0,0,0,0,0,0,0,0,53,53,53,0,53,53,53,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,53,53,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,53,53,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,53,53,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,56,0,0,0,0,0,56,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,60,64,61,0,0,0,0,0,0,0,0,0,0,59,55,0,0,0,54,58,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,67,52,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,60,52,66,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,59,65,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

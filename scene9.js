@@ -4,7 +4,6 @@ scenes.scene9.prototype = {
     create: function (){
         game.stage.backgroundColor = '#FFFFFF';
         
-        addChangeStateEventListeners();
     },
     update: function (){}
 };
