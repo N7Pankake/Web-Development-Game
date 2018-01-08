@@ -3,7 +3,7 @@ var scenes = {};
 //Map Related
 var centerX = 1216/2, centerY = 800/2 + 285, worldScale = 1;
 //Player
-var link, vel = 350, cursors, life,hitPoints = 2;
+var cursors, life,hitPoints = 2;
 //Music
 var music;
 

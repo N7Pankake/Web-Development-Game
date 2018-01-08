@@ -3,7 +3,7 @@
 scenes.scene3 = function(){};
 
 //Player speed
-vel = 350;
+var link, vel = 150;
 
 //Map/Level
 var map;
@@ -21,18 +21,15 @@ scenes.scene3.prototype = {
         game.load.image('tiles', 'Assets/Sprites/Levels/zelda_01.png');
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
+        game.renderer.resize( 1216/2, 800/2);
         
     },
     
     create: function (){
         
-        //Buttons
-        var b1 = game.add.button(900,300, 'button', function() {
-            changeState(null, 1);
-        });
-        
-        
         //Game itself
+        
+        game.world.setBounds(0,0, 1216, 800);
         game.physics.startSystem(Phaser.Physics.ARCADE);
         
         map = game.add.tilemap('level_01');
@@ -60,7 +57,8 @@ scenes.scene3.prototype = {
         
        // music.play('openWorld', 0,1,true);
         
-        link = game.add.sprite((centerX-50), (centerY-300), 'LinkMovement');
+        // Player
+        link = game.add.sprite((centerX-500), 100, 'LinkMovement');
         link.scale.setTo(0.25, 0.25);
         link.animations.add('walkHorizontalRight', [6,7,8]);
         link.animations.add('walkHorizontalLeft', [9,10,11]);
@@ -69,16 +67,22 @@ scenes.scene3.prototype = {
         game.physics.enable(link);
         link.body.collideWorldBounds=true;
         
+        //Life bar
         life = game.add.sprite((centerX-600), (centerY-675), 'lifeBar');
-        life.scale.setTo(0.25, 0.25);
+        life.scale.setTo(0.15, 0.15);
         life.animations.add('fullHP', [0]);
         life.animations.add('twoHP', [1]);
         life.animations.add('oneHP', [2]);
         life.animations.add('Dead', [3]);
         
         cursors = game.input.keyboard.createCursorKeys();
+        
+        var b1 = game.add.button(900,300, 'buttonFire', function() {fire();});
+        b1.scale.setTo(0.25,0.25);
+        
+        game.camera.bounds = 1216, 800;
+        game.camera.follow(link);
     },
-    
     
     update: function (){
         
@@ -90,11 +94,13 @@ scenes.scene3.prototype = {
         if(cursors.up.isDown){
               link.body.velocity.y = -vel;
               link.animations.play('walkVerticalUp', 9, true);
+              game.camera.y += 4;
             }
         
         else if(cursors.down.isDown){
               link.body.velocity.y = vel;
               link.animations.play('walkVerticalDown', 9, true);
+            game.camera.y += -4;
             }
         
         else{
@@ -106,11 +112,13 @@ scenes.scene3.prototype = {
         if(cursors.left.isDown){
               link.body.velocity.x = -vel;
               link.animations.play('walkHorizontalLeft', 9, true);
+            game.camera.x += -4;
             }
         
         else if(cursors.right.isDown){
               link.body.velocity.x = vel;
               link.animations.play('walkHorizontalRight', 9, true);
+            game.camera.x += +4;
             }
         
         else{
@@ -148,6 +156,5 @@ scenes.scene3.prototype = {
             {
                 life.animation.play('Dead');
             }
-   } 
-    
+   }
 };
