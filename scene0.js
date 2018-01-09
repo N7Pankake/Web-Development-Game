@@ -6,7 +6,7 @@ var scenes = {};
 var centerX = 1216/2, centerY = 800/2 + 285, worldScale = 1;
 
 //Player
-var cursors, life,hitPoints = 2;
+var cursors, life, hitpoints=1;
 
 //Music
 var music;

@@ -71,11 +71,16 @@ scenes.scene3.prototype = {
         //GUI
         life = game.add.sprite((game.camera.x), (game.camera.y), 'lifeBar');
         life.scale.setTo(0.15, 0.15);
-        life.fixedToCamera;
+        life.animations.add('Full', [0]);
+        life.animations.add('Two', [1]);
+        life.animations.add('One', [2]);
+        life.animations.add('Zero', [3]);
+        life.fixedToCamera = true;
         
         //Buttons/Joystick/Movement
-        var b1 = game.add.button(900,300, 'buttonFire', function() {fire();});
-        b1.scale.setTo(0.25,0.25);
+        var b1 = game.add.button(450,300, 'buttonFire', function() {fire();});
+        b1.scale.setTo(0.20,0.20);
+        b1.fixedToCamera = true;
         cursors = game.input.keyboard.createCursorKeys();
         
         // Camera Related
@@ -132,15 +137,33 @@ scenes.scene3.prototype = {
               link.animations.stop('walkHorizontalLeft');
         }
         
-        game.debug.cameraInfo(game.camera, 32, 32);
-        
-        
+        if (hitpoints === 3){
+            life.animations.play('Full', 5, true);
+            life.animations.stop('Two');
+            life.animations.stop('One');
+            life.animations.stop('Zero');
+            }
+        else if (hitpoints === 2){
+            life.animations.play('Two', 5, true);
+            life.animations.stop('Full');
+            life.animations.stop('One');
+            life.animations.stop('Zero');
+            }
+        else if (hitpoints === 1){
+            life.animations.play('One', 5, true);
+            life.animations.stop('Full');
+            life.animations.stop('Two');
+            life.animations.stop('Zero');
+            }
+        else  if (hitpoints === 0){
+            life.animations.play('Zero', 5, true);
+            life.animations.stop('Full');
+            life.animations.stop('One');
+            life.animations.stop('Two');
+            }
     },
     
     fire: function(){
-        console.log('firing')
-        var bullet = bullets.getFirstDead();
-        bullet.reset(link.x, link.y);
     }
     
 };
