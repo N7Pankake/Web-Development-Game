@@ -55,7 +55,7 @@ scenes.scene3.prototype = {
         bushes.forEach(function(bushes){bushes.body.immovable = true;});  
         
         
-       // music.play('openWorld', 0,1,true);
+        // music.play('openWorld', 0,1,true);
         
         // Player
         link = game.add.sprite(608, 400, 'LinkMovement');
@@ -79,9 +79,9 @@ scenes.scene3.prototype = {
         cursors = game.input.keyboard.createCursorKeys();
         
         // Camera Related
-        game.camera.height = 508;
+        game.camera.height = 608;
         game.camera.width = 300;
-        game.camera.setSize(508,400);
+        game.camera.setSize(608,400);
         game.camera.bounds = (0,0,608,400);
         game.camera.follow(link, Phaser.Camera.FOLLOW_TOPDOWN,0.5,0.5);
         
