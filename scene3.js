@@ -21,7 +21,7 @@ scenes.scene3.prototype = {
         game.load.image('tiles', 'Assets/Sprites/Levels/zelda_01.png');
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
-        //game.renderer.resize( 1216/2, 800/2);
+        game.renderer.resize( 1216/2, 800/2);
         
     },
     
@@ -58,7 +58,7 @@ scenes.scene3.prototype = {
        // music.play('openWorld', 0,1,true);
         
         // Player
-        link = game.add.sprite(centerX, centerY, 'LinkMovement');
+        link = game.add.sprite(608, 400, 'LinkMovement');
         link.scale.setTo(0.25, 0.25);
         link.anchor.setTo(0.5);
         link.animations.add('walkHorizontalRight', [6,7,8]);
@@ -68,22 +68,26 @@ scenes.scene3.prototype = {
         game.physics.enable(link);
         link.body.collideWorldBounds=true;
         
-        //Life bar
-        life = game.add.sprite((centerX-600), (centerY-675), 'lifeBar');
+        //GUI
+        life = game.add.sprite((game.camera.x), (game.camera.y), 'lifeBar');
         life.scale.setTo(0.15, 0.15);
-        life.animations.add('fullHP', [0]);
-        life.animations.add('twoHP', [1]);
-        life.animations.add('oneHP', [2]);
-        life.animations.add('Dead', [3]);
+        life.fixedToCamera;
         
-        cursors = game.input.keyboard.createCursorKeys();
-        
+        //Buttons/Joystick/Movement
         var b1 = game.add.button(900,300, 'buttonFire', function() {fire();});
         b1.scale.setTo(0.25,0.25);
+        cursors = game.input.keyboard.createCursorKeys();
         
         // Camera Related
-        game.camera.follow(link, Phaser.Camera.FOLLOW_PLATFORMER);
-        game.camera.bounds = (null);
+        game.camera.height = 508;
+        game.camera.width = 300;
+        game.camera.setSize(508,400);
+        game.camera.bounds = (0,0,608,400);
+        game.camera.follow(link, Phaser.Camera.FOLLOW_TOPDOWN,0.5,0.5);
+        
+        
+        
+        
         
     },
     
@@ -128,6 +132,8 @@ scenes.scene3.prototype = {
               link.animations.stop('walkHorizontalLeft');
         }
         
+        game.debug.cameraInfo(game.camera, 32, 32);
+        
         
     },
     
@@ -135,27 +141,6 @@ scenes.scene3.prototype = {
         console.log('firing')
         var bullet = bullets.getFirstDead();
         bullet.reset(link.x, link.y);
-    },
+    }
     
-   drawHealthBar: function(){
-       if (hitPoints === 3)
-            {
-                life.animation.play('fullHP');
-            }
-        else if
-            (hitPoints === 2)
-            {
-                life.animation.play('twoHP');
-            }
-        else if
-            (hitPoints === 1)
-            {
-                life.animation.play('oneHP');
-            }
-        else if
-            (hitPoints === 0)
-            {
-                life.animation.play('Dead');
-            }
-   }
 };
