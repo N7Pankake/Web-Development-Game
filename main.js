@@ -1,4 +1,6 @@
 var game = new Phaser.Game(1216, 800, Phaser.AUTO);
+//var movement = new Phaser.Game(200, 800, Phaser.AUTO);
+//var buttons = new Phaser.Game(200, 800, Phaser.AUTO);
 game.state.add('scene0', scenes.scene0);
 game.state.add('scene1', scenes.scene1);
 game.state.add('scene2', scenes.scene2);

@@ -21,7 +21,7 @@ scenes.scene3.prototype = {
         game.load.image('tiles', 'Assets/Sprites/Levels/zelda_01.png');
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
-        game.renderer.resize( 1216/2, 800/2);
+        //game.renderer.resize( 1216/2, 800/2);
         
     },
     
@@ -58,8 +58,9 @@ scenes.scene3.prototype = {
        // music.play('openWorld', 0,1,true);
         
         // Player
-        link = game.add.sprite((centerX-500), 100, 'LinkMovement');
+        link = game.add.sprite(centerX, centerY, 'LinkMovement');
         link.scale.setTo(0.25, 0.25);
+        link.anchor.setTo(0.5);
         link.animations.add('walkHorizontalRight', [6,7,8]);
         link.animations.add('walkHorizontalLeft', [9,10,11]);
         link.animations.add('walkVerticalDown', [0,1,2]);
@@ -80,12 +81,14 @@ scenes.scene3.prototype = {
         var b1 = game.add.button(900,300, 'buttonFire', function() {fire();});
         b1.scale.setTo(0.25,0.25);
         
-        game.camera.bounds = null;
-        game.camera.follow(link);
+        // Camera Related
+        game.camera.follow(link, Phaser.Camera.FOLLOW_PLATFORMER);
+        game.camera.bounds = (null);
         
     },
     
     update: function (){
+        
         
         
         game.physics.arcade.collide(link, walls);
@@ -124,6 +127,7 @@ scenes.scene3.prototype = {
               link.animations.stop('walkHorizontalRight');
               link.animations.stop('walkHorizontalLeft');
         }
+        
         
     },
     
