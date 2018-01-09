@@ -80,11 +80,13 @@ scenes.scene3.prototype = {
         var b1 = game.add.button(900,300, 'buttonFire', function() {fire();});
         b1.scale.setTo(0.25,0.25);
         
-        game.camera.bounds = 1216, 800;
+        game.camera.bounds = null;
         game.camera.follow(link);
+        
     },
     
     update: function (){
+        
         
         game.physics.arcade.collide(link, walls);
         game.physics.arcade.collide(link, water);
@@ -94,13 +96,11 @@ scenes.scene3.prototype = {
         if(cursors.up.isDown){
               link.body.velocity.y = -vel;
               link.animations.play('walkVerticalUp', 9, true);
-              game.camera.y += 4;
             }
         
         else if(cursors.down.isDown){
               link.body.velocity.y = vel;
               link.animations.play('walkVerticalDown', 9, true);
-            game.camera.y += -4;
             }
         
         else{
@@ -112,13 +112,11 @@ scenes.scene3.prototype = {
         if(cursors.left.isDown){
               link.body.velocity.x = -vel;
               link.animations.play('walkHorizontalLeft', 9, true);
-            game.camera.x += -4;
             }
         
         else if(cursors.right.isDown){
               link.body.velocity.x = vel;
               link.animations.play('walkHorizontalRight', 9, true);
-            game.camera.x += +4;
             }
         
         else{
@@ -127,7 +125,6 @@ scenes.scene3.prototype = {
               link.animations.stop('walkHorizontalLeft');
         }
         
-                
     },
     
     fire: function(){
