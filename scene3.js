@@ -3,10 +3,15 @@
 scenes.scene3 = function(){};
 
 //Player speed
-var link, vel = 150;
+var link, vel = 150; 
 
-//Map/Level
-var map;
+//Arrow
+var arrow;
+var fireRate = 100;
+var nextArrow = 0;
+
+//Map/Level/GUI
+var map, fireButton, swordButton, arrowButton;
 
 //Tiled Layers
 var floor, water,walls;
@@ -21,8 +26,8 @@ scenes.scene3.prototype = {
         game.load.image('tiles', 'Assets/Sprites/Levels/zelda_01.png');
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
-        game.renderer.resize( 1216/2, 800/2);
         
+        //game.renderer.resize( 1216/2, 800/2); <--- Giving me TOO MANY problems but still need it and love it <3
     },
     
     create: function (){
@@ -44,14 +49,16 @@ scenes.scene3.prototype = {
         
         //Objects layer related
         rocks = game.add.physicsGroup();
-        map.createFromObjects('rocks','ROCK','tiles', 48, true, false, rocks);
-        rocks.forEach(function(rocks){rocks.body.immovable = true;});  
+        map.createFromObjects('rocks',48,'Rocky', 0, true, false, rocks);
+        rocks.forEach(function(rocks){
+        rocks.body.immovable = true;});  
+        
         
         bushes = game.add.physicsGroup();
-        map.createFromObjects('bushes', 'BUSHTOP', 'tiles', 37, true, false , bushes);
-        map.createFromObjects('bushes', 'BUSHBOT', 'tiles', 35, true, false , bushes);
-        map.createFromObjects('bushes', 'BUSHLEFT', 'tiles', 36, true, false , bushes);
-        map.createFromObjects('bushes', 'BUSHRIGHT', 'tiles', 34, true, false , bushes);
+        map.createFromObjects('bushes', 'BUSHTOP', 'tBush', 0, true, false , bushes);
+        map.createFromObjects('bushes', 'BUSHBOT', 'bBush', 0, true, false , bushes);
+        map.createFromObjects('bushes', 'BUSHLEFT', 'lBush', 0, true, false , bushes);
+        map.createFromObjects('bushes', 'BUSHRIGHT', 'rBush', 0, true, false , bushes);
         bushes.forEach(function(bushes){bushes.body.immovable = true;});  
         
         
@@ -59,7 +66,7 @@ scenes.scene3.prototype = {
         
         // Player
         link = game.add.sprite(608, 400, 'LinkMovement');
-        link.scale.setTo(0.25, 0.25);
+        link.scale.setTo(0.2, 0.2);
         link.anchor.setTo(0.5);
         link.animations.add('walkHorizontalRight', [6,7,8]);
         link.animations.add('walkHorizontalLeft', [9,10,11]);
@@ -77,12 +84,6 @@ scenes.scene3.prototype = {
         life.animations.add('Zero', [3]);
         life.fixedToCamera = true;
         
-        //Buttons/Joystick/Movement
-        var b1 = game.add.button(450,300, 'buttonFire', function() {fire();});
-        b1.scale.setTo(0.20,0.20);
-        b1.fixedToCamera = true;
-        cursors = game.input.keyboard.createCursorKeys();
-        
         // Camera Related
         game.camera.height = 608;
         game.camera.width = 300;
@@ -90,16 +91,35 @@ scenes.scene3.prototype = {
         game.camera.bounds = (0,0,608,400);
         game.camera.follow(link, Phaser.Camera.FOLLOW_TOPDOWN,0.5,0.5);
         
+        //Buttons/Joystick/Movement
         
+        fireButton = game.add.button(487.50,240, 'buttonFire', function() {
+            changeState(null, 1);
+        });
+        fireButton.alpha = 0.5;
+        fireButton.scale.setTo(0.20,0.20);
+        fireButton.fixedToCamera = true;
         
+        swordButton = game.add.button(525,300, 'buttonSword', function() {
+            changeState(null, 1);
+        });
+        swordButton.alpha = 0.5;
+        swordButton.scale.setTo(0.20,0.20);
+        swordButton.fixedToCamera = true;
         
+        arrowButton = game.add.button(450,300, 'buttonArrow', function() {
+            changeState(null, 1);
+        });
+        arrowButton.alpha = 0.5;
+        arrowButton.scale.setTo(0.20,0.20);
+        arrowButton.fixedToCamera = true;
+        
+        cursors = game.input.keyboard.createCursorKeys();
         
     },
     
     update: function (){
-        
-        
-        
+
         game.physics.arcade.collide(link, walls);
         game.physics.arcade.collide(link, water);
         game.physics.arcade.collide(link, rocks);
@@ -114,6 +134,11 @@ scenes.scene3.prototype = {
               link.body.velocity.y = vel;
               link.animations.play('walkVerticalDown', 9, true);
             }
+        
+       /* else if ((cursors.down.isDown && cursors.left.isDown || cursors.down.isDown && cursors.right.isDown) || (cursors.up.isDown && cursors.right.isDown || cursors.up.isDown && cursors.right.isDown) ){
+                 link.body.velocity.y = 0;
+                 link.body.velocity.x = 0;
+                 }*/
         
         else{
               link.body.velocity.y = 0;
@@ -136,7 +161,6 @@ scenes.scene3.prototype = {
               link.animations.stop('walkHorizontalRight');
               link.animations.stop('walkHorizontalLeft');
         }
-        
         if (hitpoints === 3){
             life.animations.play('Full', 5, true);
             life.animations.stop('Two');
@@ -161,9 +185,6 @@ scenes.scene3.prototype = {
             life.animations.stop('One');
             life.animations.stop('Two');
             }
-    },
-    
-    fire: function(){
     }
     
 };
