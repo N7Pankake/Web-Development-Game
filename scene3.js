@@ -7,10 +7,17 @@ var link, vel = 150;
 //facing
 var up = false,down = false,left = false,right = false;
 
+//Objects hit points
+var rockHP = 3,BushHP = 2;
+
 //Arrow
 var arrow;
 var fireRate = 500;
 var nextArrow = 0;
+var arrowsOwned = 10;
+var arrowText;
+//variable to create bunch of arrows
+var sprite;
 
 //Map/Level/GUI
 var map, fireButton, swordButton, arrowButton;
@@ -29,7 +36,7 @@ scenes.scene3.prototype = {
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
         
-       // game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
+        //game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
     },
     
     create: function (){
@@ -38,7 +45,8 @@ scenes.scene3.prototype = {
         
         game.world.setBounds(0,0, 1216, 800);
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        
+               
+        //map
         map = game.add.tilemap('level_01');
         map.addTilesetImage('tiles');
         
@@ -63,7 +71,6 @@ scenes.scene3.prototype = {
         map.createFromObjects('bushes', 'BUSHRIGHT', 'rBush', 0, true, false , bushes);
         bushes.forEach(function(bushes){bushes.body.immovable = true;});  
         
-        
         // music.play('openWorld', 0,1,true);
         
         // Player
@@ -86,7 +93,14 @@ scenes.scene3.prototype = {
         life.animations.add('Zero', [3]);
         life.fixedToCamera = true;
         
-        //Bullets
+        //Arrows available
+        var arrowGUI = game.add.sprite((game.camera.x), (game.camera.y+30), 'BunchofArrows');
+        arrowGUI.scale.setTo(1.15, 1.15);
+        arrowGUI.fixedToCamera = true;
+        arrowText = game.add.text((game.camera.x+30), (game.camera.y+30), "X "+arrowsOwned);
+        arrowText.fixedToCamera = true;
+        
+        //Arrows
         arrow = game.add.group();
         arrow.enableBody = true;
         arrow.physicsBodyType = Phaser.Physics.ARCADE;
@@ -134,13 +148,22 @@ scenes.scene3.prototype = {
     
     
     update: function (){
-
+        //Collide with Walls, Water, Rocks, Bushes from TILED
         game.physics.arcade.collide(link, walls);
         game.physics.arcade.collide(link, water);
         game.physics.arcade.collide(link, rocks);
         game.physics.arcade.collide(link, bushes);
+        
+        //Arrows Collide with Rocks and Bushes TILED
         game.physics.arcade.overlap(arrow, rocks, hitRock, null, this);
         game.physics.arcade.overlap(arrow, bushes, hitBush, null, this);
+        
+        //Link/Player Collides with Sprite (Bunch of Arrows)
+        game.physics.arcade.collide(sprite, map);
+        game.physics.arcade.overlap(link, sprite, collectArrows, null, this);
+       
+        //Arrows Owned Update
+        arrowText.setText("x "+ arrowsOwned);
         
         if(cursors.up.isDown){
               link.body.velocity.y = -vel;
@@ -207,7 +230,19 @@ scenes.scene3.prototype = {
         }
         
     function hitRock(arrow, rocks){  
-    rocks.kill();
+    rockHP -= 1;
+        if (rockHP <= 0  )
+            {
+                rocks.kill();
+                if(game.rnd.integerInRange(1, 10) >= 3)
+                    {
+                        sprite = game.add.sprite((rocks.x), (rocks.y), 'BunchofArrows');
+                        sprite.enableBody = true;
+                    }
+                else{
+                    //Do Nothing ~ just die in peace silly rock
+                }
+            }
     arrow.kill();
    }
         
@@ -217,3 +252,66 @@ scenes.scene3.prototype = {
    }
  }
 };
+
+function fire (){
+    if (game.time.now > nextArrow)
+    {
+        nextArrow = game.time.now + fireRate;
+        var bullet = arrow.getFirstExists(false);
+
+        if(bullet){
+            if(arrowsOwned >= 1)
+                {
+                     if(up == true && down == false && right == false && left ==false ){
+                bullet.rotation = 0;
+                bullet.reset(link.x, link.y - 15);
+                bullet.body.velocity.y = -400;
+                bulletTime = game.time.now + 200;
+                arrowsOwned -= 1;
+            }
+            if(up == false && down == true && right == false && left ==false){
+                bullet.rotation = -135;
+                bullet.reset(link.x, link.y + 15);
+                bullet.body.velocity.y = +400;
+                bulletTime = game.time.now + 200;
+                arrowsOwned -= 1;
+            }
+            
+            if(up == false && down == false && right == true && left == false){
+                bullet.rotation = 1.5;
+                bullet.reset(link.x + 15, link.y);
+                bullet.body.velocity.x = +400;
+                bulletTime = game.time.now + 200;
+                arrowsOwned -= 1;
+            }
+            
+            if(up == false && down == false && right == false && left == true){
+                bullet.rotation = -1.5;
+                bullet.reset(link.x - 15, link.y);
+                bullet.body.velocity.x = -400;
+                bulletTime = game.time.now + 200;
+                arrowsOwned -= 1;
+            }
+            
+            if(up == false && down == false && right == false && left == false){
+                bullet.rotation = -135;
+                bullet.reset(link.x, link.y + 15);
+                bullet.body.velocity.y = +400;
+                bulletTime = game.time.now + 200;
+                arrowsOwned -= 1;
+            }
+                }
+            else {
+                //Don't shoot
+            }
+           
+        }
+    }
+}
+
+function collectArrows (link, sprite) {
+    // Removes the star from the screen
+    sprite.kill();
+    arrowsOwned = arrowsOwned + game.rnd.integerInRange(2, 10);
+
+}

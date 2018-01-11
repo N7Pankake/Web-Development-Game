@@ -22,10 +22,12 @@
                  "name":"ROCK",
                  "properties":
                     {
+                     "rockHitpoints":3,
                      "type":"Rock"
                     },
                  "propertytypes":
                     {
+                     "rockHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -42,10 +44,12 @@
                  "name":"ROCK",
                  "properties":
                     {
+                     "rockHitpoints":3,
                      "type":"Rock"
                     },
                  "propertytypes":
                     {
+                     "rockHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -62,10 +66,12 @@
                  "name":"ROCK",
                  "properties":
                     {
+                     "rockHitpoints":3,
                      "type":"Rock"
                     },
                  "propertytypes":
                     {
+                     "rockHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -82,10 +88,12 @@
                  "name":"ROCK",
                  "properties":
                     {
+                     "rockHitpoints":3,
                      "type":"Rock"
                     },
                  "propertytypes":
                     {
+                     "rockHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -112,10 +120,12 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
+                     "bushBotHitpoints":2,
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushBotHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -132,10 +142,12 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
+                     "bushTopHitpoints":"2",
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushTopHitpoints":"string",
                      "type":"string"
                     },
                  "rotation":0,
@@ -152,10 +164,12 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
+                     "bushBotHitpoints":2,
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushBotHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -172,10 +186,12 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
+                     "bushTopHitpoints":"2",
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushTopHitpoints":"string",
                      "type":"string"
                     },
                  "rotation":0,
@@ -192,11 +208,13 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
-                     "Type":"Bush"
+                     "Type":"Bush",
+                     "bushBotHitpoints":2
                     },
                  "propertytypes":
                     {
-                     "Type":"string"
+                     "Type":"string",
+                     "bushBotHitpoints":"int"
                     },
                  "rotation":0,
                  "type":"",
@@ -212,11 +230,13 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
-                     "Type":"Bush"
+                     "Type":"Bush",
+                     "bushTopHitpoints":"2"
                     },
                  "propertytypes":
                     {
-                     "Type":"string"
+                     "Type":"string",
+                     "bushTopHitpoints":"string"
                     },
                  "rotation":0,
                  "type":"",
@@ -232,10 +252,12 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
+                     "bushBotHitpoints":2,
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushBotHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -252,10 +274,12 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
+                     "bushTopHitpoints":"2",
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushTopHitpoints":"string",
                      "type":"string"
                     },
                  "rotation":0,
@@ -272,10 +296,12 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
+                     "bushBotHitpoints":2,
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushBotHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -292,10 +318,12 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
+                     "bushTopHitpoints":"2",
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushTopHitpoints":"string",
                      "type":"string"
                     },
                  "rotation":0,
@@ -312,10 +340,12 @@
                  "name":"BUSHRIGHT",
                  "properties":
                     {
+                     "bushRightHitpoints":2,
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushRightHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -332,10 +362,12 @@
                  "name":"BUSHLEFT",
                  "properties":
                     {
+                     "bushLeftHitpoints":2,
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushLeftHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -352,11 +384,13 @@
                  "name":"BUSHRIGHT",
                  "properties":
                     {
-                     "Type":"Bush"
+                     "Type":"Bush",
+                     "bushRightHitpoints":2
                     },
                  "propertytypes":
                     {
-                     "Type":"string"
+                     "Type":"string",
+                     "bushRightHitpoints":"int"
                     },
                  "rotation":0,
                  "type":"",
@@ -372,11 +406,13 @@
                  "name":"BUSHLEFT",
                  "properties":
                     {
-                     "Type":"Bush"
+                     "Type":"Bush",
+                     "bushLeftHitpoints":2
                     },
                  "propertytypes":
                     {
-                     "Type":"string"
+                     "Type":"string",
+                     "bushLeftHitpoints":"int"
                     },
                  "rotation":0,
                  "type":"",
@@ -392,10 +428,12 @@
                  "name":"BUSHRIGHT",
                  "properties":
                     {
+                     "bushRightHitpoints":2,
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushRightHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,
@@ -412,10 +450,12 @@
                  "name":"BUSHLEFT",
                  "properties":
                     {
+                     "bushLeftHitpoints":2,
                      "type":"Bush"
                     },
                  "propertytypes":
                     {
+                     "bushLeftHitpoints":"int",
                      "type":"string"
                     },
                  "rotation":0,

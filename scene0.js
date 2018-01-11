@@ -30,6 +30,7 @@ scenes.scene0.prototype = {
         
         //Arrow related
         game.load.image('arrow', 'Assets/Sprites/GUI/miniArrow.png');
+        game.load.image('BunchofArrows', 'Assets/Sprites/GUI/BunchofArrows.png');
         
         //Menu/Gui Related
         game.load.image('title', 'Assets/Sprites/GUI/MainMenu.png');
@@ -55,51 +56,4 @@ scenes.scene0.prototype = {
 function changeState(i, sceneNum){
     console.log('scene' + sceneNum);
     game.state.start('scene' + sceneNum);
-}
-
-function fire (){
-    if (game.time.now > nextArrow)
-    {
-        nextArrow = game.time.now + fireRate;
-        var bullet = arrow.getFirstExists(false);
-
-        if(bullet){
-            if(up == true && down == false && right == false && left ==false){
-                bullet.rotation = 0;
-                bullet.reset(link.x, link.y - 15);
-                bullet.body.velocity.y = -400;
-                bulletTime = game.time.now + 200;
-            }
-            if(up == false && down == true && right == false && left ==false){
-                bullet.rotation = -135;
-                bullet.reset(link.x, link.y + 15);
-                bullet.body.velocity.y = +400;
-                bulletTime = game.time.now + 200;
-            }
-            
-            if(up == false && down == false && right == true && left == false){
-                bullet.rotation = 1.5;
-                bullet.reset(link.x + 15, link.y);
-                bullet.body.velocity.x = +400;
-                bulletTime = game.time.now + 200;
-            }
-            
-            if(up == false && down == false && right == false && left == true){
-                bullet.rotation = -1.5;
-                bullet.reset(link.x - 15, link.y);
-                bullet.body.velocity.x = -400;
-                bulletTime = game.time.now + 200;
-            }
-            
-            if(up == false && down == false && right == false && left == false){
-                bullet.rotation = -135;
-                bullet.reset(link.x, link.y + 15);
-                bullet.body.velocity.y = +400;
-                bulletTime = game.time.now + 200;
-            }
-        }
-    }
-}
-    function resetArrow (arrow) {
-    arrow.kill();
 }
