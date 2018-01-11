@@ -129,6 +129,7 @@ scenes.scene3.prototype = {
         cursors = game.input.keyboard.createCursorKeys();
         fireBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
         
+        
     },
     
     
@@ -138,7 +139,8 @@ scenes.scene3.prototype = {
         game.physics.arcade.collide(link, water);
         game.physics.arcade.collide(link, rocks);
         game.physics.arcade.collide(link, bushes);
-        
+        game.physics.arcade.overlap(arrow, rocks, hitRock, null, this);
+        game.physics.arcade.overlap(arrow, bushes, hitBush, null, this);
         
         if(cursors.up.isDown){
               link.body.velocity.y = -vel;
@@ -204,52 +206,14 @@ scenes.scene3.prototype = {
             fire();
         }
         
-    }
-};
-
- function fire (){
-    if (game.time.now > nextArrow)
-    {
-        nextArrow = game.time.now + fireRate;
-        var bullet = arrow.getFirstExists(false);
-
-        if(bullet){
-            if(up == true && down == false && right == false && left ==false){
-                bullet.rotation = 0;
-                bullet.reset(link.x, link.y - 15);
-                bullet.body.velocity.y = -400;
-                bulletTime = game.time.now + 200;
-            }
-            if(up == false && down == true && right == false && left ==false){
-                bullet.rotation = -135;
-                bullet.reset(link.x, link.y + 15);
-                bullet.body.velocity.y = +400;
-                bulletTime = game.time.now + 200;
-            }
-            
-            if(up == false && down == false && right == true && left == false){
-                bullet.rotation = 1.5;
-                bullet.reset(link.x + 15, link.y);
-                bullet.body.velocity.x = +400;
-                bulletTime = game.time.now + 200;
-            }
-            
-            if(up == false && down == false && right == false && left == true){
-                bullet.rotation = -1.5;
-                bullet.reset(link.x - 15, link.y);
-                bullet.body.velocity.x = -400;
-                bulletTime = game.time.now + 200;
-            }
-            
-            if(up == false && down == false && right == false && left == false){
-                bullet.rotation = -135;
-                bullet.reset(link.x, link.y + 15);
-                bullet.body.velocity.y = +400;
-                bulletTime = game.time.now + 200;
-            }
-        }
-    }
-}
-    function resetArrow (arrow) {
+    function hitRock(arrow, rocks){  
+    rocks.kill();
     arrow.kill();
-}
+   }
+        
+    function hitBush(arrow, bushes){  
+    bushes.kill();
+    arrow.kill();
+   }
+ }
+};
