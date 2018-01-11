@@ -33,17 +33,17 @@
 </data>
  </layer>
  <objectgroup name="rocks">
-  <object id="4" name="ROCK" type="Object" gid="48" x="351.5" y="480" width="32" height="32">
+  <object id="4" name="ROCK" type="Object" gid="48" x="352.045" y="480.091" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="3"/>
    </properties>
   </object>
-  <object id="6" name="ROCK" type="Object" gid="48" x="577" y="735.5" width="32" height="32">
+  <object id="6" name="ROCK" type="Object" gid="48" x="576" y="736.136" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="3"/>
    </properties>
   </object>
-  <object id="11" name="ROCK" type="Object" gid="48" x="544.364" y="220.727" width="32" height="32">
+  <object id="11" name="ROCK" type="Object" gid="48" x="543.961" y="223.972" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="3"/>
    </properties>
@@ -105,12 +105,12 @@
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="43" name="BUSHRIGHT" type="Object" gid="34" x="576.182" y="543.818" width="32" height="32">
+  <object id="43" name="BUSHRIGHT" type="Object" gid="34" x="576.432" y="544.318" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="44" name="BUSHLEFT" type="Object" gid="36" x="544.364" y="544" width="32" height="32">
+  <object id="44" name="BUSHLEFT" type="Object" gid="36" x="544.239" y="544.25" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>

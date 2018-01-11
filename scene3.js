@@ -7,17 +7,15 @@ var link, vel = 150;
 //facing
 var up = false,down = false,left = false,right = false;
 
-//Objects hit points
-var rockHP = 3,BushHP = 2;
-
 //Arrow
 var arrow;
 var fireRate = 500;
 var nextArrow = 0;
 var arrowsOwned = 10;
 var arrowText;
-//variable to create bunch of arrows
-var sprite;
+
+//Quiver
+var quiver;
 
 //Map/Level/GUI
 var map, fireButton, swordButton, arrowButton;
@@ -35,8 +33,8 @@ scenes.scene3.prototype = {
         game.load.image('tiles', 'Assets/Sprites/Levels/zelda_01.png');
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
-        
-        //game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
+     // music.play('openWorld', 0,1,true);
+     // game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
     },
     
     create: function (){
@@ -70,8 +68,6 @@ scenes.scene3.prototype = {
         map.createFromObjects('bushes', 'BUSHLEFT', 'lBush', 0, true, false , bushes);
         map.createFromObjects('bushes', 'BUSHRIGHT', 'rBush', 0, true, false , bushes);
         bushes.forEach(function(bushes){bushes.body.immovable = true;});  
-        
-        // music.play('openWorld', 0,1,true);
         
         // Player
         link = game.add.sprite(608, 400, 'LinkMovement');
@@ -142,8 +138,6 @@ scenes.scene3.prototype = {
         
         cursors = game.input.keyboard.createCursorKeys();
         fireBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
-        
-        
     },
     
     
@@ -154,14 +148,14 @@ scenes.scene3.prototype = {
         game.physics.arcade.collide(link, rocks);
         game.physics.arcade.collide(link, bushes);
         
-        //Arrows Collide with Rocks and Bushes TILED
-        game.physics.arcade.overlap(arrow, rocks, hitRock, null, this);
-        game.physics.arcade.overlap(arrow, bushes, hitBush, null, this);
-        
         //Link/Player Collides with Sprite (Bunch of Arrows)
-        game.physics.arcade.collide(sprite, map);
-        game.physics.arcade.overlap(link, sprite, collectArrows, null, this);
-       
+        game.physics.arcade.collide(link, quiver);
+        game.physics.arcade.overlap(link, quiver, collectQuiver, null, this);
+        
+        //Arrows Collide with Rocks and Bushes TILED
+        game.physics.arcade.collide(arrow, rocks, hitRock, null, this);
+        game.physics.arcade.collide(arrow, bushes, hitBush, null, this);
+        
         //Arrows Owned Update
         arrowText.setText("x "+ arrowsOwned);
         
@@ -229,29 +223,31 @@ scenes.scene3.prototype = {
             fire();
         }
         
-    function hitRock(arrow, rocks){  
-    rockHP -= 1;
-        if (rockHP <= 0  )
+ }
+};
+
+function hitRock(arrow, rocks){  
+    rocks.Hitpoints -= 1;
+        if (rocks.Hitpoints <= 0  )
             {
                 rocks.kill();
-                if(game.rnd.integerInRange(1, 10) >= 3)
-                    {
-                        sprite = game.add.sprite((rocks.x), (rocks.y), 'BunchofArrows');
-                        sprite.enableBody = true;
+                if(game.rnd.integerInRange(1, 15) >= 10){
+                     arrowsOwned = arrowsOwned + game.rnd.integerInRange(1, 3);
                     }
-                else{
-                    //Do Nothing ~ just die in peace silly rock
-                }
             }
     arrow.kill();
    }
-        
-    function hitBush(arrow, bushes){  
-    bushes.kill();
+
+function hitBush(arrow, bushes){  
+       bushes.Hitpoints -= 1;
+        if(bushes.Hitpoints <= 0){
+            bushes.kill();
+            if(game.rnd.integerInRange(1, 15) >= 5){
+                     arrowsOwned = arrowsOwned + game.rnd.integerInRange(1, 2);
+                    }
+        }
     arrow.kill();
    }
- }
-};
 
 function fire (){
     if (game.time.now > nextArrow)
@@ -301,17 +297,13 @@ function fire (){
                 arrowsOwned -= 1;
             }
                 }
-            else {
-                //Don't shoot
-            }
-           
         }
     }
 }
 
-function collectArrows (link, sprite) {
+function collectQuiver (link, quiver) {
     // Removes the star from the screen
-    sprite.kill();
+    quiver.kill();
     arrowsOwned = arrowsOwned + game.rnd.integerInRange(2, 10);
 
 }

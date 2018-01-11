@@ -22,20 +22,18 @@
                  "name":"ROCK",
                  "properties":
                     {
-                     "rockHitpoints":3,
-                     "type":"Rock"
+                     "Hitpoints":3
                     },
                  "propertytypes":
                     {
-                     "rockHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
-                 "x":351.5,
-                 "y":480
+                 "x":352.045454545455,
+                 "y":480.090909090909
                 }, 
                 {
                  "gid":48,
@@ -44,20 +42,18 @@
                  "name":"ROCK",
                  "properties":
                     {
-                     "rockHitpoints":3,
-                     "type":"Rock"
+                     "Hitpoints":3
                     },
                  "propertytypes":
                     {
-                     "rockHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
-                 "x":577,
-                 "y":735.5
+                 "x":576,
+                 "y":736.136363636364
                 }, 
                 {
                  "gid":48,
@@ -66,20 +62,18 @@
                  "name":"ROCK",
                  "properties":
                     {
-                     "rockHitpoints":3,
-                     "type":"Rock"
+                     "Hitpoints":3
                     },
                  "propertytypes":
                     {
-                     "rockHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
-                 "x":544.364,
-                 "y":220.727
+                 "x":543.960837944664,
+                 "y":223.972059288538
                 }, 
                 {
                  "gid":48,
@@ -88,16 +82,14 @@
                  "name":"ROCK",
                  "properties":
                     {
-                     "rockHitpoints":3,
-                     "type":"Rock"
+                     "Hitpoints":3
                     },
                  "propertytypes":
                     {
-                     "rockHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":929,
@@ -120,16 +112,14 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
-                     "bushBotHitpoints":2,
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushBotHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":160,
@@ -142,16 +132,14 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
-                     "bushTopHitpoints":"2",
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushTopHitpoints":"string",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":160.5,
@@ -164,16 +152,14 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
-                     "bushBotHitpoints":2,
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushBotHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":223.75,
@@ -186,16 +172,14 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
-                     "bushTopHitpoints":"2",
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushTopHitpoints":"string",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":224.25,
@@ -208,16 +192,14 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
-                     "Type":"Bush",
-                     "bushBotHitpoints":2
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "Type":"string",
-                     "bushBotHitpoints":"int"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":478.75,
@@ -230,16 +212,14 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
-                     "Type":"Bush",
-                     "bushTopHitpoints":"2"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "Type":"string",
-                     "bushTopHitpoints":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":479.25,
@@ -252,16 +232,14 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
-                     "bushBotHitpoints":2,
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushBotHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":670.75,
@@ -274,16 +252,14 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
-                     "bushTopHitpoints":"2",
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushTopHitpoints":"string",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":671.25,
@@ -296,16 +272,14 @@
                  "name":"BUSHBOT",
                  "properties":
                     {
-                     "bushBotHitpoints":2,
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushBotHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":481.75,
@@ -318,16 +292,14 @@
                  "name":"BUSHTOP",
                  "properties":
                     {
-                     "bushTopHitpoints":"2",
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushTopHitpoints":"string",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":482.25,
@@ -340,20 +312,18 @@
                  "name":"BUSHRIGHT",
                  "properties":
                     {
-                     "bushRightHitpoints":2,
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushRightHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
-                 "x":576.182,
-                 "y":543.818
+                 "x":576.432,
+                 "y":544.318
                 }, 
                 {
                  "gid":36,
@@ -362,20 +332,18 @@
                  "name":"BUSHLEFT",
                  "properties":
                     {
-                     "bushLeftHitpoints":2,
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushLeftHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
-                 "x":544.364,
-                 "y":544
+                 "x":544.239,
+                 "y":544.25
                 }, 
                 {
                  "gid":34,
@@ -384,16 +352,14 @@
                  "name":"BUSHRIGHT",
                  "properties":
                     {
-                     "Type":"Bush",
-                     "bushRightHitpoints":2
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "Type":"string",
-                     "bushRightHitpoints":"int"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":801.909,
@@ -406,16 +372,14 @@
                  "name":"BUSHLEFT",
                  "properties":
                     {
-                     "Type":"Bush",
-                     "bushLeftHitpoints":2
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "Type":"string",
-                     "bushLeftHitpoints":"int"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":770.091,
@@ -428,16 +392,14 @@
                  "name":"BUSHRIGHT",
                  "properties":
                     {
-                     "bushRightHitpoints":2,
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushRightHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":927.909,
@@ -450,16 +412,14 @@
                  "name":"BUSHLEFT",
                  "properties":
                     {
-                     "bushLeftHitpoints":2,
-                     "type":"Bush"
+                     "Hitpoints":2
                     },
                  "propertytypes":
                     {
-                     "bushLeftHitpoints":"int",
-                     "type":"string"
+                     "Hitpoints":"int"
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"Object",
                  "visible":true,
                  "width":32,
                  "x":896.091,
