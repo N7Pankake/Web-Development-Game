@@ -29,7 +29,7 @@ scenes.scene0.prototype = {
         game.load.spritesheet('LinkMovement', 'Assets/Sprites/ResizedLink/LinkMovement.png', 150, 150);
         
         //Arrow related
-        game.load.image('arrow', 'Assets/Sprites/GUI/Arrow sprite.png');
+        game.load.image('arrow', 'Assets/Sprites/GUI/miniArrow.png');
         
         //Menu/Gui Related
         game.load.image('title', 'Assets/Sprites/GUI/MainMenu.png');

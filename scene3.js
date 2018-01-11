@@ -7,7 +7,7 @@ var link, vel = 150;
 
 //Arrow
 var arrow;
-var fireRate = 100;
+var fireRate = 500;
 var nextArrow = 0;
 
 //Map/Level/GUI
@@ -27,7 +27,7 @@ scenes.scene3.prototype = {
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
         
-        //game.renderer.resize( 1216/2, 800/2); <--- Giving me TOO MANY problems but still need it and love it <3
+        game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
     },
     
     create: function (){
@@ -197,26 +197,27 @@ scenes.scene3.prototype = {
             fire();
         }
         
-    },
-    
-    fire: function(a,b){
-    if (game.time.now > a)
+    }
+};
+
+ function fire (){
+    if (game.time.now > nextArrow)
     {
-        a = game.time.now + b;
+        nextArrow = game.time.now + fireRate;
 
         var bullet = arrow.getFirstExists(false);
 
         if(bullet){
-            bullet.reset(player.x, player.y +8);
+            bullet.reset(link.x, link.y +8);
             bullet.body.velocity.y = -400;
             bulletTime = game.time.now + 200;
+            
+            
         }
         
     }
 
-},
-    resetArrow: function (arrow) {
+}
+    function resetArrow (arrow) {
     arrow.kill();
 }
-    
-};
