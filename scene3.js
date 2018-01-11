@@ -4,6 +4,8 @@ scenes.scene3 = function(){};
 
 //Player speed
 var link, vel = 150; 
+//facing
+var up = false,down = false,left = false,right = false;
 
 //Arrow
 var arrow;
@@ -27,7 +29,7 @@ scenes.scene3.prototype = {
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
         
-        game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
+       // game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
     },
     
     create: function (){
@@ -137,14 +139,17 @@ scenes.scene3.prototype = {
         game.physics.arcade.collide(link, rocks);
         game.physics.arcade.collide(link, bushes);
         
+        
         if(cursors.up.isDown){
               link.body.velocity.y = -vel;
               link.animations.play('walkVerticalUp', 9, true);
+              up = true,down = false,left = false,right = false;
             }
         
         else if(cursors.down.isDown){
               link.body.velocity.y = vel;
               link.animations.play('walkVerticalDown', 9, true);
+              up = false,down = true,left = false,right = false;
             }
         
         else{
@@ -156,11 +161,13 @@ scenes.scene3.prototype = {
         if(cursors.left.isDown){
               link.body.velocity.x = -vel;
               link.animations.play('walkHorizontalLeft', 9, true);
+              up = false,down = false,left = true,right = false;
             }
         
         else if(cursors.right.isDown){
               link.body.velocity.x = vel;
               link.animations.play('walkHorizontalRight', 9, true);
+              up = false,down = false,left = false,right = true;
             }
         
         else{
@@ -204,19 +211,44 @@ scenes.scene3.prototype = {
     if (game.time.now > nextArrow)
     {
         nextArrow = game.time.now + fireRate;
-
         var bullet = arrow.getFirstExists(false);
 
         if(bullet){
-            bullet.reset(link.x, link.y +8);
-            bullet.body.velocity.y = -400;
-            bulletTime = game.time.now + 200;
+            if(up == true && down == false && right == false && left ==false){
+                bullet.rotation = 0;
+                bullet.reset(link.x, link.y - 15);
+                bullet.body.velocity.y = -400;
+                bulletTime = game.time.now + 200;
+            }
+            if(up == false && down == true && right == false && left ==false){
+                bullet.rotation = -135;
+                bullet.reset(link.x, link.y + 15);
+                bullet.body.velocity.y = +400;
+                bulletTime = game.time.now + 200;
+            }
             
+            if(up == false && down == false && right == true && left == false){
+                bullet.rotation = 1.5;
+                bullet.reset(link.x + 15, link.y);
+                bullet.body.velocity.x = +400;
+                bulletTime = game.time.now + 200;
+            }
             
+            if(up == false && down == false && right == false && left == true){
+                bullet.rotation = -1.5;
+                bullet.reset(link.x - 15, link.y);
+                bullet.body.velocity.x = -400;
+                bulletTime = game.time.now + 200;
+            }
+            
+            if(up == false && down == false && right == false && left == false){
+                bullet.rotation = -135;
+                bullet.reset(link.x, link.y + 15);
+                bullet.body.velocity.y = +400;
+                bulletTime = game.time.now + 200;
+            }
         }
-        
     }
-
 }
     function resetArrow (arrow) {
     arrow.kill();
