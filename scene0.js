@@ -24,6 +24,8 @@ scenes.scene0.prototype = {
         game.load.image('bBush', 'Assets/Sprites/Objects/downBush.png');
         game.load.image('lBush', 'Assets/Sprites/Objects/leftBush.png');
         game.load.image('rBush', 'Assets/Sprites/Objects/rightBush.png');
+        game.load.spritesheet('bigGhost', 'Assets/Sprites/Enemy/BigGhost.png', 150, 150);
+        
         
         //Player/Camera Related
         game.load.spritesheet('LinkMovement', 'Assets/Sprites/ResizedLink/LinkMovement.png', 150, 150);

@@ -32,8 +32,8 @@
                  "type":"Object",
                  "visible":true,
                  "width":32,
-                 "x":352.045454545455,
-                 "y":480.090909090909
+                 "x":352.045,
+                 "y":480.091
                 }, 
                 {
                  "gid":48,
@@ -53,7 +53,7 @@
                  "visible":true,
                  "width":32,
                  "x":576,
-                 "y":736.136363636364
+                 "y":736.136
                 }, 
                 {
                  "gid":48,
@@ -72,8 +72,8 @@
                  "type":"Object",
                  "visible":true,
                  "width":32,
-                 "x":543.960837944664,
-                 "y":223.972059288538
+                 "x":543.961,
+                 "y":223.972
                 }, 
                 {
                  "gid":48,
@@ -94,6 +94,244 @@
                  "width":32,
                  "x":929,
                  "y":671
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "name":"enemySpawn",
+         "objects":[
+                {
+                 "height":29,
+                 "id":52,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":30,
+                 "x":448,
+                 "y":3
+                }, 
+                {
+                 "height":29,
+                 "id":53,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31,
+                 "x":1.5,
+                 "y":355
+                }, 
+                {
+                 "height":31,
+                 "id":54,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":29,
+                 "x":577,
+                 "y":767
+                }, 
+                {
+                 "height":30,
+                 "id":55,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":28,
+                 "x":1185,
+                 "y":353.5
+                }, 
+                {
+                 "height":29,
+                 "id":57,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":30,
+                 "x":384.5,
+                 "y":2.5
+                }, 
+                {
+                 "height":29,
+                 "id":58,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":30,
+                 "x":511,
+                 "y":2.5
+                }, 
+                {
+                 "height":29,
+                 "id":59,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":30,
+                 "x":3,
+                 "y":290.5
+                }, 
+                {
+                 "height":29,
+                 "id":60,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":30,
+                 "x":1.5,
+                 "y":415.5
+                }, 
+                {
+                 "height":29,
+                 "id":61,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":30,
+                 "x":514,
+                 "y":767
+                }, 
+                {
+                 "height":29,
+                 "id":62,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":30,
+                 "x":640,
+                 "y":767
+                }, 
+                {
+                 "height":29,
+                 "id":63,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":30,
+                 "x":1183,
+                 "y":416.5
+                }, 
+                {
+                 "height":29,
+                 "id":64,
+                 "name":"enemy",
+                 "properties":
+                    {
+                     "enemyHealth":1
+                    },
+                 "propertytypes":
+                    {
+                     "enemyHealth":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":30,
+                 "x":1183,
+                 "y":291
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -453,7 +691,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":50,
+ "nextobjectid":65,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",

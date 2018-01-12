@@ -3,7 +3,7 @@
 scenes.scene3 = function(){};
 
 //Player speed
-var link, vel = 150; 
+var link, vel = 150, inmortality = false;
 //facing
 var up = false,down = false,left = false,right = false;
 
@@ -56,18 +56,27 @@ scenes.scene3.prototype = {
         map.setCollisionBetween(0, 100, true, 'water');
         
         //Objects layer related
+        //Rocks
         rocks = game.add.physicsGroup();
         map.createFromObjects('rocks',48,'Rocky', 0, true, false, rocks);
         rocks.forEach(function(rocks){
         rocks.body.immovable = true;});  
         
-        
+        //Bushes
         bushes = game.add.physicsGroup();
         map.createFromObjects('bushes', 'BUSHTOP', 'tBush', 0, true, false , bushes);
         map.createFromObjects('bushes', 'BUSHBOT', 'bBush', 0, true, false , bushes);
         map.createFromObjects('bushes', 'BUSHLEFT', 'lBush', 0, true, false , bushes);
         map.createFromObjects('bushes', 'BUSHRIGHT', 'rBush', 0, true, false , bushes);
         bushes.forEach(function(bushes){bushes.body.immovable = true;});  
+        
+        //Enemies
+        enemies = game.add.physicsGroup();
+        map.createFromObjects('enemySpawn', 'enemy', 'bigGhost', 0, true, false, enemies);
+        enemies.forEach(function(enemies){enemies.body.immovable = true;
+        enemies.animations.add('spin', [0,1,2,3,4,5,5], 0, true);
+        enemies.animations.play('spin');
+        game.physics.enable(enemies);});
         
         // Player
         link = game.add.sprite(608, 400, 'LinkMovement');
@@ -89,13 +98,6 @@ scenes.scene3.prototype = {
         life.animations.add('Zero', [3]);
         life.fixedToCamera = true;
         
-        //Arrows available
-        var arrowGUI = game.add.sprite((game.camera.x), (game.camera.y+30), 'BunchofArrows');
-        arrowGUI.scale.setTo(1.15, 1.15);
-        arrowGUI.fixedToCamera = true;
-        arrowText = game.add.text((game.camera.x+30), (game.camera.y+30), "X "+arrowsOwned);
-        arrowText.fixedToCamera = true;
-        
         //Arrows
         arrow = game.add.group();
         arrow.enableBody = true;
@@ -105,6 +107,13 @@ scenes.scene3.prototype = {
         arrow.setAll('anchor.y', 1);
         arrow.setAll('outOfBoundsKill', true);
         arrow.setAll('checkWorldBounds', true);
+        
+        //Arrows available
+        var arrowGUI = game.add.sprite((game.camera.x), (game.camera.y+30), 'BunchofArrows');
+        arrowGUI.scale.setTo(1.15, 1.15);
+        arrowGUI.fixedToCamera = true;
+        arrowText = game.add.text((game.camera.x+30), (game.camera.y+30), "X "+arrowsOwned, {font: "", fill: "#DAA520", align: ""});
+        arrowText.fixedToCamera = true;
         
         // Camera Related
         game.camera.height = 608;
@@ -136,6 +145,7 @@ scenes.scene3.prototype = {
         arrowButton.scale.setTo(0.20,0.20);
         arrowButton.fixedToCamera = true;
         
+        //Arrow keys for movement and Space bar for shooting arrows
         cursors = game.input.keyboard.createCursorKeys();
         fireBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
     },
@@ -147,18 +157,25 @@ scenes.scene3.prototype = {
         game.physics.arcade.collide(link, water);
         game.physics.arcade.collide(link, rocks);
         game.physics.arcade.collide(link, bushes);
-        
-        //Link/Player Collides with Sprite (Bunch of Arrows)
-        game.physics.arcade.collide(link, quiver);
-        game.physics.arcade.overlap(link, quiver, collectQuiver, null, this);
-        
+                
         //Arrows Collide with Rocks and Bushes TILED
         game.physics.arcade.collide(arrow, rocks, hitRock, null, this);
         game.physics.arcade.collide(arrow, bushes, hitBush, null, this);
         
+        //Enemy collider vs Arrow 
+        game.physics.arcade.overlap(arrow, enemies, killEnemy, null, this);
+        
+        //Enemy collider vs Player and Follow him
+        game.physics.arcade.overlap(link, enemies, hitPlayer, null, this);
+        followPlayer();
+        
         //Arrows Owned Update
         arrowText.setText("x "+ arrowsOwned);
         
+        //Update player Health
+        playerHealth();
+        
+        //Player Movement
         if(cursors.up.isDown){
               link.body.velocity.y = -vel;
               link.animations.play('walkVerticalUp', 9, true);
@@ -194,31 +211,8 @@ scenes.scene3.prototype = {
               link.animations.stop('walkHorizontalRight');
               link.animations.stop('walkHorizontalLeft');
         }
-        if (hitpoints === 3){
-            life.animations.play('Full', 5, true);
-            life.animations.stop('Two');
-            life.animations.stop('One');
-            life.animations.stop('Zero');
-            }
-        else if (hitpoints === 2){
-            life.animations.play('Two', 5, true);
-            life.animations.stop('Full');
-            life.animations.stop('One');
-            life.animations.stop('Zero');
-            }
-        else if (hitpoints === 1){
-            life.animations.play('One', 5, true);
-            life.animations.stop('Full');
-            life.animations.stop('Two');
-            life.animations.stop('Zero');
-            }
-        else  if (hitpoints === 0){
-            life.animations.play('Zero', 5, true);
-            life.animations.stop('Full');
-            life.animations.stop('One');
-            life.animations.stop('Two');
-            }
         
+        //Keyboard Extension to shoot arrows with SPACE
         if(fireBUTTON.isDown){
             fire();
         }
@@ -226,6 +220,7 @@ scenes.scene3.prototype = {
  }
 };
 
+//Destroy rock after 3 hits and chance of receiving 1-3 arrows afterwards
 function hitRock(arrow, rocks){  
     rocks.Hitpoints -= 1;
         if (rocks.Hitpoints <= 0  )
@@ -238,6 +233,7 @@ function hitRock(arrow, rocks){
     arrow.kill();
    }
 
+//Destroy rock after 3 hits and chance of receiving 1-2 arrows afterwards
 function hitBush(arrow, bushes){  
        bushes.Hitpoints -= 1;
         if(bushes.Hitpoints <= 0){
@@ -249,6 +245,7 @@ function hitBush(arrow, bushes){
     arrow.kill();
    }
 
+//Fire function changes direction depending on which direction the player is facing
 function fire (){
     if (game.time.now > nextArrow)
     {
@@ -301,9 +298,75 @@ function fire (){
     }
 }
 
-function collectQuiver (link, quiver) {
-    // Removes the star from the screen
-    quiver.kill();
-    arrowsOwned = arrowsOwned + game.rnd.integerInRange(2, 10);
-
+/*Health GUI for player works with an INT variable and 
+an animation that change states depending on the INT value*/
+function playerHealth(){
+    if (hitpoints === 3){
+            life.animations.play('Full', 5, true);
+            life.animations.stop('Two');
+            life.animations.stop('One');
+            life.animations.stop('Zero');
+            }
+        else if (hitpoints === 2){
+            life.animations.play('Two', 5, true);
+            life.animations.stop('Full');
+            life.animations.stop('One');
+            life.animations.stop('Zero');
+            }
+        else if (hitpoints === 1){
+            life.animations.play('One', 5, true);
+            life.animations.stop('Full');
+            life.animations.stop('Two');
+            life.animations.stop('Zero');
+            }
+        else  if (hitpoints === 0){
+            life.animations.play('Zero', 5, true);
+            life.animations.stop('Full');
+            life.animations.stop('One');
+            life.animations.stop('Two');
+            }
 }
+
+//Enemy movement (NOT working atm)
+var enemies_speed = 20;
+function followPlayer(link, enemies)
+{
+    /*if(link.body.x < enemies.body.x){
+        enemies.body.velocity.x = enemies_speed * -1;
+        }
+    else{
+        enemies.body.velocity.x = enemies_speed;
+    }
+    
+    if(link.body.y < enemies.body.y){
+        enemies.body.velocity.y = enemies_speed * -1;
+        }
+    else{
+        enemies.body.velocity.y = enemies_speed;
+    }*/
+}
+
+/*Enemy die after getting hit and 
+a 20% chance of PIRCING the enemy (since is a GHOST)*/
+function killEnemy(arrow, enemies){  
+    enemies.kill();
+    if(game.rnd.integerInRange(1, 10) >= 8){}
+    else{
+        arrow.kill();
+    }
+}
+
+//Player gets hit and Death.
+function hitPlayer(){ 
+    if (inmortality == false){
+        hitpoints -= 1;
+        inmortality = true;
+    }
+    else if (inmortality == true){
+            game.time.events.add(Phaser.Timer.SECOND * 4);
+            inmortality = false;
+        }
+    if (hitpoints <= 0){
+            link.kill();
+        }
+    }
