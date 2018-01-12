@@ -18,7 +18,7 @@ var arrowText;
 var quiver;
 
 //Map/Level/GUI
-var map, fireButton, swordButton, arrowButton;
+var map, fireButton, swordButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
 
 //Tiled Layers
 var floor, water,walls;
@@ -34,7 +34,7 @@ scenes.scene3.prototype = {
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
      // music.play('openWorld', 0,1,true);
-     // game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
+    //game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
     },
     
     create: function (){
@@ -123,27 +123,63 @@ scenes.scene3.prototype = {
         game.camera.follow(link, Phaser.Camera.FOLLOW_TOPDOWN,0.5,0.5);
         
         //Buttons/Joystick/Movement
-        
-        fireButton = game.add.button(487.50,240, 'buttonFire', function() {
-            changeState(null, 0);
-        });
+        //Fire Button
+        fireButton = game.add.button(487.50,240, 'buttonFire');
         fireButton.alpha = 0.5;
         fireButton.scale.setTo(0.20,0.20);
         fireButton.fixedToCamera = true;
         
-        swordButton = game.add.button(525,300, 'buttonSword', function() {
-            changeState(null, 0);
-        });
+        //Sword Button
+        swordButton = game.add.button(525,300, 'buttonSword');
         swordButton.alpha = 0.5;
         swordButton.scale.setTo(0.20,0.20);
         swordButton.fixedToCamera = true;
         
+        //Arrow Button
         arrowButton = game.add.button(450,300, 'buttonArrow', function() {
            fire(nextArrow, fireRate);
         });
         arrowButton.alpha = 0.5;
         arrowButton.scale.setTo(0.20,0.20);
         arrowButton.fixedToCamera = true;
+        
+        //UP Key
+        upButton = game.add.button(75,230, 'buttonUP', function() {
+           moveUP();
+        });
+        upButton.alpha = 0.25;
+        upButton.scale.setTo(0.3,0.3);
+        upButton.fixedToCamera = true;
+        
+        //DOWN key
+        downButton = game.add.button(75,320, 'buttonDOWN', function() {
+           moveDOWN();
+        });
+        downButton.alpha = 0.25;
+        downButton.scale.setTo(0.3,0.3);
+        downButton.fixedToCamera = true;
+        
+        //LEFTKEY
+        leftButton = game.add.button(30,275, 'buttonLEFT', function() {
+           moveLEFT();
+        });
+        leftButton.alpha = 0.25;
+        leftButton.scale.setTo(0.3,0.3);
+        leftButton.fixedToCamera = true;
+        
+        //RIGHTKEY
+        rightButton = game.add.button(120,275, 'buttonRIGHT', function() {
+           moveRIGHT();
+        });
+        rightButton.alpha = 0.25;
+        rightButton.scale.setTo(0.3,0.3);
+        rightButton.fixedToCamera = true;
+        
+        //PAD
+        padButton = game.add.sprite(75,275, 'buttonPAD');
+        padButton.alpha = 0.25;
+        padButton.scale.setTo(0.3,0.3);
+        padButton.fixedToCamera = true;
         
         //Arrow keys for movement and Space bar for shooting arrows
         cursors = game.input.keyboard.createCursorKeys();
@@ -162,20 +198,30 @@ scenes.scene3.prototype = {
         game.physics.arcade.collide(arrow, rocks, hitRock, null, this);
         game.physics.arcade.collide(arrow, bushes, hitBush, null, this);
         
-        //Enemy collider vs Arrow 
+        //Enemy collider TILED vs Arrow 
         game.physics.arcade.overlap(arrow, enemies, killEnemy, null, this);
         
-        //Enemy collider vs Player and Follow him
+        //Enemy collider TILED vs Player and Follow him
         game.physics.arcade.overlap(link, enemies, hitPlayer, null, this);
         followPlayer();
         
         //Arrows Owned Update
         arrowText.setText("x "+ arrowsOwned);
         
-        //Update player Health
+        //Player Related
         playerHealth();
+        playerMovement();
         
-        //Player Movement
+        //Keyboard Extension to shoot arrows with SPACE
+        if(fireBUTTON.isDown){
+            fire();
+        }
+        
+ }
+};
+
+//Player Movement and facing
+function playerMovement(){
         if(cursors.up.isDown){
               link.body.velocity.y = -vel;
               link.animations.play('walkVerticalUp', 9, true);
@@ -211,14 +257,7 @@ scenes.scene3.prototype = {
               link.animations.stop('walkHorizontalRight');
               link.animations.stop('walkHorizontalLeft');
         }
-        
-        //Keyboard Extension to shoot arrows with SPACE
-        if(fireBUTTON.isDown){
-            fire();
-        }
-        
- }
-};
+}
 
 //Destroy rock after 3 hits and chance of receiving 1-3 arrows afterwards
 function hitRock(arrow, rocks){  
@@ -370,3 +409,28 @@ function hitPlayer(){
             link.kill();
         }
     }
+
+//Buttons Set up
+function moveUP(){
+     link.body.velocity.y = -vel;
+     link.animations.play('walkVerticalUp', 9, true);
+     up = true,down = false,left = false,right = false;     
+}
+
+function moveDOWN(){
+     link.body.velocity.y = vel;
+     link.animations.play('walkVerticalDown', 9, true);
+     up = false,down = true,left = false,right = false;     
+}
+
+function moveLEFT(){
+     link.body.velocity.x = -vel;
+     link.animations.play('walkHorizontalLeft', 9, true);
+      up = false,down = false,left = true,right = false;     
+}
+
+function moveRIGHT(){
+     link.body.velocity.x = vel;
+     link.animations.play('walkHorizontalRight', 9, true);
+      up = false,down = false,left = false,right = true;   
+}

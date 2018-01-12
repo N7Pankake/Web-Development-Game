@@ -26,7 +26,6 @@ scenes.scene0.prototype = {
         game.load.image('rBush', 'Assets/Sprites/Objects/rightBush.png');
         game.load.spritesheet('bigGhost', 'Assets/Sprites/Enemy/BigGhost.png', 150, 150);
         
-        
         //Player/Camera Related
         game.load.spritesheet('LinkMovement', 'Assets/Sprites/ResizedLink/LinkMovement.png', 150, 150);
         
@@ -42,6 +41,11 @@ scenes.scene0.prototype = {
         game.load.image('buttonArrow', 'Assets/Sprites/GUI/Arrow.png');
         game.load.spritesheet('lifeBar', 'Assets/Sprites/GUI/Hearths.png', 580 , 150);
         game.load.spritesheet('joystick', 'Assets/Sprites/GUI/Joystick.png' ,320,320);
+        game.load.image('buttonUP', 'Assets/Sprites/GUI/ArrowKeysUP.png');
+        game.load.image('buttonDOWN', 'Assets/Sprites/GUI/ArrowKeysDOWN.png');
+        game.load.image('buttonLEFT', 'Assets/Sprites/GUI/ArrowKeysLEFT.png');
+        game.load.image('buttonRIGHT', 'Assets/Sprites/GUI/ArrowKeysRIGHT.png');
+        game.load.image('buttonPAD', 'Assets/Sprites/GUI/PAD.png');
         
         //Audio/Music Related
         game.load.audio('pop','Assets/Sounds/Blip_Select.wav');
