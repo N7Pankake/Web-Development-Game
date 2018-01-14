@@ -1,9 +1,9 @@
-//Lives Hud
+//GAME OVER
 scenes.scene8 = function(){};
 scenes.scene8.prototype = {
     preload: function (){},
     create: function (){
-        game.stage.backgroundColor = '#808080';
+        game.add.image(0, 0, 'GAMEOVER');
         
     },
     update: function (){}

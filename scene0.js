@@ -8,9 +8,6 @@ var centerX = 1216/2, centerY = 800/2 + 285, worldScale = 1;
 //Player/GUI
 var cursors, life, hitpoints=3;
 
-//Music
-var music;
-
 scenes.scene0 = function(){};
 scenes.scene0.prototype = {
     preload: function (){
@@ -46,6 +43,7 @@ scenes.scene0.prototype = {
         game.load.image('buttonLEFT', 'Assets/Sprites/GUI/ArrowKeysLEFT.png');
         game.load.image('buttonRIGHT', 'Assets/Sprites/GUI/ArrowKeysRIGHT.png');
         game.load.image('buttonPAD', 'Assets/Sprites/GUI/PAD.png');
+        game.load.image('GAMEOVER', 'Assets/Sprites/GUI/GAMEOVER.png');
         
         //Audio/Music Related
         game.load.audio('pop','Assets/Sounds/Blip_Select.wav');

@@ -31,16 +31,13 @@ scenes.scene1.prototype = {
         game.add.text(965,590, text2);
              
       },
+    update: function (){
+    },
      tint: function() {
          this.tint = 0xbbbbbb;
          sound.play('blep');
       },
      unTint: function() {
          this.tint = 0xFFFFFF;
-     },
-    
-   removeMusic: function() {
-    music.destroy('openWorld');
-    game.cache.removeSound('openWorld');
-  }
+     }
 };

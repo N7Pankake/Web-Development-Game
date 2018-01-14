@@ -11,14 +11,17 @@ var up = false,down = false,left = false,right = false;
 var arrow;
 var fireRate = 500;
 var nextArrow = 0;
-var arrowsOwned = 10;
+var arrowsOwned = 30;
 var arrowText;
+var arrowGUI;
 
 //Quiver
 var quiver;
 
 //Map/Level/GUI
-var map, fireButton, swordButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
+var map; 
+var fireButton, swordButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
+var scoreText, score = 0;
 
 //Tiled Layers
 var floor, water,walls;
@@ -33,14 +36,13 @@ scenes.scene3.prototype = {
         game.load.image('tiles', 'Assets/Sprites/Levels/zelda_01.png');
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
-     // music.play('openWorld', 0,1,true);
-    //game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
+        music.play('openWorld', 0,1,true);
+        game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
     },
     
     create: function (){
         
         //Game itself
-        
         game.world.setBounds(0,0, 1216, 800);
         game.physics.startSystem(Phaser.Physics.ARCADE);
                
@@ -98,6 +100,17 @@ scenes.scene3.prototype = {
         life.animations.add('Zero', [3]);
         life.fixedToCamera = true;
         
+        //Arrows available
+        arrowGUI = game.add.sprite((game.camera.x), (game.camera.y+30), 'BunchofArrows');
+        arrowGUI.scale.setTo(1.15, 1.15);
+        arrowGUI.fixedToCamera = true;
+        arrowText = game.add.text((game.camera.x+30), (game.camera.y+30), "X "+arrowsOwned, {font: "", fill: "#DAA520", align: ""});
+        arrowText.fixedToCamera = true;
+        
+        //Score
+        scoreText = game.add.text((game.camera.x), (game.camera.y+60), "Score: "+score, {font: "", fill: "#DAA520", align: ""});
+        scoreText.fixedToCamera = true;
+        
         //Arrows
         arrow = game.add.group();
         arrow.enableBody = true;
@@ -108,13 +121,6 @@ scenes.scene3.prototype = {
         arrow.setAll('outOfBoundsKill', true);
         arrow.setAll('checkWorldBounds', true);
         
-        //Arrows available
-        var arrowGUI = game.add.sprite((game.camera.x), (game.camera.y+30), 'BunchofArrows');
-        arrowGUI.scale.setTo(1.15, 1.15);
-        arrowGUI.fixedToCamera = true;
-        arrowText = game.add.text((game.camera.x+30), (game.camera.y+30), "X "+arrowsOwned, {font: "", fill: "#DAA520", align: ""});
-        arrowText.fixedToCamera = true;
-        
         // Camera Related
         game.camera.height = 608;
         game.camera.width = 300;
@@ -124,7 +130,11 @@ scenes.scene3.prototype = {
         
         //Buttons/Joystick/Movement
         //Fire Button
-        fireButton = game.add.button(487.50,240, 'buttonFire');
+        fireButton = game.add.button(487.50,240, 'buttonFire', function() {
+            music.pause();
+            game.renderer.resize(1216, 800);
+            changeState(null, 1);
+        });
         fireButton.alpha = 0.5;
         fireButton.scale.setTo(0.20,0.20);
         fireButton.fixedToCamera = true;
@@ -207,6 +217,7 @@ scenes.scene3.prototype = {
         
         //Arrows Owned Update
         arrowText.setText("x "+ arrowsOwned);
+        scoreText.setText("Score: "+ score);
         
         //Player Related
         playerHealth();
@@ -265,6 +276,7 @@ function hitRock(arrow, rocks){
         if (rocks.Hitpoints <= 0  )
             {
                 rocks.kill();
+                score = score + 10;
                 if(game.rnd.integerInRange(1, 15) >= 10){
                      arrowsOwned = arrowsOwned + game.rnd.integerInRange(1, 3);
                     }
@@ -277,6 +289,7 @@ function hitBush(arrow, bushes){
        bushes.Hitpoints -= 1;
         if(bushes.Hitpoints <= 0){
             bushes.kill();
+            score = score + 5;
             if(game.rnd.integerInRange(1, 15) >= 5){
                      arrowsOwned = arrowsOwned + game.rnd.integerInRange(1, 2);
                     }
@@ -389,6 +402,7 @@ function followPlayer(link, enemies)
 a 20% chance of PIRCING the enemy (since is a GHOST)*/
 function killEnemy(arrow, enemies){  
     enemies.kill();
+    score = score + 50;
     if(game.rnd.integerInRange(1, 10) >= 8){}
     else{
         arrow.kill();
@@ -397,18 +411,29 @@ function killEnemy(arrow, enemies){
 
 //Player gets hit and Death.
 function hitPlayer(){ 
-    if (inmortality == false){
-        hitpoints -= 1;
+    if (inmortality === false){
         inmortality = true;
+        hitpoints -= 1;
     }
-    else if (inmortality == true){
-            game.time.events.add(Phaser.Timer.SECOND * 4);
-            inmortality = false;
+    else if (inmortality === true){
+           var timer;
+           timer = Phaser.Timer.SECOND * 5;
+           game.time.events.add(timer, notInmortal,this);
+           var tween = game.add.tween(link).to({tint: 0xff0000}, 800, "Linear", true);
+           tween.repeat (5,0);
         }
     if (hitpoints <= 0){
-            link.kill();
+        link.kill();
+        music.pause();
+        changeState(null, 8);
         }
     }
+
+function notInmortal() {
+    inmortality = false;
+    link.tint = 0xFFFFFF;
+}
+
 
 //Buttons Set up
 function moveUP(){
