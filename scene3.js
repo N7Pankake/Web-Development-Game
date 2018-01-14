@@ -23,6 +23,8 @@ var map;
 var fireButton, swordButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
 var scoreText, score = 0;
 
+//Buffs
+var buffs, shield;
 //Tiled Layers
 var floor, water,walls;
 
@@ -111,6 +113,16 @@ scenes.scene3.prototype = {
         //Score
         scoreText = game.add.text((game.camera.x), (game.camera.y+60), "Score: "+score, {font: "", fill: "#DAA520", align: ""});
         scoreText.fixedToCamera = true;
+        
+        //BUFFS
+        buffs = game.add.text((game.camera.x+400), (game.camera.y+15), "Buffs ON: ", {font: "", fill: "#DAA520", align: ""});
+        buffs.fixedToCamera = true;
+        
+        //Inmortality
+        shield = game.add.sprite((game.camera.x+535), (game.camera.y+15), 'Shield');
+        shield.alpha = 0;
+        shield.scale.setTo(0.2, 0.2);
+        shield.fixedToCamera = true;
         
         //Arrows
         arrow = game.add.group();
@@ -415,25 +427,28 @@ function killEnemy(arrow, enemies){
 function hitPlayer(){ 
     if (inmortality === false){
         inmortality = true;
+        shield.alpha = 1;
         hitpoints -= 1;
     }
     else if (inmortality === true){
            var timer;
-           timer = Phaser.Timer.SECOND * 5;
+           timer = Phaser.Timer.SECOND * 2;
+           var tween = game.add.tween(link).to({tint: 0xff0000}, 150, "Linear", true);
+           tween.repeat (10,0);
            game.time.events.add(timer, notInmortal,this);
-           var tween = game.add.tween(link).to({tint: 0xff0000}, 800, "Linear", true);
-           tween.repeat (5,0);
         }
     if (hitpoints <= 0){
-        link.kill();
+        //link.kill();
         music.pause();
         changeState(null, 8);
+        game.scale.setGameSize(1216, 800);
         }
     }
 
 function notInmortal() {
-    inmortality = false;
+    shield.alpha = 0;
     link.tint = 0xFFFFFF;
+    inmortality = false;
 }
 
 

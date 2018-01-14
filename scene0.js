@@ -43,7 +43,8 @@ scenes.scene0.prototype = {
         game.load.image('buttonLEFT', 'Assets/Sprites/GUI/ArrowKeysLEFT.png');
         game.load.image('buttonRIGHT', 'Assets/Sprites/GUI/ArrowKeysRIGHT.png');
         game.load.image('buttonPAD', 'Assets/Sprites/GUI/PAD.png');
-        game.load.image('GAMEOVER', 'Assets/Sprites/GUI/GAMEOVER.png');
+        game.load.image('GAMEOVER', 'Assets/Sprites/GUI/GameOver3.png');
+        game.load.image('Shield', 'Assets/Sprites/GUI/ShieldedIcon.png');
         
         //Audio/Music Related
         game.load.audio('pop','Assets/Sounds/Blip_Select.wav');
