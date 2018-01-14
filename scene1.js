@@ -13,6 +13,9 @@ scenes.scene1.prototype = {
         sound.addMarker('blep', 0, 0.1);
         
         var b1 = game.add.button(900,300, 'button', function() {
+            hitpoints = 3;
+            arrowsOwned = 30;
+            score = 0;
             changeState(null, 3);
         });
         

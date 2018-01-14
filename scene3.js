@@ -37,7 +37,7 @@ scenes.scene3.prototype = {
         music = game.add.audio('openWorld');
         music.addMarker('openWorld', 0, 16, true);
         music.play('openWorld', 0,1,true);
-        game.renderer.resize( 1216/2, 800/2); //<--- Giving me TOO MANY problems but still need it and love it <3
+        game.scale.setGameSize(1216/2, 800/2);
     },
     
     create: function (){
@@ -49,6 +49,7 @@ scenes.scene3.prototype = {
         //map
         map = game.add.tilemap('level_01');
         map.addTilesetImage('tiles');
+        
         
         floor = map.createLayer('ground');
         walls = map.createLayer('walls');
@@ -125,15 +126,16 @@ scenes.scene3.prototype = {
         game.camera.height = 608;
         game.camera.width = 300;
         game.camera.setSize(608,400);
-        game.camera.bounds = (0,0,608,400);
+        game.camera.bounds = (null);
         game.camera.follow(link, Phaser.Camera.FOLLOW_TOPDOWN,0.5,0.5);
         
         //Buttons/Joystick/Movement
         //Fire Button
         fireButton = game.add.button(487.50,240, 'buttonFire', function() {
             music.pause();
-            game.renderer.resize(1216, 800);
             changeState(null, 1);
+            game.scale.setGameSize(1216, 800);
+            
         });
         fireButton.alpha = 0.5;
         fireButton.scale.setTo(0.20,0.20);
