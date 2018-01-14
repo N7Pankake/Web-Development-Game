@@ -7,6 +7,11 @@ var link, vel = 150, inmortality = false;
 //facing
 var up = false,down = false,left = false,right = false;
 
+//Game System
+var waveNumber = 1 , nextWave, enemyNumbers = 12;
+var waveTimer;
+var waveStarts;
+var isWaveStarting = true;
 //Arrow
 var arrow;
 var fireRate = 500;
@@ -31,6 +36,7 @@ var floor, water,walls;
 //Object Tiled Layers
 var rocks
 var bushes1, bushes2, bushes3, bushes4;
+var canCreateEnemies = true;
 
 scenes.scene3.prototype = {
     preload: function (){
@@ -40,10 +46,10 @@ scenes.scene3.prototype = {
         music.addMarker('openWorld', 0, 16, true);
         music.play('openWorld', 0,1,true);
         game.scale.setGameSize(1216/2, 800/2);
+        
     },
     
     create: function (){
-        
         //Game itself
         game.world.setBounds(0,0, 1216, 800);
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -51,8 +57,7 @@ scenes.scene3.prototype = {
         //map
         map = game.add.tilemap('level_01');
         map.addTilesetImage('tiles');
-        
-        
+
         floor = map.createLayer('ground');
         walls = map.createLayer('walls');
         water = map.createLayer('water');
@@ -74,11 +79,12 @@ scenes.scene3.prototype = {
         map.createFromObjects('bushes', 'BUSHLEFT', 'lBush', 0, true, false , bushes);
         map.createFromObjects('bushes', 'BUSHRIGHT', 'rBush', 0, true, false , bushes);
         bushes.forEach(function(bushes){bushes.body.immovable = true;});  
-        
+                
         //Enemies
         enemies = game.add.physicsGroup();
-        map.createFromObjects('enemySpawn', 'enemy', 'bigGhost', 0, true, false, enemies);
-        enemies.forEach(function(enemies){enemies.body.immovable = true;
+        map.createFromObjects('enemies', 'enemy', 'bigGhost', 0, true, false, enemies);
+        enemies.forEach(function(enemies){
+        enemies.body.immovable = true;
         enemies.animations.add('spin', [0,1,2,3,4,5,5], 0, true);
         enemies.animations.play('spin');
         game.physics.enable(enemies);});
@@ -115,11 +121,11 @@ scenes.scene3.prototype = {
         scoreText.fixedToCamera = true;
         
         //BUFFS
-        buffs = game.add.text((game.camera.x+400), (game.camera.y+15), "Buffs ON: ", {font: "", fill: "#DAA520", align: ""});
+        buffs = game.add.text((game.camera.x+400), (game.camera.y+0), "Buffs ON: ", {font: "", fill: "#DAA520", align: ""});
         buffs.fixedToCamera = true;
         
         //Inmortality
-        shield = game.add.sprite((game.camera.x+535), (game.camera.y+15), 'Shield');
+        shield = game.add.sprite((game.camera.x+535), (game.camera.y+5), 'Shield');
         shield.alpha = 0;
         shield.scale.setTo(0.2, 0.2);
         shield.fixedToCamera = true;
@@ -139,7 +145,8 @@ scenes.scene3.prototype = {
         game.camera.width = 300;
         game.camera.setSize(608,400);
         game.camera.bounds = (null);
-        game.camera.follow(link, Phaser.Camera.FOLLOW_TOPDOWN,0.5,0.5);
+        game.camera.follow(link); //normal follow
+        // game.camera.follow(link, Phaser.Camera.FOLLOW_TOPDOWN,0.5,0.5); Follow with box
         
         //Buttons/Joystick/Movement
         //Fire Button
@@ -208,6 +215,14 @@ scenes.scene3.prototype = {
         //Arrow keys for movement and Space bar for shooting arrows
         cursors = game.input.keyboard.createCursorKeys();
         fireBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+        
+        //Timers/Waves
+        waveTimer = game.add.text((game.camera.x +135), (game.camera.y), "Wave starts in: "+waveStarts, {font: "50", fill: "#DAA520", align: ""});
+        waveTimer.fixedToCamera = true;
+        
+        waveStarts = game.time.create(false);
+        waveStarts.add(5000, destroyTimer);
+        waveStarts.start();
     },
     
     
@@ -227,7 +242,6 @@ scenes.scene3.prototype = {
         
         //Enemy collider TILED vs Player and Follow him
         game.physics.arcade.overlap(link, enemies, hitPlayer, null, this);
-        followPlayer();
         
         //Arrows Owned Update
         arrowText.setText("x "+ arrowsOwned);
@@ -237,6 +251,14 @@ scenes.scene3.prototype = {
         playerHealth();
         playerMovement();
         
+        //GameSystem
+        waveTimer.setText("Wave starts in: "+waveStarts.duration);
+        if (waveStarts == 0)
+            {
+                isWaveStarting = false;
+                if(canCreateEnemies == true){}
+            }
+         
         //Keyboard Extension to shoot arrows with SPACE
         if(fireBUTTON.isDown){
             fire();
@@ -393,27 +415,6 @@ function playerHealth(){
             }
 }
 
-//Enemy movement (NOT working atm)
-var enemies_speed = 20;
-function followPlayer(link, enemies)
-{
-    /*if(link.body.x < enemies.body.x){
-        enemies.body.velocity.x = enemies_speed * -1;
-        }
-    else{
-        enemies.body.velocity.x = enemies_speed;
-    }
-    
-    if(link.body.y < enemies.body.y){
-        enemies.body.velocity.y = enemies_speed * -1;
-        }
-    else{
-        enemies.body.velocity.y = enemies_speed;
-    }*/
-}
-
-/*Enemy die after getting hit and 
-a 20% chance of PIRCING the enemy (since is a GHOST)*/
 function killEnemy(arrow, enemies){  
     enemies.kill();
     score = score + 50;
@@ -451,7 +452,6 @@ function notInmortal() {
     inmortality = false;
 }
 
-
 //Buttons Set up
 function moveUP(){
      link.body.velocity.y = -vel;
@@ -476,3 +476,8 @@ function moveRIGHT(){
      link.animations.play('walkHorizontalRight', 9, true);
       up = false,down = false,left = false,right = true;   
 }
+
+function destroyTimer(){
+     waveTimer.alpha = 0;
+}
+
