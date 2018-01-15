@@ -2,16 +2,24 @@
 
 scenes.scene3 = function(){};
 
-//Player speed
+//Player stats
 var link, vel = 150, inmortality = false;
 //facing
 var up = false,down = false,left = false,right = false;
 
 //Game System
-var waveNumber = 1, enemyNumbers = 0, enemies, enemyText, waveNumberText, enemyCreationCD;
+var waveNumber = 1;
+var enemiesAlive = 0;
+var enemiesTotal = 0;
+var enemies;
+var enemyText; 
+var waveNumberText; 
+var enemyCreationCD;
 var waveTimer;
 var waveStarts;
-var waveON;
+var waveON = false;
+var ghost;
+
 //Arrow
 var arrow;
 var fireRate = 500;
@@ -19,8 +27,7 @@ var nextArrow = 0;
 var arrowsOwned = 30;
 var arrowText;
 var arrowGUI;
-
-//Quiver
+var bunchOfArrows;
 var quiver;
 
 //Map/Level/GUI
@@ -214,14 +221,21 @@ scenes.scene3.prototype = {
         waveNumberText.fixedToCamera = true;
         
         waveStarts = game.time.create(false);
-        waveStarts.add(5000, waveCreation);
+        waveStarts.add(5000, function(){createEnemies()});
         waveStarts.start();
         
-        enemyCreationCD = game.time.create(false);
-        
-        
-        enemyText = game.add.text((game.camera.x +135), (game.camera.y+30), "enemy # "+enemyNumbers, {font: "50", fill: "#DAA520", align: ""});
+        enemyText = game.add.text((game.camera.x +135), (game.camera.y+30), "enemy # "+enemiesAlive, {font: "50", fill: "#DAA520", align: ""});
         enemyText.fixedToCamera = true;
+        
+        //Enemy
+        enemies = game.add.group();
+        enemies.enableBody = true;
+        enemies.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        quiver = game.add.group();
+        quiver.enableBody = true;
+        quiver.physicsBodyType = Phaser.Physics.ARCADE;
+        
     },
     
     
@@ -235,17 +249,17 @@ scenes.scene3.prototype = {
         //Arrows Collide with Rocks and Bushes TILED
         game.physics.arcade.collide(arrow, rocks, hitRock, null, this);
         game.physics.arcade.collide(arrow, bushes, hitBush, null, this);
-        
-        //Enemy collider TILED vs Arrow 
-        game.physics.arcade.overlap(arrow, enemies, killEnemy, null, this);
-        
-        //Enemy collider TILED vs Player and Follow him
-        game.physics.arcade.overlap(link, enemies, hitPlayer, null, this);
-        
+                
         //Arrows Owned Update
         arrowText.setText("x "+ arrowsOwned);
         scoreText.setText("Score: "+ score);
         
+        //Enemy vs Arrow 
+        game.physics.arcade.overlap(arrow, enemies, killEnemy, null, this);
+        
+        //Enemy vs Player 
+        game.physics.arcade.overlap(link, enemies, hitPlayer, null, this);
+        game.physics.arcade.overlap(link, quiver, arrowPack, null, this);
         //Player Related
         playerHealth();
         playerMovement();
@@ -253,15 +267,15 @@ scenes.scene3.prototype = {
         //GameSystem
         waveTimer.setText("Wave starts in: "+waveStarts.duration);
         waveNumberText.setText("Wave# "+waveNumber);
-        enemyText.setText("enemy #"+enemyNumbers);
+        enemyText.setText("enemy #"+enemiesAlive);
         
         //Wave System
-        if (waveON == true && enemyNumbers == 0)
+        if (waveON == true && enemiesAlive == 0)
             {
                 waveNumber += 1;
                 waveON = false;
                 waveTimer.alpha = 1;
-                waveStarts.add(20000, waveCreation);
+                waveStarts.add(1000, function(){createEnemies()});
                 waveStarts.start();
             }
         
@@ -270,7 +284,7 @@ scenes.scene3.prototype = {
             fire();
         }
         
-        chasePlayer();
+        //chasePlayer();
         
  }
 };
@@ -313,33 +327,6 @@ function playerMovement(){
               link.animations.stop('walkHorizontalLeft');
         }
 }
-
-//Destroy rock after 3 hits and chance of receiving 1-3 arrows afterwards
-function hitRock(arrow, rocks){  
-    rocks.Hitpoints -= 1;
-        if (rocks.Hitpoints <= 0  )
-            {
-                rocks.kill();
-                score = score + 10;
-                if(game.rnd.integerInRange(1, 15) >= 10){
-                     arrowsOwned = arrowsOwned + game.rnd.integerInRange(1, 3);
-                    }
-            }
-    arrow.kill();
-   }
-
-//Destroy rock after 3 hits and chance of receiving 1-2 arrows afterwards
-function hitBush(arrow, bushes){  
-       bushes.Hitpoints -= 1;
-        if(bushes.Hitpoints <= 0){
-            bushes.kill();
-            score = score + 5;
-            if(game.rnd.integerInRange(1, 15) >= 5){
-                     arrowsOwned = arrowsOwned + game.rnd.integerInRange(1, 2);
-                    }
-        }
-    arrow.kill();
-   }
 
 //Fire function changes direction depending on which direction the player is facing
 function fire (){
@@ -394,6 +381,40 @@ function fire (){
     }
 }
 
+//Destroy rock after 3 hits and chance of receiving 1-3 arrows afterwards
+function hitRock(arrow, rocks){  
+    rocks.Hitpoints -= 1;
+        if (rocks.Hitpoints <= 0  )
+            {
+                rocks.kill();
+                score = score + 10;
+                if(game.rnd.integerInRange(1, 15) >= 10){
+                     bunchOfArrows = game.add.sprite(bushes.x, bushes.y,'BunchofArrows');
+                     quiver.add(bunchOfArrows)
+                    }
+            }
+    arrow.kill();
+   }
+
+//Destroy rock after 3 hits and chance of receiving 1-2 arrows afterwards
+function hitBush(arrow, bushes){  
+       bushes.Hitpoints -= 1;
+        if(bushes.Hitpoints <= 0){
+            bushes.kill();
+            score = score + 5;
+            if(game.rnd.integerInRange(1, 15) >= 5){
+               bunchOfArrows = game.add.sprite(bushes.x, bushes.y,'BunchofArrows');
+               quiver.add(bunchOfArrows)
+              }
+        }
+    arrow.kill();
+   }
+
+function arrowPack(link, arrows){
+        arrows.kill();
+        arrowsOwned = arrowsOwned + game.rnd.integerInRange(2, 10);
+}
+
 /*Health GUI for player works with an INT variable and 
 an animation that change states depending on the INT value*/
 function playerHealth(){
@@ -426,8 +447,8 @@ function playerHealth(){
 function killEnemy(arrow, enemies){  
     enemies.kill();
     score = score + 50;
-    enemyNumbers -= 1;
-    if(game.rnd.integerInRange(1, 10) >= 8){}
+    enemiesAlive -= 1;
+    if(game.rnd.integerInRange(1, 100) >= 80 ){}
     else{
         arrow.kill();
     }
@@ -448,7 +469,7 @@ function hitPlayer(){
            game.time.events.add(timer, notInmortal,this);
         }
     if (hitpoints <= 0){
-        //link.kill();
+        link.kill();
         music.pause();
         changeState(null, 8);
         game.scale.setGameSize(1216, 800);
@@ -459,6 +480,42 @@ function notInmortal() {
     shield.alpha = 0;
     link.tint = 0xFFFFFF;
     inmortality = false;
+}
+
+
+function createEnemies(){
+    for(var i = 1; i <= waveNumber; i++)
+        {  enemies.create((32)+Math.floor(Math.random()*100+1),(384)+Math.floor(Math.random()*100+1),'bigGhost');
+           enemies.create((448)+Math.floor(Math.random()*100+1),(64)+Math.floor(Math.random()*100+1),'bigGhost');
+           enemies.create((1152)+Math.floor(Math.random()*100+1),(384)+Math.floor(Math.random()*100+1),'bigGhost');
+           enemies.create((576)+Math.floor(Math.random()*100+1),(768)+Math.floor(Math.random()*100+1),'bigGhost');
+           enemiesAlive += 4;
+         }
+    enemies.callAll('animations.add', 'animations', 'flap', [0,1,2,3,4,5], 16, true);
+    enemies.callAll('play', null, 'flap');
+    
+            waveON = true;
+}
+
+function chasePlayer(enemies){
+   enemiesSpeed = 25 * waveNumber;
+    if(link.body.x < enemies.body.x)
+        {
+            enemies.body.velocity.x = -enemiesSpeed;
+        }
+    else(link.body.x < enemies.body.x)
+        {
+            enemies.body.velocity.x = enemiesSpeed;
+        }
+    
+    if(link.body.y < enemies.body.y)
+        {
+            enemies.body.velocity.y = -enemiesSpeed;
+        }
+    else(link.body.y < enemies.body.y)
+        {
+            enemies.body.velocity.y = enemiesSpeed;
+        }
 }
 
 //Buttons Set up
@@ -484,47 +541,4 @@ function moveRIGHT(){
      link.body.velocity.x = vel;
      link.animations.play('walkHorizontalRight', 9, true);
       up = false,down = false,left = false,right = true;   
-}
-
-function waveCreation(){
-        waveTimer.alpha = 0;
-        waveON = true;
-    if (waveON == true)
-        {
-        for(var repeat = 1; repeat <= waveNumber; repeat++ ){
-        enemies = game.add.physicsGroup();
-        map.createFromObjects('enemies', 'enemy', 'bigGhost', 0, true, false, enemies);
-        enemies.forEach(function(enemies){
-        enemies.body.immovable = true;
-        enemies.animations.add('spin', [0,1,2,3,4,5], 0, true);
-        enemies.animations.play('spin');
-        game.physics.enable(enemies);
-        enemyNumbers += 1;
-        enemyCreationCD.add(3000, function(){});
-        enemyCreationCD.start();
-        });
-        }  
-         enemyNumbers = (enemyNumbers * waveNumber)/waveNumber; 
-        }
-}
-
-function chasePlayer(enemies){
-   enemiesSpeed = 25 * waveNumber;
-    if(link.body.x < enemies.body.x)
-        {
-            enemies.body.velocity.x = -enemiesSpeed;
-        }
-    else(link.body.x < enemies.body.x)
-        {
-            enemies.body.velocity.x = enemiesSpeed;
-        }
-    
-    if(link.body.y < enemies.body.y)
-        {
-            enemies.body.velocity.y = -enemiesSpeed;
-        }
-    else(link.body.y < enemies.body.y)
-        {
-            enemies.body.velocity.y = enemiesSpeed;
-        }
 }

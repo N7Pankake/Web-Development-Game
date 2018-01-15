@@ -54,28 +54,6 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="enemies">
-  <object id="79" name="enemy" x="32" y="384" width="32" height="32">
-   <properties>
-    <property name="enemyHealth" type="int" value="1"/>
-   </properties>
-  </object>
-  <object id="81" name="enemy" x="448" y="64" width="32" height="32">
-   <properties>
-    <property name="enemyHealth" type="int" value="1"/>
-   </properties>
-  </object>
-  <object id="82" name="enemy" x="576" y="768" width="32" height="32">
-   <properties>
-    <property name="enemyHealth" type="int" value="1"/>
-   </properties>
-  </object>
-  <object id="83" name="enemy" x="1152" y="384" width="32" height="32">
-   <properties>
-    <property name="enemyHealth" type="int" value="1"/>
-   </properties>
-  </object>
- </objectgroup>
  <objectgroup name="bushes">
   <object id="18" name="BUSHBOT" type="Object" gid="35" x="160" y="352.5" width="32" height="32">
    <properties>
