@@ -8,10 +8,9 @@ var link, vel = 150, inmortality = false;
 var up = false,down = false,left = false,right = false;
 
 //Game System
-var waveNumber = 1 , nextWave, enemyNumbers = 12;
+var waveNumber = 1, enemyNumbers = 4, enemies, enemyText;
 var waveTimer;
 var waveStarts;
-var isWaveStarting = true;
 //Arrow
 var arrow;
 var fireRate = 500;
@@ -36,7 +35,6 @@ var floor, water,walls;
 //Object Tiled Layers
 var rocks
 var bushes1, bushes2, bushes3, bushes4;
-var canCreateEnemies = true;
 
 scenes.scene3.prototype = {
     preload: function (){
@@ -79,16 +77,7 @@ scenes.scene3.prototype = {
         map.createFromObjects('bushes', 'BUSHLEFT', 'lBush', 0, true, false , bushes);
         map.createFromObjects('bushes', 'BUSHRIGHT', 'rBush', 0, true, false , bushes);
         bushes.forEach(function(bushes){bushes.body.immovable = true;});  
-                
-        //Enemies
-        enemies = game.add.physicsGroup();
-        map.createFromObjects('enemies', 'enemy', 'bigGhost', 0, true, false, enemies);
-        enemies.forEach(function(enemies){
-        enemies.body.immovable = true;
-        enemies.animations.add('spin', [0,1,2,3,4,5,5], 0, true);
-        enemies.animations.play('spin');
-        game.physics.enable(enemies);});
-        
+         
         // Player
         link = game.add.sprite(608, 400, 'LinkMovement');
         link.scale.setTo(0.2, 0.2);
@@ -221,8 +210,11 @@ scenes.scene3.prototype = {
         waveTimer.fixedToCamera = true;
         
         waveStarts = game.time.create(false);
-        waveStarts.add(5000, destroyTimer);
+        waveStarts.add(5000, wave1);
         waveStarts.start();
+        
+        enemyText = game.add.text((game.camera.x +135), (game.camera.y+30), "enemy # "+enemyNumbers, {font: "50", fill: "#DAA520", align: ""});
+        enemyText.fixedToCamera = true;
     },
     
     
@@ -253,12 +245,7 @@ scenes.scene3.prototype = {
         
         //GameSystem
         waveTimer.setText("Wave starts in: "+waveStarts.duration);
-        if (waveStarts == 0)
-            {
-                isWaveStarting = false;
-                if(canCreateEnemies == true){}
-            }
-         
+        enemyText.setText("enemy #"+enemyNumbers);
         //Keyboard Extension to shoot arrows with SPACE
         if(fireBUTTON.isDown){
             fire();
@@ -477,7 +464,15 @@ function moveRIGHT(){
       up = false,down = false,left = false,right = true;   
 }
 
-function destroyTimer(){
-     waveTimer.alpha = 0;
+function wave1(){
+        waveTimer.alpha = 0
+        enemies = game.add.physicsGroup();
+        map.createFromObjects('enemies', 'enemy', 'bigGhost', 0, true, false, enemies);
+        enemies.forEach(function(enemies){
+        enemies.body.immovable = true;
+        enemies.animations.add('spin', [0,1,2,3,4,5], 0, true);
+        enemies.animations.play('spin');
+        game.physics.enable(enemies);}); 
+        enemyNumbers = enemyNumbers * waveNumber;
 }
 
