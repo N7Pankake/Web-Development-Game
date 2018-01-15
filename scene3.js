@@ -388,8 +388,8 @@ function hitRock(arrow, rocks){
             {
                 rocks.kill();
                 score = score + 10;
-                if(game.rnd.integerInRange(1, 15) >= 10){
-                     bunchOfArrows = game.add.sprite(bushes.x, bushes.y,'BunchofArrows');
+                if(game.rnd.integerInRange(1, 100) >= 70){
+                     bunchOfArrows = game.add.sprite(rocks.x, rocks.y,'BunchofArrows');
                      quiver.add(bunchOfArrows)
                     }
             }
@@ -402,7 +402,7 @@ function hitBush(arrow, bushes){
         if(bushes.Hitpoints <= 0){
             bushes.kill();
             score = score + 5;
-            if(game.rnd.integerInRange(1, 15) >= 5){
+            if(game.rnd.integerInRange(1, 100) >= 35){
                bunchOfArrows = game.add.sprite(bushes.x, bushes.y,'BunchofArrows');
                quiver.add(bunchOfArrows)
               }
