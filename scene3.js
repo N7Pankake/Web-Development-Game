@@ -8,9 +8,10 @@ var link, vel = 150, inmortality = false;
 var up = false,down = false,left = false,right = false;
 
 //Game System
-var waveNumber = 1, enemyNumbers = 4, enemies, enemyText;
+var waveNumber = 1, enemyNumbers = 0, enemies, enemyText, waveNumberText, enemyCreationCD;
 var waveTimer;
 var waveStarts;
+var waveON;
 //Arrow
 var arrow;
 var fireRate = 500;
@@ -209,9 +210,15 @@ scenes.scene3.prototype = {
         waveTimer = game.add.text((game.camera.x +135), (game.camera.y), "Wave starts in: "+waveStarts, {font: "50", fill: "#DAA520", align: ""});
         waveTimer.fixedToCamera = true;
         
+        waveNumberText = game.add.text((game.camera.x +135), (game.camera.y + 60), "Wave# "+waveNumber, {font: "50", fill: "#DAA520", align: ""});
+        waveNumberText.fixedToCamera = true;
+        
         waveStarts = game.time.create(false);
-        waveStarts.add(5000, wave1);
+        waveStarts.add(5000, waveCreation);
         waveStarts.start();
+        
+        enemyCreationCD = game.time.create(false);
+        
         
         enemyText = game.add.text((game.camera.x +135), (game.camera.y+30), "enemy # "+enemyNumbers, {font: "50", fill: "#DAA520", align: ""});
         enemyText.fixedToCamera = true;
@@ -245,11 +252,25 @@ scenes.scene3.prototype = {
         
         //GameSystem
         waveTimer.setText("Wave starts in: "+waveStarts.duration);
+        waveNumberText.setText("Wave# "+waveNumber);
         enemyText.setText("enemy #"+enemyNumbers);
+        
+        //Wave System
+        if (waveON == true && enemyNumbers == 0)
+            {
+                waveNumber += 1;
+                waveON = false;
+                waveTimer.alpha = 1;
+                waveStarts.add(20000, waveCreation);
+                waveStarts.start();
+            }
+        
         //Keyboard Extension to shoot arrows with SPACE
         if(fireBUTTON.isDown){
             fire();
         }
+        
+        chasePlayer();
         
  }
 };
@@ -405,6 +426,7 @@ function playerHealth(){
 function killEnemy(arrow, enemies){  
     enemies.kill();
     score = score + 50;
+    enemyNumbers -= 1;
     if(game.rnd.integerInRange(1, 10) >= 8){}
     else{
         arrow.kill();
@@ -464,15 +486,45 @@ function moveRIGHT(){
       up = false,down = false,left = false,right = true;   
 }
 
-function wave1(){
-        waveTimer.alpha = 0
+function waveCreation(){
+        waveTimer.alpha = 0;
+        waveON = true;
+    if (waveON == true)
+        {
+        for(var repeat = 1; repeat <= waveNumber; repeat++ ){
         enemies = game.add.physicsGroup();
         map.createFromObjects('enemies', 'enemy', 'bigGhost', 0, true, false, enemies);
         enemies.forEach(function(enemies){
         enemies.body.immovable = true;
         enemies.animations.add('spin', [0,1,2,3,4,5], 0, true);
         enemies.animations.play('spin');
-        game.physics.enable(enemies);}); 
-        enemyNumbers = enemyNumbers * waveNumber;
+        game.physics.enable(enemies);
+        enemyNumbers += 1;
+        enemyCreationCD.add(3000, function(){});
+        enemyCreationCD.start();
+        });
+        }  
+         enemyNumbers = (enemyNumbers * waveNumber)/waveNumber; 
+        }
 }
 
+function chasePlayer(enemies){
+   enemiesSpeed = 25 * waveNumber;
+    if(link.body.x < enemies.body.x)
+        {
+            enemies.body.velocity.x = -enemiesSpeed;
+        }
+    else(link.body.x < enemies.body.x)
+        {
+            enemies.body.velocity.x = enemiesSpeed;
+        }
+    
+    if(link.body.y < enemies.body.y)
+        {
+            enemies.body.velocity.y = -enemiesSpeed;
+        }
+    else(link.body.y < enemies.body.y)
+        {
+            enemies.body.velocity.y = enemiesSpeed;
+        }
+}
