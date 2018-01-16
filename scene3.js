@@ -24,11 +24,12 @@ var ghost;
 var arrow;
 var fireRate = 500;
 var nextArrow = 0;
-var arrowsOwned = 30;
+var arrowsOwned = 5;
 var arrowText;
 var arrowGUI;
 var bunchOfArrows;
 var quiver;
+var randomQuiver = true;
 
 //Map/Level/GUI
 var map; 
@@ -52,7 +53,7 @@ scenes.scene3.prototype = {
         music.addMarker('openWorld', 0, 16, true);
         music.play('openWorld', 0,1,true);
         game.scale.setGameSize(1216/2, 800/2);
-        
+        arrowsOwned = 5;
     },
     
     create: function (){
@@ -236,6 +237,9 @@ scenes.scene3.prototype = {
         quiver.enableBody = true;
         quiver.physicsBodyType = Phaser.Physics.ARCADE;
         
+        randomQuiverTimer = game.time.create(false);
+        randomQuiverTimer.add(1000, function(){randomQuiverF()});
+        randomQuiverTimer.start();
     },
     
     
@@ -275,9 +279,16 @@ scenes.scene3.prototype = {
                 waveNumber += 1;
                 waveON = false;
                 waveTimer.alpha = 1;
-                waveStarts.add(1000, function(){createEnemies()});
+                waveStarts.add(20000, function(){createEnemies()});
                 waveStarts.start();
             }
+        
+        //Random Quivers system
+        if(randomQuiver === true && waveON === false){
+                randomQuiverTimer.add(1000, function(){randomQuiverF()});
+                randomQuiverTimer.start();
+                randomQuiver = false;
+                }
         
         //Keyboard Extension to shoot arrows with SPACE
         if(fireBUTTON.isDown){
@@ -412,7 +423,20 @@ function hitBush(arrow, bushes){
 
 function arrowPack(link, arrows){
         arrows.kill();
-        arrowsOwned = arrowsOwned + game.rnd.integerInRange(2, 10);
+        arrowsOwned = arrowsOwned + game.rnd.integerInRange(2, 4);
+}
+
+function randomQuiverF(){
+    var randX, randY;
+    randX = Math.floor(Math.random()*1216+1);
+    randY = Math.floor(Math.random()*800+1);
+    
+    if((randX >= 64 && randX <= 1120) && (randY >= 96 && randY <= 736))
+    {
+       bunchOfArrows = game.add.sprite(randX,randY,'BunchofArrows');
+       quiver.add(bunchOfArrows);
+    }
+     randomQuiver = true;
 }
 
 /*Health GUI for player works with an INT variable and 
