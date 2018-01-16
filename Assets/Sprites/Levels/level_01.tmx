@@ -33,74 +33,74 @@
 </data>
  </layer>
  <objectgroup name="rocks">
-  <object id="4" name="ROCK" type="Object" gid="48" x="352.045" y="480.091" width="32" height="32">
+  <object id="4" name="ROCK" type="Object" gid="48" x="352" y="480" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="3"/>
    </properties>
   </object>
-  <object id="6" name="ROCK" type="Object" gid="48" x="640.333" y="703.469" width="32" height="32">
+  <object id="6" name="ROCK" type="Object" gid="48" x="640" y="704" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="3"/>
    </properties>
   </object>
-  <object id="11" name="ROCK" type="Object" gid="48" x="543.961" y="223.972" width="32" height="32">
+  <object id="11" name="ROCK" type="Object" gid="48" x="544" y="224" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="3"/>
    </properties>
   </object>
-  <object id="13" name="ROCK" type="Object" gid="48" x="929" y="671" width="32" height="32">
+  <object id="13" name="ROCK" type="Object" gid="48" x="928" y="672" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="3"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup name="bushes">
-  <object id="18" name="BUSHBOT" type="Object" gid="35" x="160" y="352.5" width="32" height="32">
+  <object id="18" name="BUSHBOT" type="Object" gid="35" x="160" y="352" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="19" name="BUSHTOP" type="Object" gid="37" x="160.5" y="321" width="32" height="32">
+  <object id="19" name="BUSHTOP" type="Object" gid="37" x="160" y="320" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="32" name="BUSHBOT" type="Object" gid="35" x="223.75" y="608.75" width="32" height="32">
+  <object id="32" name="BUSHBOT" type="Object" gid="35" x="224" y="608" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="33" name="BUSHTOP" type="Object" gid="37" x="224.25" y="577.25" width="32" height="32">
+  <object id="33" name="BUSHTOP" type="Object" gid="37" x="224" y="576" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="34" name="BUSHBOT" type="Object" gid="35" x="478.75" y="255.75" width="32" height="32">
+  <object id="34" name="BUSHBOT" type="Object" gid="35" x="480" y="256" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="35" name="BUSHTOP" type="Object" gid="37" x="479.25" y="224.25" width="32" height="32">
+  <object id="35" name="BUSHTOP" type="Object" gid="37" x="480" y="224" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="36" name="BUSHBOT" type="Object" gid="35" x="670.75" y="289.75" width="32" height="32">
+  <object id="36" name="BUSHBOT" type="Object" gid="35" x="672" y="288" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="37" name="BUSHTOP" type="Object" gid="37" x="671.25" y="258.25" width="32" height="32">
+  <object id="37" name="BUSHTOP" type="Object" gid="37" x="672" y="256" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="38" name="BUSHBOT" type="Object" gid="35" x="481.75" y="704.75" width="32" height="32">
+  <object id="38" name="BUSHBOT" type="Object" gid="35" x="480" y="704" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="39" name="BUSHTOP" type="Object" gid="37" x="482.25" y="673.25" width="32" height="32">
+  <object id="39" name="BUSHTOP" type="Object" gid="37" x="480" y="672" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
@@ -115,22 +115,22 @@
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="45" name="BUSHRIGHT" type="Object" gid="34" x="801.909" y="671.909" width="32" height="32">
+  <object id="45" name="BUSHRIGHT" type="Object" gid="34" x="800" y="672" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="46" name="BUSHLEFT" type="Object" gid="36" x="770.091" y="672.091" width="32" height="32">
+  <object id="46" name="BUSHLEFT" type="Object" gid="36" x="768" y="672" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="47" name="BUSHRIGHT" type="Object" gid="34" x="927.909" y="163.909" width="32" height="32">
+  <object id="47" name="BUSHRIGHT" type="Object" gid="34" x="928" y="160" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>
   </object>
-  <object id="48" name="BUSHLEFT" type="Object" gid="36" x="896.091" y="164.091" width="32" height="32">
+  <object id="48" name="BUSHLEFT" type="Object" gid="36" x="896" y="160" width="32" height="32">
    <properties>
     <property name="Hitpoints" type="int" value="2"/>
    </properties>

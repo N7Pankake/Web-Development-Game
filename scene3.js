@@ -221,7 +221,7 @@ scenes.scene3.prototype = {
         waveNumberText.fixedToCamera = true;
         
         waveStarts = game.time.create(false);
-        waveStarts.add(5000, function(){createEnemies()});
+        waveStarts.add(1000, function(){createEnemies()});
         waveStarts.start();
         
         enemyText = game.add.text((game.camera.x +135), (game.camera.y+30), "enemy # "+enemiesAlive, {font: "50", fill: "#DAA520", align: ""});
@@ -448,10 +448,11 @@ function killEnemy(arrow, enemies){
     enemies.kill();
     score = score + 50;
     enemiesAlive -= 1;
-    if(game.rnd.integerInRange(1, 100) >= 80 ){}
-    else{
-        arrow.kill();
-    }
+    if(game.rnd.integerInRange(1, 10) >= 3 ){
+               bunchOfArrows = game.add.sprite(enemies.x, enemies.y,'BunchofArrows');
+               quiver.add(bunchOfArrows)
+               arrow.kill();}
+    else {}
 }
 
 //Player gets hit and Death.
@@ -485,11 +486,12 @@ function notInmortal() {
 
 function createEnemies(){
     for(var i = 1; i <= waveNumber; i++)
-        {  enemies.create((32)+Math.floor(Math.random()*100+1),(384)+Math.floor(Math.random()*100+1),'bigGhost');
-           enemies.create((448)+Math.floor(Math.random()*100+1),(64)+Math.floor(Math.random()*100+1),'bigGhost');
-           enemies.create((1152)+Math.floor(Math.random()*100+1),(384)+Math.floor(Math.random()*100+1),'bigGhost');
-           enemies.create((576)+Math.floor(Math.random()*100+1),(768)+Math.floor(Math.random()*100+1),'bigGhost');
+        {  enemies.create((32),(384),'bigGhost');
+           enemies.create((448),(64),'bigGhost');
+           enemies.create((1152),(384),'bigGhost');
+           enemies.create((576),(768),'bigGhost');
            enemiesAlive += 4;
+         //Math.floor(Math.random()*100+1)
          }
     enemies.callAll('animations.add', 'animations', 'flap', [0,1,2,3,4,5], 16, true);
     enemies.callAll('play', null, 'flap');
