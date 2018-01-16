@@ -41,7 +41,6 @@ var bunchOfBombs;
 var bombSash;
 var randomBomb = true;
 
-
 //Map/Level/GUI
 var map; 
 var fireButton, bombButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
@@ -55,6 +54,10 @@ var floor, water,walls;
 //Object Tiled Layers
 var rocks
 var bushes1, bushes2, bushes3, bushes4;
+
+//BUTTONS
+var buttonL = false, buttonR = false, buttonT = false, buttonD = false;
+var leftButton, rightButton, topButton, downButton;
 
 scenes.scene3.prototype = {
     preload: function (){
@@ -227,36 +230,44 @@ scenes.scene3.prototype = {
         arrowButton.fixedToCamera = true;
         
         //UP Key
-        upButton = game.add.button(75,230, 'buttonUP', function() {
-           moveUP();
-        });
+        upButton = game.add.button(75,220, 'buttonUP', null, this, 0, 1, 0, 1);
         upButton.alpha = 0.25;
         upButton.scale.setTo(0.3,0.3);
         upButton.fixedToCamera = true;
+        upButton.events.onInputOver.add(function(){buttonT=true;});
+        upButton.events.onInputOut.add(function(){buttonT=false;});
+        upButton.events.onInputDown.add(function(){buttonT=true;});
+        upButton.events.onInputUp.add(function(){buttonT=false;});
         
         //DOWN key
-        downButton = game.add.button(75,320, 'buttonDOWN', function() {
-           moveDOWN();
-        });
+        downButton = game.add.button(75,320, 'buttonDOWN', null, this, 0, 1, 0, 1);
         downButton.alpha = 0.25;
         downButton.scale.setTo(0.3,0.3);
         downButton.fixedToCamera = true;
+        downButton.events.onInputOver.add(function(){buttonD=true;});
+        downButton.events.onInputOut.add(function(){buttonD=false;});
+        downButton.events.onInputDown.add(function(){buttonD=true;});
+        downButton.events.onInputUp.add(function(){buttonD=false;});
         
-        //LEFTKEY
-        leftButton = game.add.button(30,275, 'buttonLEFT', function() {
-           moveLEFT();
-        });
+        //LEFT KEY
+        leftButton = game.add.button(30,275, 'buttonLEFT', null, this, 0, 1, 0, 1);
         leftButton.alpha = 0.25;
         leftButton.scale.setTo(0.3,0.3);
         leftButton.fixedToCamera = true;
+        leftButton.events.onInputOver.add(function(){buttonL=true;});
+        leftButton.events.onInputOut.add(function(){buttonL=false;});
+        leftButton.events.onInputDown.add(function(){buttonL=true;});
+        leftButton.events.onInputUp.add(function(){buttonL=false;});
         
         //RIGHTKEY
-        rightButton = game.add.button(120,275, 'buttonRIGHT', function() {
-           moveRIGHT();
-        });
+        rightButton = game.add.button(120,275, 'buttonRIGHT', null, this, 0, 1, 0, 1);
         rightButton.alpha = 0.25;
         rightButton.scale.setTo(0.3,0.3);
         rightButton.fixedToCamera = true;
+        rightButton.events.onInputOver.add(function(){buttonR=true;});
+        rightButton.events.onInputOut.add(function(){buttonR=false;});
+        rightButton.events.onInputDown.add(function(){buttonR=true;});
+        rightButton.events.onInputUp.add(function(){buttonR=false;});
         
         //PAD
         padButton = game.add.sprite(75,275, 'buttonPAD');
@@ -357,6 +368,29 @@ scenes.scene3.prototype = {
         if(bombBUTTON.isDown){
             dropBomb();
         }
+        
+        if (buttonL) {
+                link.body.velocity.x = -vel;
+                link.animations.play('walkHorizontalLeft', 9, true);
+                up = false,down = false,left = true,right = false;
+    }
+        else if(buttonR){
+                link.body.velocity.x = vel;
+                link.animations.play('walkHorizontalRight', 9, true);
+                up = false,down = false,left = false,right = true;  
+        }
+        else if(buttonD){
+                link.body.velocity.y = vel;
+                link.animations.play('walkVerticalDown', 9, true);
+                up = false,down = true,left = false,right = false; 
+        }
+        else if(buttonT){
+                link.body.velocity.y = -vel;
+                link.animations.play('walkVerticalUp', 9, true);
+                up = true,down = false,left = false,right = false; 
+        }
+                
+        
         
         //Enemies move towards the player
         enemies.forEach(function(enemy){game.physics.arcade.moveToObject(enemy,link, ((75*waveNumber)-(35*waveNumber)));});
@@ -636,29 +670,4 @@ function createEnemies(){
     enemies.callAll('play', null, 'flap');
     
             waveON = true;
-}
-
-//Buttons Set up
-function moveUP(){
-     link.body.velocity.y = -vel;
-     link.animations.play('walkVerticalUp', 9, true);
-     up = true,down = false,left = false,right = false;     
-}
-
-function moveDOWN(){
-     link.body.velocity.y = vel;
-     link.animations.play('walkVerticalDown', 9, true);
-     up = false,down = true,left = false,right = false;     
-}
-
-function moveLEFT(){
-     link.body.velocity.x = -vel;
-     link.animations.play('walkHorizontalLeft', 9, true);
-      up = false,down = false,left = true,right = false;     
-}
-
-function moveRIGHT(){
-     link.body.velocity.x = vel;
-     link.animations.play('walkHorizontalRight', 9, true);
-      up = false,down = false,left = false,right = true;   
 }
