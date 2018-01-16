@@ -28,13 +28,15 @@ scenes.scene0.prototype = {
         
         //Arrow related
         game.load.image('arrow', 'Assets/Sprites/GUI/miniArrow.png');
+        game.load.image('bomb', 'Assets/Sprites/GUI/bombSprite.png');
+        game.load.image('bombSash', 'Assets/Sprites/GUI/bombSash.png');
         game.load.image('BunchofArrows', 'Assets/Sprites/GUI/BunchofArrows.png');
         
         //Menu/Gui Related
         game.load.image('title', 'Assets/Sprites/GUI/MainMenu.png');
         game.load.image('button', 'Assets/Sprites/GUI/Boton.png');
         game.load.image('buttonFire', 'Assets/Sprites/GUI/Fire.png');
-        game.load.image('buttonSword', 'Assets/Sprites/GUI/Sword.png');
+        game.load.image('buttonBomb', 'Assets/Sprites/GUI/Bomb.png');
         game.load.image('buttonArrow', 'Assets/Sprites/GUI/Arrow.png');
         game.load.spritesheet('lifeBar', 'Assets/Sprites/GUI/Hearths.png', 580 , 150);
         game.load.spritesheet('joystick', 'Assets/Sprites/GUI/Joystick.png' ,320,320);

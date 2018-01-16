@@ -30,9 +30,21 @@ var bunchOfArrows;
 var quiver;
 var randomQuiver = true;
 
+//Bombs
+var bomb;
+var bombRate = 100;
+var nextBomb = 0;
+var bombsOwned = 3;
+var bombText;
+var bombGUI;
+var bunchOfBombs;
+var bombSash;
+var randomBomb = true;
+
+
 //Map/Level/GUI
 var map; 
-var fireButton, swordButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
+var fireButton, bombButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
 var scoreText, score = 0;
 
 //Buffs
@@ -53,6 +65,7 @@ scenes.scene3.prototype = {
         music.play('openWorld', 0,1,true);
         game.scale.setGameSize(1216/2, 800/2);
         arrowsOwned = 5;
+        bombsOwned = 3;
         waveNumber = 1;
         enemiesAlive = 0;
         
@@ -116,8 +129,15 @@ scenes.scene3.prototype = {
         arrowText = game.add.text((game.camera.x+30), (game.camera.y+30), "X "+arrowsOwned, {font: "", fill: "#DAA520", align: ""});
         arrowText.fixedToCamera = true;
         
+        //Bombs available
+        bombGUI = game.add.sprite((game.camera.x), (game.camera.y+60), 'bombSash');
+        bombGUI.scale.setTo(1, 1);
+        bombGUI.fixedToCamera = true;
+        bombText = game.add.text((game.camera.x+30), (game.camera.y+60), "X "+bombsOwned, {font: "", fill: "#DAA520", align: ""});
+        bombText.fixedToCamera = true;
+        
         //Score
-        scoreText = game.add.text((game.camera.x), (game.camera.y+60), "Score: "+score, {font: "", fill: "#DAA520", align: ""});
+        scoreText = game.add.text((game.camera.x), (game.camera.y+90), "Score: "+score, {font: "", fill: "#DAA520", align: ""});
         scoreText.fixedToCamera = true;
         
         //BUFFS
@@ -140,6 +160,36 @@ scenes.scene3.prototype = {
         arrow.setAll('outOfBoundsKill', true);
         arrow.setAll('checkWorldBounds', true);
         
+        //Quivers
+        quiver = game.add.group();
+        quiver.enableBody = true;
+        quiver.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        //Random Quivers Spawn
+        randomQuiverTimer = game.time.create(false);
+        randomQuiverTimer.add(5001, function(){randomQuiverF()});
+        randomQuiverTimer.start();
+        
+        //Bombs
+        bomb = game.add.group();
+        bomb.enableBody = true;
+        bomb.physicsBodyType = Phaser.Physics.ARCADE;
+        bomb.createMultiple(30, 'bomb');
+        bomb.setAll('anchor.x', 0.5);
+        bomb.setAll('anchor.y', 1);
+        bomb.setAll('outOfBoundsKill', true);
+        bomb.setAll('checkWorldBounds', true);
+        
+        //Bomb Sashs
+        bombSash = game.add.group();
+        bombSash.enableBody = true;
+        bombSash.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        //Random Bomb Sashs Spawn
+        randomSashTimer = game.time.create(false);
+        randomSashTimer.add(5001, function(){randomSashF()});
+        randomSashTimer.start();
+        
         // Camera Related
         game.camera.height = 608;
         game.camera.width = 300;
@@ -160,11 +210,13 @@ scenes.scene3.prototype = {
         fireButton.scale.setTo(0.20,0.20);
         fireButton.fixedToCamera = true;
         
-        //Sword Button
-        swordButton = game.add.button(525,300, 'buttonSword');
-        swordButton.alpha = 0.5;
-        swordButton.scale.setTo(0.20,0.20);
-        swordButton.fixedToCamera = true;
+        //Bomb Button
+        bombButton = game.add.button(525,300, 'buttonBomb', function(){
+            dropBomb(nextBomb, bombRate);
+        });
+        bombButton.alpha = 0.5;
+        bombButton.scale.setTo(0.20,0.20);
+        bombButton.fixedToCamera = true;
         
         //Arrow Button
         arrowButton = game.add.button(450,300, 'buttonArrow', function() {
@@ -212,11 +264,7 @@ scenes.scene3.prototype = {
         padButton.scale.setTo(0.3,0.3);
         padButton.fixedToCamera = true;
         
-        //Arrow keys for movement and Space bar for shooting arrows
-        cursors = game.input.keyboard.createCursorKeys();
-        fireBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
-        
-        //Timers/Waves
+        //Waves texts and timer
         waveTimer = game.add.text((game.camera.x +135), (game.camera.y), "Wave starts in: "+waveStarts, {font: "50", fill: "#DAA520", align: ""});
         waveTimer.fixedToCamera = true;
         
@@ -224,7 +272,7 @@ scenes.scene3.prototype = {
         waveNumberText.fixedToCamera = true;
         
         waveStarts = game.time.create(false);
-        waveStarts.add(1000, function(){createEnemies()});
+        waveStarts.add(5000, function(){createEnemies()});
         waveStarts.start();
         
         enemyText = game.add.text((game.camera.x +135), (game.camera.y+30), "enemy # "+enemiesAlive, {font: "50", fill: "#DAA520", align: ""});
@@ -235,13 +283,10 @@ scenes.scene3.prototype = {
         enemies.enableBody = true;
         enemies.physicsBodyType = Phaser.Physics.ARCADE;
         
-        quiver = game.add.group();
-        quiver.enableBody = true;
-        quiver.physicsBodyType = Phaser.Physics.ARCADE;
-        
-        randomQuiverTimer = game.time.create(false);
-        randomQuiverTimer.add(1000, function(){randomQuiverF()});
-        randomQuiverTimer.start();
+        //Arrow keys for movement and Space bar for shooting arrows
+        cursors = game.input.keyboard.createCursorKeys();
+        fireBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        bombBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.Q);
     },
     
     
@@ -256,17 +301,22 @@ scenes.scene3.prototype = {
         game.physics.arcade.collide(arrow, rocks, hitRock, null, this);
         game.physics.arcade.collide(arrow, bushes, hitBush, null, this);
                 
-        //Arrows Owned Update
+        //Arrows, bombs Owned and ScoreUpdate
         arrowText.setText("x "+ arrowsOwned);
+        bombText.setText("x "+ bombsOwned);
         scoreText.setText("Score: "+ score);
         
         //Enemy vs Arrow 
-        game.physics.arcade.overlap(arrow, enemies, killEnemy, null, this);
+        game.physics.arcade.overlap(arrow, enemies, killEnemyArrow, null, this);
+        
+        //enemy vs Bombs
+        game.physics.arcade.overlap(bomb, enemies, killEnemyBomb, null, this);
         
         //Enemy vs Player 
         game.physics.arcade.overlap(link, enemies, hitPlayer, null, this);
         game.physics.arcade.collide(enemies, enemies, null, null, this);
         game.physics.arcade.overlap(link, quiver, arrowPack, null, this);
+        game.physics.arcade.overlap(link, bombSash, bombPack, null, this);
         //Player Related
         playerHealth();
         playerMovement();
@@ -282,13 +332,19 @@ scenes.scene3.prototype = {
                 waveNumber += 1;
                 waveON = false;
                 waveTimer.alpha = 1;
-                waveStarts.add(1000, function(){createEnemies()});
+                waveStarts.add(20000, function(){createEnemies()});
                 waveStarts.start();
             }
         
         //Random Quivers system
+        if(randomBomb === true && waveON === false){
+                randomSashTimer.add(5000, function(){randomQuiverF()});
+                randomSashTimer.start();
+                randomBomb = false;
+                }
+        
         if(randomQuiver === true && waveON === false){
-                randomQuiverTimer.add(1000, function(){randomQuiverF()});
+                randomQuiverTimer.add(5000, function(){randomSashF()});
                 randomQuiverTimer.start();
                 randomQuiver = false;
                 }
@@ -296,6 +352,10 @@ scenes.scene3.prototype = {
         //Keyboard Extension to shoot arrows with SPACE
         if(fireBUTTON.isDown){
             fire();
+        }
+        
+        if(bombBUTTON.isDown){
+            dropBomb();
         }
         
         //Enemies move towards the player
@@ -396,6 +456,20 @@ function fire (){
     }
 }
 
+function dropBomb(){
+    if (game.time.now > nextBomb){
+        nextBomb = game.time.now + bombRate;
+        var bombastic = bomb.getFirstExists(false);
+    if(bombastic)
+        {  if(bombsOwned>=1){
+            bombastic.reset(link.x, link.y);
+            bombsOwned -= 1;
+          }
+        }
+    }
+        
+}
+
 //Destroy rock after 3 hits and chance of receiving 1-3 arrows afterwards
 function hitRock(arrow, rocks){  
     rocks.Hitpoints -= 1;
@@ -407,6 +481,10 @@ function hitRock(arrow, rocks){
                      bunchOfArrows = game.add.sprite(rocks.x, rocks.y,'BunchofArrows');
                      quiver.add(bunchOfArrows)
                     }
+                else{
+                bunchOfBombs = game.add.sprite(rocks.x,rocks.y,'bombSash');
+                bombSash.add(bunchOfBombs);
+            }
             }
     arrow.kill();
    }
@@ -419,15 +497,24 @@ function hitBush(arrow, bushes){
             score = score + 5;
             if(game.rnd.integerInRange(1, 100) >= 35){
                bunchOfArrows = game.add.sprite(bushes.x, bushes.y,'BunchofArrows');
-               quiver.add(bunchOfArrows)
+               quiver.add(bunchOfArrows);
               }
+            else{
+                bunchOfBombs = game.add.sprite(bushes.x,bushes.y,'bombSash');
+                bombSash.add(bunchOfBombs);
+            }
         }
     arrow.kill();
    }
 
 function arrowPack(link, arrows){
         arrows.kill();
-        arrowsOwned = arrowsOwned + game.rnd.integerInRange(2, 4);
+        arrowsOwned = arrowsOwned + game.rnd.integerInRange(2, 5);
+}
+
+function bombPack(link, bombs){
+        bombs.kill();
+        bombsOwned = bombsOwned + game.rnd.integerInRange(2, 4);
 }
 
 function randomQuiverF(){
@@ -442,6 +529,20 @@ function randomQuiverF(){
     }
      randomQuiver = true;
 }
+
+function randomSashF(){
+    var randX, randY;
+    randX = Math.floor(Math.random()*1216+1);
+    randY = Math.floor(Math.random()*800+1);
+    
+    if((randX >= 64 && randX <= 1120) && (randY >= 96 && randY <= 736))
+    {
+       bunchOfBombs = game.add.sprite(randX,randY,'bombSash');
+       bombSash.add(bunchOfBombs);
+    }
+     randomBomb = true;
+}
+
 
 /*Health GUI for player works with an INT variable and 
 an animation that change states depending on the INT value*/
@@ -472,7 +573,7 @@ function playerHealth(){
             }
 }
 
-function killEnemy(arrow, enemies){  
+function killEnemyArrow(arrow, enemies){  
     enemies.kill();
     score = score + 50;
     enemiesAlive -= 1;
@@ -482,6 +583,14 @@ function killEnemy(arrow, enemies){
                arrow.kill();}
     else {}
 }
+
+function killEnemyBomb(bomb, enemies){  
+    enemies.kill();
+    score = score + 50;
+    enemiesAlive -= 1;
+    bomb.kill();
+}
+
 
 //Player gets hit and Death.
 function hitPlayer(){ 
@@ -500,6 +609,9 @@ function hitPlayer(){
     if (hitpoints <= 0){
         link.kill();
         music.pause();
+        arrowsOwned = 5;
+        waveNumber = 1;
+        enemiesAlive = 0;
         changeState(null, 8);
         game.scale.setGameSize(1216, 800);
         }
