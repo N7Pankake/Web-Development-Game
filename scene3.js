@@ -10,7 +10,6 @@ var up = false,down = false,left = false,right = false;
 //Game System
 var waveNumber = 1;
 var enemiesAlive = 0;
-var enemiesTotal = 0;
 var enemies;
 var enemyText; 
 var waveNumberText; 
@@ -54,6 +53,9 @@ scenes.scene3.prototype = {
         music.play('openWorld', 0,1,true);
         game.scale.setGameSize(1216/2, 800/2);
         arrowsOwned = 5;
+        waveNumber = 1;
+        enemiesAlive = 0;
+        
     },
     
     create: function (){
@@ -263,6 +265,7 @@ scenes.scene3.prototype = {
         
         //Enemy vs Player 
         game.physics.arcade.overlap(link, enemies, hitPlayer, null, this);
+        game.physics.arcade.collide(enemies, enemies, null, null, this);
         game.physics.arcade.overlap(link, quiver, arrowPack, null, this);
         //Player Related
         playerHealth();
@@ -279,7 +282,7 @@ scenes.scene3.prototype = {
                 waveNumber += 1;
                 waveON = false;
                 waveTimer.alpha = 1;
-                waveStarts.add(20000, function(){createEnemies()});
+                waveStarts.add(1000, function(){createEnemies()});
                 waveStarts.start();
             }
         
@@ -295,7 +298,8 @@ scenes.scene3.prototype = {
             fire();
         }
         
-        //chasePlayer();
+        //Enemies move towards the player
+        enemies.forEach(function(enemy){game.physics.arcade.moveToObject(enemy,link, ((75*waveNumber)-(35*waveNumber)));});
         
  }
 };
@@ -510,38 +514,16 @@ function notInmortal() {
 
 function createEnemies(){
     for(var i = 1; i <= waveNumber; i++)
-        {  enemies.create((32),(384),'bigGhost');
-           enemies.create((448),(64),'bigGhost');
-           enemies.create((1152),(384),'bigGhost');
-           enemies.create((576),(768),'bigGhost');
+        {  enemies.create(game.rnd.integerInRange(0, 64),game.rnd.integerInRange(288, 416),'bigGhost');
+           enemies.create(game.rnd.integerInRange(384, 512),game.rnd.integerInRange(0, 32),'bigGhost');
+           enemies.create(game.rnd.integerInRange(1152, 1184),game.rnd.integerInRange(288, 416),'bigGhost');
+           enemies.create(game.rnd.integerInRange(512, 640),game.rnd.integerInRange(736, 768),'bigGhost');
            enemiesAlive += 4;
-         //Math.floor(Math.random()*100+1)
          }
     enemies.callAll('animations.add', 'animations', 'flap', [0,1,2,3,4,5], 16, true);
     enemies.callAll('play', null, 'flap');
     
             waveON = true;
-}
-
-function chasePlayer(enemies){
-   enemiesSpeed = 25 * waveNumber;
-    if(link.body.x < enemies.body.x)
-        {
-            enemies.body.velocity.x = -enemiesSpeed;
-        }
-    else(link.body.x < enemies.body.x)
-        {
-            enemies.body.velocity.x = enemiesSpeed;
-        }
-    
-    if(link.body.y < enemies.body.y)
-        {
-            enemies.body.velocity.y = -enemiesSpeed;
-        }
-    else(link.body.y < enemies.body.y)
-        {
-            enemies.body.velocity.y = enemiesSpeed;
-        }
 }
 
 //Buttons Set up
