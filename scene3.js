@@ -58,6 +58,7 @@ var manaText;
 //Map/Level/GUI
 var map; 
 var fireButton, bombButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
+var fireButtonTouch, bombButtonTouch, arrowButtonTouch;
 
 //Buffs
 var buffs, shield, noFireball;
@@ -109,6 +110,7 @@ scenes.scene3.prototype = {
             buttonLDD = false;
             buttonRDU = false;
             buttonRDD = false;
+            fireButtonTouch = false;
     },
     
     create: function (){
@@ -291,80 +293,80 @@ scenes.scene3.prototype = {
         upButton.alpha = 0.25;
         upButton.scale.setTo(0.3,0.3);
         upButton.fixedToCamera = true;
-        upButton.events.onInputOver.add(function(){buttonU=true;});
-        upButton.events.onInputOut.add(function(){buttonU=false;});
-        upButton.events.onInputDown.add(function(){buttonU=true;});
-        upButton.events.onInputUp.add(function(){buttonU=false;});
+        upButton.events.onInputOver.add(function(){buttonU=true; upButton.alpha = 1;});
+        upButton.events.onInputOut.add(function(){buttonU=false; upButton.alpha = 0.25;});
+        upButton.events.onInputDown.add(function(){buttonU=true; upButton.alpha = 1;});
+        upButton.events.onInputUp.add(function(){buttonU=false; upButton.alpha = 0.25;});
         
         //DOWN key
         downButton = game.add.button(75,320, 'buttonDOWN', null, this, 0, 1, 0, 1);
         downButton.alpha = 0.25;
         downButton.scale.setTo(0.3,0.3);
         downButton.fixedToCamera = true;
-        downButton.events.onInputOver.add(function(){buttonD=true;});
-        downButton.events.onInputOut.add(function(){buttonD=false;});
-        downButton.events.onInputDown.add(function(){buttonD=true;});
-        downButton.events.onInputUp.add(function(){buttonD=false;});
+        downButton.events.onInputOver.add(function(){buttonD=true; downButton.alpha = 1;});
+        downButton.events.onInputOut.add(function(){buttonD=false; downButton.alpha = 0.25;});
+        downButton.events.onInputDown.add(function(){buttonD=true; downButton.alpha = 1;});
+        downButton.events.onInputUp.add(function(){buttonD=false; downButton.alpha = 0.25;});
         
         //LEFT KEY
         leftButton = game.add.button(30,275, 'buttonLEFT', null, this, 0, 1, 0, 1);
         leftButton.alpha = 0.25;
         leftButton.scale.setTo(0.3,0.3);
         leftButton.fixedToCamera = true;
-        leftButton.events.onInputOver.add(function(){buttonL=true;});
-        leftButton.events.onInputOut.add(function(){buttonL=false;});
-        leftButton.events.onInputDown.add(function(){buttonL=true;});
-        leftButton.events.onInputUp.add(function(){buttonL=false;});
+        leftButton.events.onInputOver.add(function(){buttonL=true; leftButton.alpha = 1;});
+        leftButton.events.onInputOut.add(function(){buttonL=false; leftButton.alpha = 0.25;});
+        leftButton.events.onInputDown.add(function(){buttonL=true; leftButton.alpha = 1;});
+        leftButton.events.onInputUp.add(function(){buttonL=false; leftButton.alpha = 0.25;});
         
         //LEFT Diagonal DOWN KEY
         leftDDButton = game.add.button(30,320, 'buttonLDDOWN', null, this, 0, 1, 0, 1);
         leftDDButton.alpha = 0.25;
         leftDDButton.scale.setTo(0.3,0.3);
         leftDDButton.fixedToCamera = true;
-        leftDDButton.events.onInputOver.add(function(){buttonL=true; buttonLDD = true;});
-        leftDDButton.events.onInputOut.add(function(){buttonL=false; buttonLDD = false;});
-        leftDDButton.events.onInputDown.add(function(){buttonL=true; buttonLDD = true;});
-        leftDDButton.events.onInputUp.add(function(){buttonL=false;  buttonLDD = false;});
+        leftDDButton.events.onInputOver.add(function(){buttonL=true; buttonLDD = true; leftDDButton.alpha = 1;});
+        leftDDButton.events.onInputOut.add(function(){buttonL=false; buttonLDD = false; leftDDButton.alpha = 0.25;});
+        leftDDButton.events.onInputDown.add(function(){buttonL=true; buttonLDD = true; leftDDButton.alpha = 1;});
+        leftDDButton.events.onInputUp.add(function(){buttonL=false;  buttonLDD = false; leftDDButton.alpha = 0.25;});
         
         //LEFT Diagonal UP KEY
         leftDUButton = game.add.button(30,230, 'buttonLDUP', null, this, 0, 1, 0, 1);
         leftDUButton.alpha = 0.25;
         leftDUButton.scale.setTo(0.3,0.3);
         leftDUButton.fixedToCamera = true;
-        leftDUButton.events.onInputOver.add(function(){buttonL=true; buttonLDU = true;});
-        leftDUButton.events.onInputOut.add(function(){buttonL=false; buttonLDU = false;});
-        leftDUButton.events.onInputDown.add(function(){buttonL=true; buttonLDU = true;});
-        leftDUButton.events.onInputUp.add(function(){buttonL=false;  buttonLDU = false;});
+        leftDUButton.events.onInputOver.add(function(){buttonL=true; buttonLDU = true; leftDUButton.alpha = 1;});
+        leftDUButton.events.onInputOut.add(function(){buttonL=false; buttonLDU = false; leftDUButton.alpha = 0.25;});
+        leftDUButton.events.onInputDown.add(function(){buttonL=true; buttonLDU = true; leftDUButton.alpha = 1;});
+        leftDUButton.events.onInputUp.add(function(){buttonL=false;  buttonLDU = false; leftDUButton.alpha = 0.25;});
         
         //RIGHTKEY
         rightButton = game.add.button(120,275, 'buttonRIGHT', null, this, 0, 1, 0, 1);
         rightButton.alpha = 0.25;
         rightButton.scale.setTo(0.3,0.3);
         rightButton.fixedToCamera = true;
-        rightButton.events.onInputOver.add(function(){buttonR=true;});
-        rightButton.events.onInputOut.add(function(){buttonR=false;});
-        rightButton.events.onInputDown.add(function(){buttonR=true;});
-        rightButton.events.onInputUp.add(function(){buttonR=false;});
+        rightButton.events.onInputOver.add(function(){buttonR=true; rightButton.alpha = 1;});
+        rightButton.events.onInputOut.add(function(){buttonR=false; rightButton.alpha = 0.25;});
+        rightButton.events.onInputDown.add(function(){buttonR=true; rightButton.alpha = 1;});
+        rightButton.events.onInputUp.add(function(){buttonR=false; rightButton.alpha = 0.25;});
         
         //RIGHT Diagonal DOWN KEY
         rightDDButton = game.add.button(120,320, 'buttonRDDOWN', null, this, 0, 1, 0, 1);
         rightDDButton.alpha = 0.25;
         rightDDButton.scale.setTo(0.3,0.3);
         rightDDButton.fixedToCamera = true;
-        rightDDButton.events.onInputOver.add(function(){buttonR=true; buttonRDD = true;});
-        rightDDButton.events.onInputOut.add(function(){buttonR=false; buttonRDD = false;});
-        rightDDButton.events.onInputDown.add(function(){buttonR=true; buttonRDD = true;});
-        rightDDButton.events.onInputUp.add(function(){buttonR=false;  buttonRDD = false;});
+        rightDDButton.events.onInputOver.add(function(){buttonR=true; buttonRDD = true; rightDDButton.alpha = 1;});
+        rightDDButton.events.onInputOut.add(function(){buttonR=false; buttonRDD = false; rightDDButton.alpha = 0.25;});
+        rightDDButton.events.onInputDown.add(function(){buttonR=true; buttonRDD = true; rightDDButton.alpha = 1;});
+        rightDDButton.events.onInputUp.add(function(){buttonR=false;  buttonRDD = false; rightDDButton.alpha = 0.25;});
         
         //RIGHT Diagonal UP KEY
         rightDUButton = game.add.button(120,230, 'buttonRDUP', null, this, 0, 1, 0, 1);
         rightDUButton.alpha = 0.25;
         rightDUButton.scale.setTo(0.3,0.3);
         rightDUButton.fixedToCamera = true;
-        rightDUButton.events.onInputOver.add(function(){buttonR=true; buttonRDU = true;});
-        rightDUButton.events.onInputOut.add(function(){buttonR=false; buttonRDU = false;});
-        rightDUButton.events.onInputDown.add(function(){buttonR=true; buttonRDU = true;});
-        rightDUButton.events.onInputUp.add(function(){buttonR=false;  buttonRDU = false;});
+        rightDUButton.events.onInputOver.add(function(){buttonR=true; buttonRDU = true; rightDUButton.alpha = 1;});
+        rightDUButton.events.onInputOut.add(function(){buttonR=false; buttonRDU = false; rightDUButton.alpha = 0.25});
+        rightDUButton.events.onInputDown.add(function(){buttonR=true; buttonRDU = true; rightDUButton.alpha = 1});
+        rightDUButton.events.onInputUp.add(function(){buttonR=false;  buttonRDU = false; rightDUButton.alpha = 0.25});
         
         //PAD this do nothing it just make it look better :D
         padButton = game.add.sprite(75,275, 'buttonPAD');
@@ -373,26 +375,28 @@ scenes.scene3.prototype = {
         padButton.fixedToCamera = true;
         
         //Fire Button
-        fireButton = game.add.button(487.50,240, 'buttonFire', function(){gigaFIREBALL(nextFireBall, fireBallRate)});
+        fireButton = game.add.button(487.50,240, 'buttonFire', null, this, 0,1,0,1);
         fireButton.alpha = 0.5;
         fireButton.scale.setTo(0.20,0.20);
         fireButton.fixedToCamera = true;
+        fireButton.events.onInputDown.add(function(){fireButtonTouch = true; fireButton.alpha = 1;});
+        fireButton.events.onInputUp.add(function(){fireButtonTouch = false; fireButton.alpha = 0.5;});
         
         //Bomb Button
-        bombButton = game.add.button(525,300, 'buttonBomb', function(){
-            dropBomb(nextBomb, bombRate);
-        });
+        bombButton = game.add.button(525,300, 'buttonBomb', null, this, 0,1,0,1);
         bombButton.alpha = 0.5;
         bombButton.scale.setTo(0.20,0.20);
         bombButton.fixedToCamera = true;
+        bombButton.events.onInputDown.add(function(){bombButtonTouch = true; bombButton.alpha = 1;});
+        bombButton.events.onInputUp.add(function(){bombButtonTouch = false; bombButton.alpha = 0.5;});
         
         //Arrow Button
-        arrowButton = game.add.button(450,300, 'buttonArrow', function() {
-           fire(nextArrow, fireRate);
-        });
+        arrowButton = game.add.button(450,300, 'buttonArrow', null, this, 0,1,0,1);
         arrowButton.alpha = 0.5;
         arrowButton.scale.setTo(0.20,0.20);
         arrowButton.fixedToCamera = true;
+        arrowButton.events.onInputDown.add(function(){arrowButtonTouch = true; arrowButton.alpha = 1;});
+        arrowButton.events.onInputUp.add(function(){arrowButtonTouch = false; arrowButton.alpha = 0.5;});
         
         //Keyboard
         cursors = game.input.keyboard.createCursorKeys();
@@ -403,6 +407,7 @@ scenes.scene3.prototype = {
     
     
     update: function (){
+        //mana = 100; //<- just for testing 
         //Collide with Walls, Water, Rocks, Bushes from TILED
         game.physics.arcade.collide(link, walls);
         game.physics.arcade.collide(link, water);
@@ -488,7 +493,7 @@ scenes.scene3.prototype = {
                 tween.repeat (20,0);
                 waveStarts.start();
             }
-        
+        //Keyboard
         //Shoot arrow with Space bar
         if(arrowBUTTON.isDown){
             fire();
@@ -504,133 +509,67 @@ scenes.scene3.prototype = {
             gigaFIREBALL();
         }
         
+        //Buttons/Phone
+        if(fireButtonTouch)
+            {
+                gigaFIREBALL();
+            }
+        if(bombButtonTouch)
+            {
+                dropBomb();
+            }
+        if(arrowButtonTouch)
+            {
+                fire();
+            }
+        
         if ((buttonL == true) && (buttonLDD == false) && (buttonLDU == false)) {
                 link.body.velocity.x = -vel;
                 link.animations.play('walkHorizontalLeft', 9, true);
                 up = false,down = false,left = true,right = false;
-                leftButton.alpha = 1;
-            
-                rightButton.alpha = 0.25;
-                downButton.alpha = 0.25;
-                upButton.alpha = 0.25;
-                leftDDButton.alpha = 0.25;
-                leftDUButton.alpha = 0.25;
-                rightDDButton.alpha = 0.25;
-                rightDUButton.alpha = 0.25;
         }
         
         else if ((buttonL == true) && (buttonLDD == true)) {
                 link.body.velocity.x = -vel;
                 link.body.velocity.y = vel;
                 up = false,down = false,left = true,right = false;
-                leftDDButton.alpha = 1;
-            
-                leftButton.alpha = 0.25;
-                rightButton.alpha = 0.25;
-                downButton.alpha = 0.25;
-                upButton.alpha = 0.25;
-                leftDUButton.alpha = 0.25;
-                rightDDButton.alpha = 0.25;
-                rightDUButton.alpha = 0.25;
         }
         
         else if ((buttonL == true) && (buttonLDU == true)) {
                 link.body.velocity.x = -vel;
                 link.body.velocity.y = -vel;
                 up = false,down = false,left = true,right = false;
-                leftDUButton.alpha = 1;
-            
-                leftButton.alpha = 0.25;
-                rightButton.alpha = 0.25;
-                downButton.alpha = 0.25;
-                upButton.alpha = 0.25;
-                leftDDButton.alpha = 0.25;
-                rightDDButton.alpha = 0.25;
-                rightDUButton.alpha = 0.25;
         }
         
         else if((buttonR == true) && (buttonRDD == false) && (buttonRDU == false)){
                 link.body.velocity.x = vel;
                 link.animations.play('walkHorizontalRight', 9, true);
                 up = false,down = false,left = false,right = true;  
-                rightButton.alpha = 1;
-                
-                leftButton.alpha = 0.25;
-                downButton.alpha = 0.25;
-                upButton.alpha = 0.25;
-                leftDDButton.alpha = 0.25;
-                leftDUButton.alpha = 0.25;
-                rightDDButton.alpha = 0.25;
-                rightDUButton.alpha = 0.25;
         }
         
         else if ((buttonR == true) && (buttonRDD == true)) {
                 link.body.velocity.x = vel;
                 link.body.velocity.y = vel;
                 up = false,down = false,left = true,right = false;
-                rightDDButton.alpha = 1;
-            
-                leftButton.alpha = 0.25;
-                rightButton.alpha = 0.25;
-                downButton.alpha = 0.25;
-                upButton.alpha = 0.25;
-                leftDDButton.alpha = 0.25;
-                leftDUButton.alpha = 0.25;
-                rightDUButton.alpha = 0.25;
         }
         
         else if ((buttonR == true) && (buttonRDU == true)) {
                 link.body.velocity.x = vel;
                 link.body.velocity.y = -vel;
                 up = false,down = false,left = true,right = false;
-                rightDUButton.alpha = 1;
-            
-                leftButton.alpha = 0.25;
-                rightButton.alpha = 0.25;
-                downButton.alpha = 0.25;
-                upButton.alpha = 0.25;
-                leftDDButton.alpha = 0.25;
-                leftDUButton.alpha = 0.25;
-                rightDDButton.alpha = 0.25;
         }
         
         else if(buttonD){
                 link.body.velocity.y = vel;
                 link.animations.play('walkVerticalDown', 9, true);
                 up = false,down = true,left = false,right = false; 
-                downButton.alpha = 1;
-            
-                leftButton.alpha = 0.25;
-                rightButton.alpha = 0.25;
-                upButton.alpha = 0.25;
-                leftDDButton.alpha = 0.25;
-                leftDUButton.alpha = 0.25;
-                rightDDButton.alpha = 0.25;
-                rightDUButton.alpha = 0.25;
         }
         else if(buttonU){
                 link.body.velocity.y = -vel;
                 link.animations.play('walkVerticalUp', 9, true);
                 up = true,down = false,left = false,right = false; 
-                upButton.alpha = 1;
-            
-                leftButton.alpha = 0.25;
-                rightButton.alpha = 0.25;
-                downButton.alpha = 0.25;
-                leftDDButton.alpha = 0.25;
-                leftDUButton.alpha = 0.25;
-                rightDDButton.alpha = 0.25;
-                rightDUButton.alpha = 0.25;
         }
         else {
-            leftButton.alpha = 0.25;
-            rightButton.alpha = 0.25;
-            downButton.alpha = 0.25;
-            upButton.alpha = 0.25;
-            leftDDButton.alpha = 0.25;
-            leftDUButton.alpha = 0.25;
-            rightDDButton.alpha = 0.25;
-            rightDUButton.alpha = 0.25;
         }
              
         if (ghostSpeed >= vel)
@@ -739,6 +678,7 @@ function dropBomb(){
 }
 
 function gigaFIREBALL(){
+    fireButton.alpha = 1;
     if (game.time.now > nextFireBall){
         nextFireBall = game.time.now + fireBallRate;
         var ultraFireBall = fireBall.getFirstExists(false);
