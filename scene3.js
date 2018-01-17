@@ -260,15 +260,18 @@ scenes.scene3.prototype = {
         arrowButton.fixedToCamera = true;
         
         //Waves texts and timer
-        waveTimer = game.add.text((game.camera.x +135), (game.camera.y), "Wave starts in: "+waveStarts, {font: "50", fill: "#DAA520", align: ""});
+        waveTimer = game.add.text((game.camera.x+200), (game.camera.y+175), "Wave starts in: "+waveStarts, {font: "", fill: "#DAA520", align: ""});
         waveTimer.fixedToCamera = true;
         
-        waveNumberText = game.add.text((game.camera.x +135), (game.camera.y + 60), "Wave# "+waveNumber, {font: "50", fill: "#DAA520", align: ""});
+        waveNumberText = game.add.text((game.camera.x +200), (game.camera.y), "Wave: "+waveNumber, {font: "", fill: "#DAA520", align: ""});
         waveNumberText.fixedToCamera = true;
         
         waveStarts = game.time.create(false);
         waveStarts.add(5000, function(){createEnemies()});
+        var tween = game.add.tween(waveTimer).to({alpha: 0}, 1000, "Linear", true);
+        tween.repeat (5,0);
         waveStarts.start();
+        
         
         manaRegenTimer = game.time.create(false);
         manaRegenTimer.add(1000, function(){playerMana()});
@@ -413,8 +416,8 @@ scenes.scene3.prototype = {
             }
         
         //GameSystem
-        waveTimer.setText("Wave starts in: "+waveStarts.duration);
-        waveNumberText.setText("Wave# "+waveNumber);
+        waveTimer.setText("Wave "+waveNumber+" starts in: "+waveStarts.duration);
+        waveNumberText.setText("Wave: "+waveNumber);
         
         //Random Objects system
         if(randomBomb === true && waveON === false){
@@ -448,6 +451,8 @@ scenes.scene3.prototype = {
                 waveON = false;
                 waveTimer.alpha = 1;
                 waveStarts.add(20000, function(){createEnemies()});
+                var tween = game.add.tween(waveTimer).to({alpha: 0}, 1000, "Linear", true);
+                tween.repeat (20,0);
                 waveStarts.start();
             }
         
@@ -864,6 +869,7 @@ function notInmortal() {
 
 
 function createEnemies(){
+    waveTimer.alpha = 0;
     for(var i = 1; i <= waveNumber; i++)
         {  enemies.create(game.rnd.integerInRange(0, 64),game.rnd.integerInRange(288, 416),'bigGhost');
            enemies.create(game.rnd.integerInRange(384, 512),game.rnd.integerInRange(0, 32),'bigGhost');
