@@ -17,7 +17,7 @@ var enemyCreationCD;
 var waveTimer;
 var waveStarts;
 var waveON;
-var ghost;
+var ghostSpeed = 50;
 
 //Arrow
 var arrow;
@@ -88,6 +88,7 @@ scenes.scene3.prototype = {
             randomBomb = true;
             waveNumber = 1;
             enemiesAlive = 0;
+            ghostSpeed = 50;
             up = false;
             down = true;
             left = false;
@@ -594,9 +595,14 @@ scenes.scene3.prototype = {
             rightDDButton.alpha = 0.25;
             rightDUButton.alpha = 0.25;
         }
-                
+             
+        if (ghostSpeed >= vel)
+            {
+                ghostSpeed = 225;
+            }
         //Enemies move towards the player
-        enemies.forEach(function(enemy){game.physics.arcade.moveToObject(enemy,link, (50*waveNumber));});
+        enemies.forEach(function(enemy){game.physics.arcade.moveToObject(enemy,link, ghostSpeed);});
+        
  }
 };
 
@@ -870,6 +876,7 @@ function notInmortal() {
 
 function createEnemies(){
     waveTimer.alpha = 0;
+    ghostSpeed = ghostSpeed * waveNumber;
     for(var i = 1; i <= waveNumber; i++)
         {  enemies.create(game.rnd.integerInRange(0, 64),game.rnd.integerInRange(288, 416),'bigGhost');
            enemies.create(game.rnd.integerInRange(384, 512),game.rnd.integerInRange(0, 32),'bigGhost');
@@ -1209,7 +1216,7 @@ function playerMana(){
         else if (mana === 99){
             manaBar.frame = 99;
             }
-        else if (mana === 100){
+        else if (mana => 100){
             manaBar.frame = 100;
             }
 }
