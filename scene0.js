@@ -6,7 +6,7 @@ var scenes = {};
 var centerX = 1216/2, centerY = 800/2 + 285, worldScale = 1;
 
 //Player/GUI
-var cursors, life, hitpoints=3;
+var cursors, life, hitpoints=3, manaBar, mana = 0;
 
 scenes.scene0 = function(){};
 scenes.scene0.prototype = {
@@ -26,11 +26,15 @@ scenes.scene0.prototype = {
         //Player/Camera Related
         game.load.spritesheet('LinkMovement', 'Assets/Sprites/ResizedLink/LinkMovement.png', 150, 150);
         
-        //Arrow related
+        //Weapons (Arrow/Bombs) related
         game.load.image('arrow', 'Assets/Sprites/GUI/miniArrow.png');
         game.load.image('bomb', 'Assets/Sprites/GUI/bombSprite.png');
         game.load.image('bombSash', 'Assets/Sprites/GUI/bombSash.png');
         game.load.image('BunchofArrows', 'Assets/Sprites/GUI/BunchofArrows.png');
+        
+        //Healing up
+        game.load.image('Hearth', 'Assets/Sprites/GUI/Hearth.png');
+        game.load.image('ManaPot', 'Assets/Sprites/GUI/ManaPotion.png');
         
         //Menu/Gui Related
         game.load.image('title', 'Assets/Sprites/GUI/MainMenu.png');
@@ -39,11 +43,15 @@ scenes.scene0.prototype = {
         game.load.image('buttonBomb', 'Assets/Sprites/GUI/Bomb.png');
         game.load.image('buttonArrow', 'Assets/Sprites/GUI/Arrow.png');
         game.load.spritesheet('lifeBar', 'Assets/Sprites/GUI/Hearths.png', 580 , 150);
-        game.load.spritesheet('joystick', 'Assets/Sprites/GUI/Joystick.png' ,320,320);
+        game.load.spritesheet('manaBar', 'Assets/Sprites/GUI/ManaBar.png', 102 , 5);
         game.load.image('buttonUP', 'Assets/Sprites/GUI/ArrowKeysUP.png');
         game.load.image('buttonDOWN', 'Assets/Sprites/GUI/ArrowKeysDOWN.png');
         game.load.image('buttonLEFT', 'Assets/Sprites/GUI/ArrowKeysLEFT.png');
         game.load.image('buttonRIGHT', 'Assets/Sprites/GUI/ArrowKeysRIGHT.png');
+        game.load.image('buttonLDUP', 'Assets/Sprites/GUI/LeftDiagonalUp.png');
+        game.load.image('buttonLDDOWN', 'Assets/Sprites/GUI/LeftDiagonalDown.png');
+        game.load.image('buttonRDUP', 'Assets/Sprites/GUI/RightDiagonalUp.png');
+        game.load.image('buttonRDDOWN', 'Assets/Sprites/GUI/RightDiagonalDown.png');
         game.load.image('buttonPAD', 'Assets/Sprites/GUI/PAD.png');
         game.load.image('GAMEOVER', 'Assets/Sprites/GUI/GameOver3.png');
         game.load.image('Shield', 'Assets/Sprites/GUI/ShieldedIcon.png');
