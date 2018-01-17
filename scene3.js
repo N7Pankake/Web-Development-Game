@@ -51,7 +51,6 @@ var randomManaPot;
 //Map/Level/GUI
 var map; 
 var fireButton, bombButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
-var scoreText, score = 0;
 
 //Buffs
 var buffs, shield;
@@ -87,7 +86,6 @@ scenes.scene3.prototype = {
             randomQuiver = true;
             bombsOwned = 3;
             randomBomb = true;
-            score = 0;
             waveNumber = 1;
             enemiesAlive = 0;
             up = false;
@@ -169,10 +167,6 @@ scenes.scene3.prototype = {
         bombGUI.fixedToCamera = true;
         bombText = game.add.text((game.camera.x+30), (game.camera.y+60), "X "+bombsOwned, {font: "", fill: "#DAA520", align: ""});
         bombText.fixedToCamera = true;
-        
-        //Score
-        scoreText = game.add.text((game.camera.x), (game.camera.y+90), "Score: "+score, {font: "", fill: "#DAA520", align: ""});
-        scoreText.fixedToCamera = true;
         
         //BUFFS
         buffs = game.add.text((game.camera.x+400), (game.camera.y+0), "Buffs ON: ", {font: "", fill: "#DAA520", align: ""});
@@ -275,9 +269,6 @@ scenes.scene3.prototype = {
         waveStarts = game.time.create(false);
         waveStarts.add(5000, function(){createEnemies()});
         waveStarts.start();
-        
-        enemyText = game.add.text((game.camera.x +135), (game.camera.y+30), "enemy # "+enemiesAlive, {font: "50", fill: "#DAA520", align: ""});
-        enemyText.fixedToCamera = true;
         
         manaRegenTimer = game.time.create(false);
         manaRegenTimer.add(1000, function(){playerMana()});
@@ -394,7 +385,6 @@ scenes.scene3.prototype = {
         //Arrows, bombs Owned and ScoreUpdate
         arrowText.setText("x "+ arrowsOwned);
         bombText.setText("x "+ bombsOwned);
-        scoreText.setText("Score: "+ score);
         
         //Enemy vs Arrow 
         game.physics.arcade.overlap(arrow, enemies, killEnemyArrow, null, this);
@@ -425,7 +415,6 @@ scenes.scene3.prototype = {
         //GameSystem
         waveTimer.setText("Wave starts in: "+waveStarts.duration);
         waveNumberText.setText("Wave# "+waveNumber);
-        enemyText.setText("enemy #"+enemiesAlive);
         
         //Random Objects system
         if(randomBomb === true && waveON === false){
