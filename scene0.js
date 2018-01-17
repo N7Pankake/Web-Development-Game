@@ -39,12 +39,15 @@ scenes.scene0.prototype = {
         
         //Menu/Gui Related
         game.load.image('title', 'Assets/Sprites/GUI/MainMenu.png');
+        game.load.image('instructions', 'Assets/Sprites/GUI/InstructionsTitle.png');
         game.load.image('button', 'Assets/Sprites/GUI/Boton.png');
         game.load.image('buttonFire', 'Assets/Sprites/GUI/Fire.png');
         game.load.image('buttonBomb', 'Assets/Sprites/GUI/Bomb.png');
         game.load.image('buttonArrow', 'Assets/Sprites/GUI/Arrow.png');
+        
         game.load.spritesheet('lifeBar', 'Assets/Sprites/GUI/Hearths.png', 580 , 150);
         game.load.spritesheet('manaBar', 'Assets/Sprites/GUI/ManaBar.png', 102 , 5);
+        
         game.load.image('buttonUP', 'Assets/Sprites/GUI/ArrowKeysUP.png');
         game.load.image('buttonDOWN', 'Assets/Sprites/GUI/ArrowKeysDOWN.png');
         game.load.image('buttonLEFT', 'Assets/Sprites/GUI/ArrowKeysLEFT.png');
