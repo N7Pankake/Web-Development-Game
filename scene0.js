@@ -28,7 +28,7 @@ scenes.scene0.prototype = {
         
         //Weapons (Arrow/Bombs) related
         game.load.image('arrow', 'Assets/Sprites/GUI/miniArrow.png');
-        game.load.image('fireball', 'Assets/Sprites/GUI/firesprite.png');
+        game.load.image('fireball', 'Assets/Sprites/GUI/bigfire.png');
         game.load.image('bomb', 'Assets/Sprites/GUI/bombSprite.png');
         game.load.image('bombSash', 'Assets/Sprites/GUI/bombSash.png');
         game.load.image('BunchofArrows', 'Assets/Sprites/GUI/BunchofArrows.png');
@@ -56,6 +56,7 @@ scenes.scene0.prototype = {
         game.load.image('buttonPAD', 'Assets/Sprites/GUI/PAD.png');
         game.load.image('GAMEOVER', 'Assets/Sprites/GUI/GameOver3.png');
         game.load.image('Shield', 'Assets/Sprites/GUI/ShieldedIcon.png');
+        game.load.image('NoFireBall', 'Assets/Sprites/GUI/Nofire.png');
         
         //Audio/Music Related
         game.load.audio('pop','Assets/Sounds/Blip_Select.wav');

@@ -41,19 +41,26 @@ var bunchOfBombs;
 var bombSash;
 var randomBomb;
 
-//Hearth
+//fireBall
+var fireBall;
+var nextFireBall = 0, fireBallRate = 5000;
+
+//Health
 var hearths;
 var randomHearth;
+
+//Mana
 var manaRegen;
 var manaPots;
 var randomManaPot;
+var manaText;
 
 //Map/Level/GUI
 var map; 
 var fireButton, bombButton, arrowButton, upButton, downButton, leftButton,rightButton,padButton;
 
 //Buffs
-var buffs, shield;
+var buffs, shield, noFireball;
 //Tiled Layers
 var floor, water,walls;
 
@@ -146,7 +153,7 @@ scenes.scene3.prototype = {
         game.physics.enable(link);
         link.body.collideWorldBounds=true;
         
-        //GUI
+        //Health and Mana GUI
         life = game.add.sprite((game.camera.x), (game.camera.y), 'lifeBar');
         life.scale.setTo(0.15, 0.15);
         life.fixedToCamera = true;
@@ -174,10 +181,16 @@ scenes.scene3.prototype = {
         buffs.fixedToCamera = true;
         
         //Inmortality
-        shield = game.add.sprite((game.camera.x+535), (game.camera.y+5), 'Shield');
+        shield = game.add.sprite((game.camera.x+535), (game.camera.y), 'Shield');
         shield.alpha = 0;
         shield.scale.setTo(0.2, 0.2);
         shield.fixedToCamera = true;
+        
+        //Fireball CD
+        noFireBall = game.add.sprite((game.camera.x+575), (game.camera.y+7.5), 'NoFireBall');
+        noFireBall.alpha = 0;
+        noFireBall.scale.setTo(1,1);
+        noFireBall.fixedToCamera = true;
         
         //Arrows and quivers
         arrow = game.add.group();
@@ -210,6 +223,17 @@ scenes.scene3.prototype = {
         bombSash.physicsBodyType = Phaser.Physics.ARCADE;
         //Random Bomb Sashs Spawn
         randomSashTimer = game.time.create(false);
+        
+        //Arrows and quivers
+        fireBall = game.add.group();
+        fireBall.enableBody = true;
+        fireBall.physicsBodyType = Phaser.Physics.ARCADE;
+        fireBall.createMultiple(2, 'fireball');
+        fireBall.setAll('anchor.x', 0.5);
+        fireBall.setAll('anchor.y', 1);
+        fireBall.setAll('anchor.y', 1);
+        fireBall.setAll('outOfBoundsKill', true);
+        fireBall.setAll('checkWorldBounds', true);
         
         //Hearths
         hearths = game.add.group();
@@ -245,13 +269,21 @@ scenes.scene3.prototype = {
         tween.repeat (5,0);
         waveStarts.start();
         
+        //Mana timer and text
         manaRegenTimer = game.time.create(false);
         manaRegenTimer.add(1000, function(){playerMana()});
         manaRegenTimer.start();
+        
+        manaText = game.add.text((game.camera.x+65 ), (game.camera.y+19), mana+"%", {font: "23", fill: "#DAA520", align: ""});
+        manaText.fixedToCamera = true;
+        
         //Enemy
         enemies = game.add.group();
         enemies.enableBody = true;
         enemies.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        //Fire Ball CD
+        noFireBallTimer = game.time.create(false);
         
         ///Buttons/Keyboard
         //UP Key
@@ -341,7 +373,7 @@ scenes.scene3.prototype = {
         padButton.fixedToCamera = true;
         
         //Fire Button
-        fireButton = game.add.button(487.50,240, 'buttonFire', function(){});
+        fireButton = game.add.button(487.50,240, 'buttonFire', function(){gigaFIREBALL(nextFireBall, fireBallRate)});
         fireButton.alpha = 0.5;
         fireButton.scale.setTo(0.20,0.20);
         fireButton.fixedToCamera = true;
@@ -364,8 +396,9 @@ scenes.scene3.prototype = {
         
         //Keyboard
         cursors = game.input.keyboard.createCursorKeys();
-        fireBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        arrowBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         bombBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+        fireBallBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.W);
     },
     
     
@@ -379,17 +412,22 @@ scenes.scene3.prototype = {
         //Arrows Collide with Rocks and Bushes TILED
         game.physics.arcade.collide(arrow, rocks, hitRock, null, this);
         game.physics.arcade.collide(arrow, bushes, hitBush, null, this);
-                
+        
+        //FireBall collide with Rocks and Bushes TILED (if you destroy one of this objects with a fireball you don't get RNG consumables from it (Arrows and bombs))
+        game.physics.arcade.overlap(fireBall, rocks, hitRockFireBall, null, this);
+        game.physics.arcade.overlap(fireBall, bushes, hitBushFireBall, null, this);
+        
         //Arrows, bombs Owned and ScoreUpdate
         arrowText.setText("x "+ arrowsOwned);
         bombText.setText("x "+ bombsOwned);
+        manaText.setText(mana+"%");
         
         //Enemy vs Arrow 
         game.physics.arcade.overlap(arrow, enemies, killEnemyArrow, null, this);
-        
         //enemy vs Bombs
         game.physics.arcade.overlap(bomb, enemies, killEnemyBomb, null, this);
-        
+        //enemy vs Fireball
+        game.physics.arcade.overlap(fireBall, enemies, killEnemyFireBall, null, this);
         //Enemy vs Player 
         game.physics.arcade.overlap(link, enemies, hitPlayer, null, this);
         //Enemy vs Enemy
@@ -452,13 +490,18 @@ scenes.scene3.prototype = {
             }
         
         //Shoot arrow with Space bar
-        if(fireBUTTON.isDown){
+        if(arrowBUTTON.isDown){
             fire();
         }
         
         //Drop bomb with Q
         if(bombBUTTON.isDown){
             dropBomb();
+        }
+        
+        //Drop bomb with Q
+        if(fireBallBUTTON.isDown){
+            gigaFIREBALL();
         }
         
         if ((buttonL == true) && (buttonLDD == false) && (buttonLDU == false)) {
@@ -695,13 +738,65 @@ function dropBomb(){
     }     
 }
 
+function gigaFIREBALL(){
+    if (game.time.now > nextFireBall){
+        nextFireBall = game.time.now + fireBallRate;
+        var ultraFireBall = fireBall.getFirstExists(false);
+    if(ultraFireBall)
+        {  
+            if(mana >= 50)
+                {
+                if(up == true && down == false && right == false && left ==false ){
+                ultraFireBall.rotation = -135;
+                ultraFireBall.reset(link.x, link.y - 15);
+                ultraFireBall.body.velocity.y = -750;
+                mana -= 50;
+                noFireBall.alpha = 1;
+                noFireBallTimer.add(5000, function(){NoFireBall()});
+                noFireBallTimer.start();
+            }
+                if(up == false && down == true && right == false && left ==false){
+                ultraFireBall.rotation = 0;
+                ultraFireBall.reset(link.x, link.y + 15);
+                ultraFireBall.body.velocity.y = +750;
+                mana -= 50;
+                noFireBall.alpha = 1;
+                noFireBallTimer.add(5000, function(){NoFireBall()});
+                noFireBallTimer.start();
+            }
+                if(up == false && down == false && right == true && left == false){
+                ultraFireBall.rotation = -1.5;
+                ultraFireBall.reset(link.x + 15, link.y);
+                ultraFireBall.body.velocity.x = +750;
+                mana -= 50;
+                noFireBall.alpha = 1;
+                noFireBallTimer.add(5000, function(){NoFireBall()});
+                noFireBallTimer.start();
+            }
+                if(up == false && down == false && right == false && left == true){
+                ultraFireBall.rotation = 1.5;
+                ultraFireBall.reset(link.x - 15, link.y);
+                ultraFireBall.body.velocity.x = -750;
+                mana -= 50;
+                noFireBall.alpha = 1;
+                noFireBallTimer.add(5000, function(){NoFireBall()});
+                noFireBallTimer.start();
+            }
+          }
+        }
+    }     
+}
+
+function NoFireBall(){
+    noFireBall.alpha = 0;
+}
+
 //Destroy rock after 3 hits and chance of receiving 1-3 arrows afterwards
 function hitRock(arrow, rocks){  
     rocks.Hitpoints -= 1;
         if (rocks.Hitpoints <= 0  )
             {
                 rocks.kill();
-                score = score + 10;
                 if(game.rnd.integerInRange(1, 100) >= 80){
                      bunchOfArrows = game.add.sprite(rocks.x, rocks.y,'BunchofArrows');
                      quiver.add(bunchOfArrows)
@@ -714,12 +809,25 @@ function hitRock(arrow, rocks){
     arrow.kill();
    }
 
+function hitRockFireBall(fireBall, rocks){  
+    rocks.Hitpoints -= 3;
+        if (rocks.Hitpoints <= 0){
+              rocks.kill();
+            }
+   }
+
+function hitBushFireBall(fireBall, bushes){  
+    bushes.Hitpoints -= 2;
+        if(bushes.Hitpoints <= 0){
+            bushes.kill();
+        }
+   }
+
 //Destroy rock after 3 hits and chance of receiving 1-2 arrows afterwards
 function hitBush(arrow, bushes){  
        bushes.Hitpoints -= 1;
         if(bushes.Hitpoints <= 0){
             bushes.kill();
-            score = score + 5;
             if(game.rnd.integerInRange(1, 100) >= 20){
                bunchOfArrows = game.add.sprite(bushes.x, bushes.y,'BunchofArrows');
                quiver.add(bunchOfArrows);
@@ -816,7 +924,6 @@ function randomManaPotF(){
 
 function killEnemyArrow(arrow, enemies){  
     enemies.kill();
-    score = score + 50;
     enemiesAlive -= 1;
     if(game.rnd.integerInRange(1, 10) >= 3 ){
                bunchOfArrows = game.add.sprite(enemies.x, enemies.y,'BunchofArrows');
@@ -830,11 +937,37 @@ function killEnemyArrow(arrow, enemies){
 
 function killEnemyBomb(bomb, enemies){  
     enemies.kill();
-    score = score + 50;
     enemiesAlive -= 1;
     bomb.kill();
 }
 
+function killEnemyFireBall (fireBall, enemies)
+{   enemies.kill();
+    enemiesAlive -= 1;
+}
+
+function notInmortal() {
+    shield.alpha = 0;
+    link.tint = 0xFFFFFF;
+    inmortality = false;
+}
+
+
+function createEnemies(){
+    waveTimer.alpha = 0;
+    ghostSpeed = ghostSpeed * waveNumber;
+    for(var i = 1; i <= waveNumber; i++)
+        {  enemies.create(game.rnd.integerInRange(0, 64),game.rnd.integerInRange(288, 416),'bigGhost');
+           enemies.create(game.rnd.integerInRange(384, 512),game.rnd.integerInRange(0, 32),'bigGhost');
+           enemies.create(game.rnd.integerInRange(1152, 1184),game.rnd.integerInRange(288, 416),'bigGhost');
+           enemies.create(game.rnd.integerInRange(512, 640),game.rnd.integerInRange(736, 768),'bigGhost');
+           enemiesAlive += 4;
+         }
+    enemies.callAll('animations.add', 'animations', 'flap', [0,1,2,3,4,5], 16, true);
+    enemies.callAll('play', null, 'flap');
+    
+            waveON = true;
+}
 
 //Player gets hit and Death.
 function hitPlayer(){ 
@@ -860,29 +993,6 @@ function hitPlayer(){
         game.scale.setGameSize(1216, 800);
         }
     }
-
-function notInmortal() {
-    shield.alpha = 0;
-    link.tint = 0xFFFFFF;
-    inmortality = false;
-}
-
-
-function createEnemies(){
-    waveTimer.alpha = 0;
-    ghostSpeed = ghostSpeed * waveNumber;
-    for(var i = 1; i <= waveNumber; i++)
-        {  enemies.create(game.rnd.integerInRange(0, 64),game.rnd.integerInRange(288, 416),'bigGhost');
-           enemies.create(game.rnd.integerInRange(384, 512),game.rnd.integerInRange(0, 32),'bigGhost');
-           enemies.create(game.rnd.integerInRange(1152, 1184),game.rnd.integerInRange(288, 416),'bigGhost');
-           enemies.create(game.rnd.integerInRange(512, 640),game.rnd.integerInRange(736, 768),'bigGhost');
-           enemiesAlive += 4;
-         }
-    enemies.callAll('animations.add', 'animations', 'flap', [0,1,2,3,4,5], 16, true);
-    enemies.callAll('play', null, 'flap');
-    
-            waveON = true;
-}
 
 /*Health GUI and Mana for player works with an INT variable */
 function playerHealth(){
