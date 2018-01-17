@@ -199,7 +199,7 @@ scenes.scene3.prototype = {
         bomb = game.add.group();
         bomb.enableBody = true;
         bomb.physicsBodyType = Phaser.Physics.ARCADE;
-        bomb.createMultiple(30, 'bomb');
+        bomb.createMultiple(100, 'bomb');
         bomb.setAll('anchor.x', 0.5);
         bomb.setAll('anchor.y', 1);
         bomb.setAll('outOfBoundsKill', true);
@@ -232,34 +232,6 @@ scenes.scene3.prototype = {
         game.camera.bounds = (null);
         game.camera.follow(link); //normal follow
         
-        //Buttons/Joystick/Movement
-        //Fire Button
-        fireButton = game.add.button(487.50,240, 'buttonFire', function() {
-            music.pause();
-            changeState(null, 1);
-            game.scale.setGameSize(1216, 800);
-            
-        });
-        fireButton.alpha = 0.5;
-        fireButton.scale.setTo(0.20,0.20);
-        fireButton.fixedToCamera = true;
-        
-        //Bomb Button
-        bombButton = game.add.button(525,300, 'buttonBomb', function(){
-            dropBomb(nextBomb, bombRate);
-        });
-        bombButton.alpha = 0.5;
-        bombButton.scale.setTo(0.20,0.20);
-        bombButton.fixedToCamera = true;
-        
-        //Arrow Button
-        arrowButton = game.add.button(450,300, 'buttonArrow', function() {
-           fire(nextArrow, fireRate);
-        });
-        arrowButton.alpha = 0.5;
-        arrowButton.scale.setTo(0.20,0.20);
-        arrowButton.fixedToCamera = true;
-        
         //Waves texts and timer
         waveTimer = game.add.text((game.camera.x+200), (game.camera.y+175), "Wave starts in: "+waveStarts, {font: "", fill: "#DAA520", align: ""});
         waveTimer.fixedToCamera = true;
@@ -273,7 +245,6 @@ scenes.scene3.prototype = {
         tween.repeat (5,0);
         waveStarts.start();
         
-        
         manaRegenTimer = game.time.create(false);
         manaRegenTimer.add(1000, function(){playerMana()});
         manaRegenTimer.start();
@@ -282,7 +253,7 @@ scenes.scene3.prototype = {
         enemies.enableBody = true;
         enemies.physicsBodyType = Phaser.Physics.ARCADE;
         
-        //Arrow keys for movement and Space bar for shooting arrows
+        ///Buttons/Keyboard
         //UP Key
         upButton = game.add.button(75,230, 'buttonUP', null, this, 0, 1, 0, 1);
         upButton.alpha = 0.25;
@@ -363,12 +334,35 @@ scenes.scene3.prototype = {
         rightDUButton.events.onInputDown.add(function(){buttonR=true; buttonRDU = true;});
         rightDUButton.events.onInputUp.add(function(){buttonR=false;  buttonRDU = false;});
         
-        //PAD
+        //PAD this do nothing it just make it look better :D
         padButton = game.add.sprite(75,275, 'buttonPAD');
         padButton.alpha = 0.25;
         padButton.scale.setTo(0.3,0.3);
         padButton.fixedToCamera = true;
         
+        //Fire Button
+        fireButton = game.add.button(487.50,240, 'buttonFire', function(){});
+        fireButton.alpha = 0.5;
+        fireButton.scale.setTo(0.20,0.20);
+        fireButton.fixedToCamera = true;
+        
+        //Bomb Button
+        bombButton = game.add.button(525,300, 'buttonBomb', function(){
+            dropBomb(nextBomb, bombRate);
+        });
+        bombButton.alpha = 0.5;
+        bombButton.scale.setTo(0.20,0.20);
+        bombButton.fixedToCamera = true;
+        
+        //Arrow Button
+        arrowButton = game.add.button(450,300, 'buttonArrow', function() {
+           fire(nextArrow, fireRate);
+        });
+        arrowButton.alpha = 0.5;
+        arrowButton.scale.setTo(0.20,0.20);
+        arrowButton.fixedToCamera = true;
+        
+        //Keyboard
         cursors = game.input.keyboard.createCursorKeys();
         fireBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         bombBUTTON = game.input.keyboard.addKey(Phaser.Keyboard.Q);
@@ -1216,7 +1210,7 @@ function playerMana(){
         else if (mana === 99){
             manaBar.frame = 99;
             }
-        else if (mana => 100){
+        else if (mana >= 100){
             manaBar.frame = 100;
             }
 }

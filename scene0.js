@@ -28,6 +28,7 @@ scenes.scene0.prototype = {
         
         //Weapons (Arrow/Bombs) related
         game.load.image('arrow', 'Assets/Sprites/GUI/miniArrow.png');
+        game.load.image('fireball', 'Assets/Sprites/GUI/firesprite.png');
         game.load.image('bomb', 'Assets/Sprites/GUI/bombSprite.png');
         game.load.image('bombSash', 'Assets/Sprites/GUI/bombSash.png');
         game.load.image('BunchofArrows', 'Assets/Sprites/GUI/BunchofArrows.png');
