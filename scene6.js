@@ -11,7 +11,7 @@ var text1 = "Restart"
         sound.addMarker('blep', 0, 0.1);
         
         var b1 = game.add.button(900,300, 'button', function() {
-            changeState(null, 3);
+            changeState(null, 5);
         });
         
         var b2 = game.add.button(900,500, 'button', function() {

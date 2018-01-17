@@ -18,6 +18,7 @@ var waveTimer;
 var waveStarts;
 var waveON;
 var ghostSpeed;
+var waveScore;
 
 //Arrow
 var arrow;
@@ -192,19 +193,19 @@ scenes.scene5.prototype = {
         bombText.fixedToCamera = true;
         
         //BUFFS
-        buffs = game.add.text((game.camera.x+400), (game.camera.y+0), "Buffs ON: ", {font: "", fill: "#DAA520", align: ""});
+        buffs = game.add.text((game.camera.x+400), (game.camera.y), "Status: ", {font: "", fill: "#DAA520", align: ""});
         buffs.fixedToCamera = true;
         
         //Inmortality
-        shield = game.add.sprite((game.camera.x+535), (game.camera.y), 'Shield');
+        shield = game.add.sprite((game.camera.x+500), (game.camera.y), 'Shield');
         shield.alpha = 0;
         shield.scale.setTo(0.2, 0.2);
         shield.fixedToCamera = true;
         
         //Fireball CD
-        noFireBall = game.add.sprite((game.camera.x+575), (game.camera.y+7.5), 'NoFireBall');
+        noFireBall = game.add.sprite((game.camera.x+550), (game.camera.y), 'NoFireBall');
         noFireBall.alpha = 0;
-        noFireBall.scale.setTo(1,1);
+        noFireBall.scale.setTo(1.5,1.5);
         noFireBall.fixedToCamera = true;
         
         //Arrows and quivers
@@ -423,6 +424,8 @@ scenes.scene5.prototype = {
         //Testing area
         //mana = 100;
         //console.log(ghostSpeed);
+        waveScore = waveNumber;
+        
         //Collide with Walls, Water, Rocks, Bushes from TILED
         game.physics.arcade.collide(link, walls);
         game.physics.arcade.collide(link, water);
@@ -901,13 +904,6 @@ function killEnemyFireBall (fireBall, enemies)
     enemiesAlive -= 1;
 }
 
-function notInmortal() {
-    shield.alpha = 0;
-    link.tint = 0xFFFFFF;
-    inmortality = false;
-}
-
-
 function createEnemies(){
     waveTimer.alpha = 0;
     ghostSpeed = ghostSpeed * waveNumber;
@@ -926,28 +922,42 @@ function createEnemies(){
 
 //Player gets hit and Death.
 function hitPlayer(){ 
-    if (inmortality === false){
-        inmortality = true;
-        shield.alpha = 1;
-        hitpoints -= 1;
-    }
-    else if (inmortality === true){
+    if (!inmortality){
+           hitpoints -= 1;
            var timer;
-           timer = Phaser.Timer.SECOND * 2;
-           game.time.events.add(timer, notInmortal,this);
+           timer = game.time.create(false);
+           timer.add(0, Inmortal,this);
+           timer.start();
            var tween = game.add.tween(link).to({tint: 0xff0000}, 150, "Linear", true);
            tween.repeat (10,0);
-        }
+    }
     if (hitpoints <= 0){
         link.kill();
-        music.pause();
-        arrowsOwned = 5;
-        waveNumber = 1;
-        enemiesAlive = 0;
+        music.pause();        
+        /*
+        fbObj.hs.push(waveScore);
+        fbObj.hs = fbObj.hs.sort(function(a,b){
+            return b - a;
+        }).slice(0,10)
+        ref.set(fbObj);*/
         changeState(null, 6);
         game.scale.setGameSize(1216, 800);
         }
     }
+function Inmortal(){
+          inmortality = true;
+          shield.alpha = 1;
+           var timer;
+           timer = game.time.create(false);
+           timer.add(2000, notInmortal,this);
+           timer.start();
+}
+
+function notInmortal() {
+    shield.alpha = 0;
+    link.tint = 0xFFFFFF;
+    inmortality = false;
+}
 
 /*Health GUI and Mana for player works with an INT variable */
 function playerHealth(){

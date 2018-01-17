@@ -21,9 +21,7 @@ scenes.scene1.prototype = {
             changeState(null, 3);
         });
         
-        var b3 = game.add.button(900,550, 'button', function() {
-            changeState(null, 4);
-        });
+        var b3 = game.add.button(900,550, 'button', function() {});
         
         
         b1.onInputDown.add(this.tint, b1);        

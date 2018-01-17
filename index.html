@@ -3,6 +3,19 @@
 <head>
     <script src="phaser/phaser.js"></script>
     <link rel = "stylesheet" href = "main.css">
+    <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+    <script>
+  // Initialize Firebase
+    var config = {
+    apiKey: "AIzaSyBS8B84LoSNU3QoIGLZGboT-G4uzw2m6Ko",
+    authDomain: "meldaz-undead-trial.firebaseapp.com",
+    databaseURL: "https://meldaz-undead-trial.firebaseio.com",
+    projectId: "meldaz-undead-trial",
+    storageBucket: "meldaz-undead-trial.appspot.com",
+    messagingSenderId: "883432598730"
+    };
+    firebase.initializeApp(config);
+    </script>
     <script src="scene0.js"></script>
     <script src="scene1.js"></script>
     <script src="scene2.js"></script>

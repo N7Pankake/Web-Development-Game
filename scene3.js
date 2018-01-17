@@ -44,24 +44,25 @@ scenes.scene3.prototype = {
         var text2 = "Movement:"
         var text3 = "If you are playing from a computer you will be able \nto move with your Arrow Keys if not you can move with\nthe arrow buttons in display."
         var text4 = "Attacks:"
-        var text5 = "FIREBALL: Will destroy everything on its path this includes\nANY consumable that enemies, rocks or bushes are supose\nto drop use it wisely because it can only be cast if you have 50%\nor higher mana with a cooldown of 5 seconds."
-        var text6 = "BOMBS: Bombs will destroy enemies with ease as soon as the \nenemy have contact with them, you can only have one hundred \n(100) bombs in the map at the same time."
-        var text7 = "ARROWS: Arrows will destroy enemies in one (1) shot, \nrocks in (3) shots and bushes in two(2) shots."
-        game.add.text(250,150, text1);
-        game.add.text(250,190, text2);
-        game.add.text(385,255, text3);
-        game.add.text(250,365, text4);
-        game.add.text(385,405, text5);
-        game.add.text(385,560, text6);
-        game.add.text(385,700, text7);
+        var text5 = "FIREBALL (W): Will destroy everything on its path this includes\nANY consumable that enemies, rocks or bushes are supose\nto drop use it wisely because it can only be cast if you have 50%\nor higher mana with a cooldown of 5 seconds."
+        var text6 = "BOMBS (Q): Bombs will destroy enemies with ease as soon as\n the enemy have contact with them, you can only have one \nhundred (100) bombs in the map at the same time."
+        var text7 = "ARROWS (SpaceBar): Arrows will destroy enemies in one (1) \nshot, bushes in two(2) shots and rocks in (3) shots. "
+        game.add.text(250,150, text1, {font: "", fill: "#DAA520", align: ""});
+        game.add.text(250,190, text2, {font: "", fill: "#DAA520", align: ""});
+        game.add.text(385,255, text3, {font: "", fill: "#DAA520", align: ""});
+        game.add.text(250,365, text4, {font: "", fill: "#DAA520", align: ""});
+        game.add.text(385,405, text5, {font: "", fill: "#DAA520", align: ""});
+        game.add.text(385,560, text6, {font: "", fill: "#DAA520", align: ""});
+        game.add.text(385,700, text7, {font: "", fill: "#DAA520", align: ""});
         
         var buttonText = "Main Menu"
         var b1 = game.add.button(25,375, 'button', function() {
             changeState(null, 1);
         });
+        b1.scale.setTo(0.75,0.75);
         b1.onInputDown.add(this.tint, b1);  
         b1.onInputUp.add(this.unTint, b1);
-        game.add.text(60,465, buttonText); 
+        game.add.text(33,435, buttonText); 
         
     },
     update: function (){},

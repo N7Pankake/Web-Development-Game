@@ -40,6 +40,7 @@ scenes.scene0.prototype = {
         //Menu/Gui Related
         game.load.image('title', 'Assets/Sprites/GUI/MainMenu.png');
         game.load.image('instructions', 'Assets/Sprites/GUI/InstructionsTitle.png');
+        game.load.image('Highscores', 'Assets/Sprites/GUI/Highscores.png');
         game.load.image('button', 'Assets/Sprites/GUI/Boton.png');
         game.load.image('buttonFire', 'Assets/Sprites/GUI/Fire.png');
         game.load.image('buttonBomb', 'Assets/Sprites/GUI/Bomb.png');
